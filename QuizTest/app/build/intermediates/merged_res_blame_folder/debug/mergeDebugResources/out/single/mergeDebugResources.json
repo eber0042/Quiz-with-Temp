@@ -1,0 +1,222 @@
+[
+    {
+        "merged": "com.temi.temiSDK.app-debug-60:/raw_alarm.mp3.flat",
+        "source": "com.temi.temiSDK.app-main-62:/raw/alarm.mp3"
+    },
+    {
+        "merged": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-debug-60:\\drawable_image3.png.flat",
+        "source": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-main-62:\\drawable\\image3.png"
+    },
+    {
+        "merged": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-debug-60:\\raw_quizba.txt.flat",
+        "source": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-main-62:\\raw\\quizba.txt"
+    },
+    {
+        "merged": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-debug-60:\\mipmap-hdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-main-62:\\mipmap-hdpi\\ic_launcher_round.webp"
+    },
+    {
+        "merged": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-debug-60:\\mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-main-62:\\mipmap-anydpi-v26\\ic_launcher.xml"
+    },
+    {
+        "merged": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-debug-60:\\mipmap-hdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-main-62:\\mipmap-hdpi\\ic_launcher.webp"
+    },
+    {
+        "merged": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-debug-60:\\mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-main-62:\\mipmap-anydpi-v26\\ic_launcher_round.xml"
+    },
+    {
+        "merged": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-debug-60:\\drawable-nodpi_oip.jpg.flat",
+        "source": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-main-62:\\drawable-nodpi\\oip.jpg"
+    },
+    {
+        "merged": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-debug-60:\\raw_buttonsound.mp3.flat",
+        "source": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-main-62:\\raw\\buttonsound.mp3"
+    },
+    {
+        "merged": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-debug-60:\\drawable-nodpi_gold.jpg.flat",
+        "source": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-main-62:\\drawable-nodpi\\gold.jpg"
+    },
+    {
+        "merged": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-debug-60:\\raw_alert.mp3.flat",
+        "source": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-main-62:\\raw\\alert.mp3"
+    },
+    {
+        "merged": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-debug-60:\\drawable_image.jpg.flat",
+        "source": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-main-62:\\drawable\\image.jpg"
+    },
+    {
+        "merged": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-debug-60:\\raw_language.txt.flat",
+        "source": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-main-62:\\raw\\language.txt"
+    },
+    {
+        "merged": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-debug-60:\\mipmap-xhdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-main-62:\\mipmap-xhdpi\\ic_launcher.webp"
+    },
+    {
+        "merged": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-debug-60:\\raw_quizte.txt.flat",
+        "source": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-main-62:\\raw\\quizte.txt"
+    },
+    {
+        "merged": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-debug-60:\\drawable-nodpi_pres.jpg.flat",
+        "source": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-main-62:\\drawable-nodpi\\pres.jpg"
+    },
+    {
+        "merged": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-debug-60:\\drawable-nodpi_code.jpg.flat",
+        "source": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-main-62:\\drawable-nodpi\\code.jpg"
+    },
+    {
+        "merged": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-debug-60:\\mipmap-xhdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-main-62:\\mipmap-xhdpi\\ic_launcher_round.webp"
+    },
+    {
+        "merged": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-debug-60:\\raw_quizjp.txt.flat",
+        "source": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-main-62:\\raw\\quizjp.txt"
+    },
+    {
+        "merged": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-debug-60:\\drawable-nodpi_oip__4_.jpg.flat",
+        "source": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-main-62:\\drawable-nodpi\\oip__4_.jpg"
+    },
+    {
+        "merged": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-debug-60:\\drawable_ic_launcher_background.xml.flat",
+        "source": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-main-62:\\drawable\\ic_launcher_background.xml"
+    },
+    {
+        "merged": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-debug-60:\\xml_backup_rules.xml.flat",
+        "source": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-main-62:\\xml\\backup_rules.xml"
+    },
+    {
+        "merged": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-debug-60:\\raw_ok.mp3.flat",
+        "source": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-main-62:\\raw\\ok.mp3"
+    },
+    {
+        "merged": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-debug-60:\\drawable-nodpi_color.jpg.flat",
+        "source": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-main-62:\\drawable-nodpi\\color.jpg"
+    },
+    {
+        "merged": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-debug-60:\\mipmap-xxhdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-main-62:\\mipmap-xxhdpi\\ic_launcher.webp"
+    },
+    {
+        "merged": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-debug-60:\\raw_thememusic.mp3.flat",
+        "source": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-main-62:\\raw\\thememusic.mp3"
+    },
+    {
+        "merged": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-debug-60:\\drawable_image5.jpg.flat",
+        "source": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-main-62:\\drawable\\image5.jpg"
+    },
+    {
+        "merged": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-debug-60:\\mipmap-xxxhdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-main-62:\\mipmap-xxxhdpi\\ic_launcher.webp"
+    },
+    {
+        "merged": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-debug-60:\\raw_correct.mp3.flat",
+        "source": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-main-62:\\raw\\correct.mp3"
+    },
+    {
+        "merged": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-debug-60:\\raw_greeting1.mp3.flat",
+        "source": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-main-62:\\raw\\greeting1.mp3"
+    },
+    {
+        "merged": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-debug-60:\\mipmap-mdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-main-62:\\mipmap-mdpi\\ic_launcher_round.webp"
+    },
+    {
+        "merged": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-debug-60:\\drawable-nodpi_fruit.jpg.flat",
+        "source": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-main-62:\\drawable-nodpi\\fruit.jpg"
+    },
+    {
+        "merged": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-debug-60:\\raw_blacklist.txt.flat",
+        "source": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-main-62:\\raw\\blacklist.txt"
+    },
+    {
+        "merged": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-debug-60:\\drawable_image4.png.flat",
+        "source": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-main-62:\\drawable\\image4.png"
+    },
+    {
+        "merged": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-debug-60:\\drawable-nodpi_aust.jpg.flat",
+        "source": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-main-62:\\drawable-nodpi\\aust.jpg"
+    },
+    {
+        "merged": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-debug-60:\\drawable-nodpi_oip__3_.jpg.flat",
+        "source": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-main-62:\\drawable-nodpi\\oip__3_.jpg"
+    },
+    {
+        "merged": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-debug-60:\\raw_quizen.txt.flat",
+        "source": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-main-62:\\raw\\quizen.txt"
+    },
+    {
+        "merged": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-debug-60:\\drawable_image2.jpg.flat",
+        "source": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-main-62:\\drawable\\image2.jpg"
+    },
+    {
+        "merged": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-debug-60:\\drawable-nodpi_idle.gif.flat",
+        "source": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-main-62:\\drawable-nodpi\\idle.gif"
+    },
+    {
+        "merged": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-debug-60:\\xml_data_extraction_rules.xml.flat",
+        "source": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-main-62:\\xml\\data_extraction_rules.xml"
+    },
+    {
+        "merged": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-debug-60:\\raw_buttonsound1.mp3.flat",
+        "source": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-main-62:\\raw\\buttonsound1.mp3"
+    },
+    {
+        "merged": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-debug-60:\\mipmap-xxxhdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-main-62:\\mipmap-xxxhdpi\\ic_launcher_round.webp"
+    },
+    {
+        "merged": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-debug-60:\\mipmap-mdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-main-62:\\mipmap-mdpi\\ic_launcher.webp"
+    },
+    {
+        "merged": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-debug-60:\\drawable-nodpi_oip__2_.jpg.flat",
+        "source": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-main-62:\\drawable-nodpi\\oip__2_.jpg"
+    },
+    {
+        "merged": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-debug-60:\\drawable-nodpi_like.jpg.flat",
+        "source": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-main-62:\\drawable-nodpi\\like.jpg"
+    },
+    {
+        "merged": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-debug-60:\\mipmap-xxhdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-main-62:\\mipmap-xxhdpi\\ic_launcher_round.webp"
+    },
+    {
+        "merged": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-debug-60:\\raw_alarm.mp3.flat",
+        "source": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-main-62:\\raw\\alarm.mp3"
+    },
+    {
+        "merged": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-debug-60:\\drawable-nodpi_oip__1_.jpg.flat",
+        "source": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-main-62:\\drawable-nodpi\\oip__1_.jpg"
+    },
+    {
+        "merged": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-debug-60:\\drawable-nodpi_hoby.jpg.flat",
+        "source": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-main-62:\\drawable-nodpi\\hoby.jpg"
+    },
+    {
+        "merged": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-debug-60:\\raw_mainquiz.txt.flat",
+        "source": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-main-62:\\raw\\mainquiz.txt"
+    },
+    {
+        "merged": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-debug-60:\\drawable-v24_ic_launcher_foreground.xml.flat",
+        "source": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-main-62:\\drawable-v24\\ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-debug-60:\\raw_whitelist.txt.flat",
+        "source": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-main-62:\\raw\\whitelist.txt"
+    },
+    {
+        "merged": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-debug-60:\\drawable-nodpi_mock.jpg.flat",
+        "source": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-main-62:\\drawable-nodpi\\mock.jpg"
+    },
+    {
+        "merged": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-debug-60:\\drawable_image1.jpg.flat",
+        "source": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-main-62:\\drawable\\image1.jpg"
+    },
+    {
+        "merged": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-debug-60:\\raw_incorrect.mp3.flat",
+        "source": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-main-62:\\raw\\incorrect.mp3"
+    }
+]

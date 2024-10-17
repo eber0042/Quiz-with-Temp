@@ -1,0 +1,40 @@
+<!--English-->
+<resources>
+    <string name="app_name">Temi</string>
+    <string name="default_message">Bitte Text ei’fügn</string>
+    <string name="enter_quiz_prompt">Quiz startn</string>
+    <string name="exit_quiz">Quiz beendn?</string>
+    <string name="title_activity_multiple_choice">Mehrfochwahl</string>
+    <string name="warning">WARNUNG</string>
+    <string name="warning_message">Du bist dabei, des Quiz zu verlossa und host no ned alle Frogn beantwortet. Bist sicher, dass’d wuit weitermacha?</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Obbrecha</string>
+    <string name="test_page_welcome_message">Griaß di auf da Testseite. Wenn du des her siechsd und des ned für di gmoant is, dann bist am falschn Platz.</string>
+    <string name="submitted">Eigegeben</string>
+    <string name="submit_answer">Antwort abschicka</string>
+    <string name="next_question">Nächste Frog</string>
+    <string name="finish_quiz">Quiz beendn?</string>
+    <string name="previous_question">Vorige Frog</string>
+    <string name="yes">Ja</string>
+    <string name="no">Na</string>
+    <string name="you_have_not_selected_any_answers_are_you_sure_you_wish_to_proceed">Du host koane Antwort ausgewählt, bist dir sicher, dass’d weitermacha willst?</string>
+    <string name="mild_warning">Wart amoi!</string>
+    <string name="data">Daten</string>
+    <string name="enter_password">Passwort eigebn</string>
+    <string name="password">Passwort</string>
+    <string name="confirm">Bestätign</string>
+    <string name="clear">Zurücksetzn</string>
+    <string name="thank_you">Danke, dassd beim Quiz dabei warst!</string>
+    <string name="score_board">Ergebnis-Tafel</string>
+    <string name="exit">Rausgehn</string>
+    <string name="input">Schreib dei Namen do ei</string>
+    <string name="you_got">Du host</string>
+    <string name="well_done">Guad gmacht!</string>
+    <string name="good_try">Guader Versuch!</string>
+    <string name="keep_trying">Bleib dran!</string>
+    <string name="english">Englisch</string>
+    <string name="japanese">Japanisch</string>
+    <string name="german_bavarian">Bayerisch</string>
+    <string name="language">Sprache</string>
+    <string name="test">Test</string>
+</resources>

@@ -1,0 +1,40 @@
+<!--English-->
+<resources>
+    <string name="app_name">Temi</string>
+    <string name="default_message">Please add Text</string>
+    <string name="enter_quiz_prompt">Start Quiz</string>
+    <string name="exit_quiz">Exit Quiz?</string>
+    <string name="title_activity_multiple_choice">MultipleChoice</string>
+    <string name="warning">WARNING</string>
+    <string name="warning_message">You are about to leave the quiz and you have not completed all the questions. Are you sure you want to continue?</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="test_page_welcome_message">Welcome to the testing page, If you are seeing this and this was not intended you are in the wrong spot.</string>
+    <string name="submitted">Submitted</string>
+    <string name="submit_answer">Submit Answer</string>
+    <string name="next_question">Next Question</string>
+    <string name="finish_quiz">Finish Quiz?</string>
+    <string name="previous_question">Previous Question</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="you_have_not_selected_any_answers_are_you_sure_you_wish_to_proceed">You have not selected any answers, are you sure you wish to proceed?</string>
+    <string name="mild_warning">Wait!</string>
+    <string name="data">Data</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="password">Password</string>
+    <string name="confirm">Confirm</string>
+    <string name="clear">Clear</string>
+    <string name="thank_you">Thank you for taking this quiz!</string>
+    <string name="score_board">Score Board</string>
+    <string name="exit">Exit</string>
+    <string name="input">Add your name here</string>
+    <string name="you_got">You got</string>
+    <string name="well_done">Well done!</string>
+    <string name="good_try">Good try!</string>
+    <string name="keep_trying">Keep trying!</string>
+    <string name="english">English</string>
+    <string name="japanese">Japanese</string>
+    <string name="german_bavarian">German Bavarian</string>
+    <string name="language">Language</string>
+    <string name="test">Test</string>
+</resources>

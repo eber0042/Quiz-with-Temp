@@ -1,0 +1,196 @@
+<Quiz1>
+text:-> Single Answer: Which planet is known as the Red Planet?
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> true
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 3
+scoreType:-> s
+texts:->
+* Mars ; true
+* Venus ; false
+* Jupiter ; false
+* Saturn ; false
+* Earth ; false
+* Neptune ; false
+<end>
+
+<Quiz2>
+text:-> Single Answer: Who painted the Mona Lisa?
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> true
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 3
+scoreType:-> s
+texts:->
+* Leonardo da Vinci ; true
+* Vincent van Gogh ; false
+* Pablo Picasso ; false
+* Claude Monet ; false
+* Salvador Dalí ; false
+* Michelangelo ; false
+<end>
+
+<Quiz3>
+text:-> Single Answer: What is the capital of France?
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> true
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 3
+scoreType:-> s
+texts:->
+* Paris ; true
+* Rome ; false
+* Madrid ; false
+* Berlin ; false
+* Vienna ; false
+* Brussels ; false
+<end>
+
+<Quiz4>
+text:-> Single Answer: What is the boiling point of water?
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 2
+scoreType:-> s
+texts:->
+* 100°C ; true
+* 50°C ; false
+* 0°C ; false
+* 150°C ; false
+* 200°C ; false
+* 75°C ; false
+<end>
+
+<Quiz5>
+text:-> Multiple Answers: Which of the following animals are mammals?
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> false
+OnCorrect:-> true
+surveyOn:-> false
+columnLength:-> 3
+scoreType:-> s
+texts:->
+* Dolphin ; true
+* Shark ; false
+* Bat ; true
+* Crocodile ; false
+* Elephant ; true
+* Turtle ; false
+<end>
+
+<Quiz6>
+text:-> Multiple Answers: Which elements are noble gases?
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> false
+OnCorrect:-> true
+surveyOn:-> false
+columnLength:-> 2
+scoreType:-> s
+texts:->
+* Helium ; true
+* Oxygen ; false
+* Argon ; true
+* Nitrogen ; false
+* Neon ; true
+* Hydrogen ; false
+<end>
+
+<Quiz7>
+text:-> Single Answer: Who discovered gravity?
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 3
+scoreType:-> s
+texts:->
+* Isaac Newton ; true
+* Albert Einstein ; false
+* Galileo Galilei ; false
+* Nikola Tesla ; false
+* Marie Curie ; false
+* Charles Darwin ; false
+<end>
+
+<Quiz8>
+text:-> Multiple Answers: Which of these are programming languages?
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> false
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 2
+scoreType:-> all
+texts:->
+* Python ; true
+* HTML ; false
+* Java ; true
+* CSS ; false
+* C# ; true
+* SQL ; false
+<end>
+
+<Quiz9>
+text:-> What are the two most famous mountains in Japan?
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> false
+OnCorrect:-> true
+surveyOn:-> false
+columnLength:-> 2
+scoreType:-> all
+texts:->
+* Mt. Fuji ; true
+* Mt. Everest ; false
+* Mt. Tokyo ; false
+* Mt. Big Ben ; false
+* Mt. Kita ; true
+* Mt. Uluru ; false
+<end>
+
+<Quiz10>
+text:-> Survey: Did you enjoy taking the quiz?
+image:-> R.drawable.image4
+background:-> R.drawable.like
+textQuestion:-> true
+imageQuestion:-> true
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> true
+columnLength:-> 1
+scoreType:-> s
+texts:->
+* Yes, I enjoyed it! ; true
+* It was okay. ; true
+* No, I did not enjoy it. ; true
+<end>

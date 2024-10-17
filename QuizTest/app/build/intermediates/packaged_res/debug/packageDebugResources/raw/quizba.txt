@@ -1,0 +1,196 @@
+<Quiz1>
+text:-> Einfache Antwort: Welcher Planet is als roter Planet bekannt?
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> true
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 3
+scoreType:-> s
+texts:->
+* Mars ; true
+* Venus ; false
+* Jupiter ; false
+* Saturn ; false
+* Erde ; false
+* Neptun ; false
+<end>
+
+<Quiz2>
+text:-> Einfache Antwort: Wer hod d'Mona Lisa g’malt?
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> true
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 3
+scoreType:-> s
+texts:->
+* Leonardo da Vinci ; true
+* Vincent van Gogh ; false
+* Pablo Picasso ; false
+* Claude Monet ; false
+* Salvador Dalí ; false
+* Michelangelo ; false
+<end>
+
+<Quiz3>
+text:-> Einfache Antwort: Was is d’Hauptstod vo Frankreich?
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> true
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 3
+scoreType:-> s
+texts:->
+* Paris ; true
+* Rom ; false
+* Madrid ; false
+* Berlin ; false
+* Wien ; false
+* Brüssel ; false
+<end>
+
+<Quiz4>
+text:-> Einfache Antwort: Wos is da Siedepunkt vom Wasser?
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 2
+scoreType:-> s
+texts:->
+* 100°C ; true
+* 50°C ; false
+* 0°C ; false
+* 150°C ; false
+* 200°C ; false
+* 75°C ; false
+<end>
+
+<Quiz5>
+text:-> Mehrere Antworten: Welche von dene Viecher san Säugetiere?
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> false
+OnCorrect:-> true
+surveyOn:-> false
+columnLength:-> 3
+scoreType:-> s
+texts:->
+* Delfin ; true
+* Hai ; false
+* Fledermaus ; true
+* Krokodil ; false
+* Elefant ; true
+* Schildkröte ; false
+<end>
+
+<Quiz6>
+text:-> Mehrere Antworten: Welche Elemente san Edelgase?
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> false
+OnCorrect:-> true
+surveyOn:-> false
+columnLength:-> 2
+scoreType:-> s
+texts:->
+* Helium ; true
+* Sauerstoff ; false
+* Argon ; true
+* Stickstoff ; false
+* Neon ; true
+* Wasserstoff ; false
+<end>
+
+<Quiz7>
+text:-> Einfache Antwort: Wer hod d’Schwerkraft entdeckt?
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 3
+scoreType:-> s
+texts:->
+* Isaac Newton ; true
+* Albert Einstein ; false
+* Galileo Galilei ; false
+* Nikola Tesla ; false
+* Marie Curie ; false
+* Charles Darwin ; false
+<end>
+
+<Quiz8>
+text:-> Mehrere Antworten: Welche vo dene san Programmiersprachn?
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> false
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 2
+scoreType:-> all
+texts:->
+* Python ; true
+* HTML ; false
+* Java ; true
+* CSS ; false
+* C# ; true
+* SQL ; false
+<end>
+
+<Quiz9>
+text:-> Was san die zwoa bekanntesten Berge in Japan?
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> false
+OnCorrect:-> true
+surveyOn:-> false
+columnLength:-> 2
+scoreType:-> all
+texts:->
+* Berg Fuji ; true
+* Berg Everest ; false
+* Berg Tokio ; false
+* Berg Big Ben ; false
+* Berg Kita ; true
+* Berg Uluru ; false
+<end>
+
+<Quiz10>
+text:-> Umfrage: Hod da des Quiz gfoin?
+image:-> R.drawable.image4
+background:-> R.drawable.like
+textQuestion:-> true
+imageQuestion:-> true
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> true
+columnLength:-> 1
+scoreType:-> s
+texts:->
+* Jo, hod ma gfoin! ; true
+* Joa, war ned schlecht. ; true
+* Na, hod ma ned gfoin. ; true
+<end>

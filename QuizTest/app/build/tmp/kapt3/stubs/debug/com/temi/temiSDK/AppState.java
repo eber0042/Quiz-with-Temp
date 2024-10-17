@@ -1,0 +1,80 @@
+package com.temi.temiSDK;
+
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.media.MediaPlayer;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
+import android.widget.Toast;
+import androidx.activity.ComponentActivity;
+import androidx.compose.animation.ExperimentalAnimationApi;
+import androidx.compose.animation.core.RepeatMode;
+import androidx.compose.foundation.layout.Arrangement;
+import androidx.compose.material3.ButtonDefaults;
+import androidx.compose.material3.ExperimentalMaterial3Api;
+import androidx.compose.runtime.Composable;
+import androidx.compose.ui.Alignment;
+import androidx.compose.ui.Modifier;
+import androidx.compose.ui.graphics.painter.Painter;
+import androidx.compose.ui.layout.ContentScale;
+import androidx.compose.ui.text.TextStyle;
+import androidx.compose.ui.text.font.FontStyle;
+import androidx.compose.ui.text.font.FontWeight;
+import androidx.compose.ui.text.input.PasswordVisualTransformation;
+import androidx.compose.ui.text.style.TextAlign;
+import coil.decode.GifDecoder;
+import coil.decode.ImageDecoderDecoder;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import dagger.hilt.android.AndroidEntryPoint;
+import kotlinx.coroutines.Dispatchers;
+import java.util.Locale;
+
+@kotlin.Metadata(mv = {1, 9, 0}, k = 1, xi = 48, d1 = {"\u0000\u001e\n\u0002\u0018\u0002\n\u0002\u0010\u0000\n\u0002\b\u0005\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0000\b6\u0018\u00002\u00020\u0001:\u0004\u0003\u0004\u0005\u0006B\u0007\b\u0004\u00a2\u0006\u0002\u0010\u0002\u0082\u0001\u0004\u0007\b\t\n\u00a8\u0006\u000b"}, d2 = {"Lcom/temi/temiSDK/AppState;", "", "()V", "Quiz", "QuizHome", "ScoreBoard", "Test", "Lcom/temi/temiSDK/AppState$Quiz;", "Lcom/temi/temiSDK/AppState$QuizHome;", "Lcom/temi/temiSDK/AppState$ScoreBoard;", "Lcom/temi/temiSDK/AppState$Test;", "app_debug"})
+public abstract class AppState {
+    
+    private AppState() {
+        super();
+    }
+    
+    @kotlin.Metadata(mv = {1, 9, 0}, k = 1, xi = 48, d1 = {"\u0000\f\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\b\u0002\b\u00c6\u0002\u0018\u00002\u00020\u0001B\u0007\b\u0002\u00a2\u0006\u0002\u0010\u0002\u00a8\u0006\u0003"}, d2 = {"Lcom/temi/temiSDK/AppState$Quiz;", "Lcom/temi/temiSDK/AppState;", "()V", "app_debug"})
+    public static final class Quiz extends com.temi.temiSDK.AppState {
+        @org.jetbrains.annotations.NotNull
+        public static final com.temi.temiSDK.AppState.Quiz INSTANCE = null;
+        
+        private Quiz() {
+        }
+    }
+    
+    @kotlin.Metadata(mv = {1, 9, 0}, k = 1, xi = 48, d1 = {"\u0000\f\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\b\u0002\b\u00c6\u0002\u0018\u00002\u00020\u0001B\u0007\b\u0002\u00a2\u0006\u0002\u0010\u0002\u00a8\u0006\u0003"}, d2 = {"Lcom/temi/temiSDK/AppState$QuizHome;", "Lcom/temi/temiSDK/AppState;", "()V", "app_debug"})
+    public static final class QuizHome extends com.temi.temiSDK.AppState {
+        @org.jetbrains.annotations.NotNull
+        public static final com.temi.temiSDK.AppState.QuizHome INSTANCE = null;
+        
+        private QuizHome() {
+        }
+    }
+    
+    @kotlin.Metadata(mv = {1, 9, 0}, k = 1, xi = 48, d1 = {"\u0000\f\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\b\u0002\b\u00c6\u0002\u0018\u00002\u00020\u0001B\u0007\b\u0002\u00a2\u0006\u0002\u0010\u0002\u00a8\u0006\u0003"}, d2 = {"Lcom/temi/temiSDK/AppState$ScoreBoard;", "Lcom/temi/temiSDK/AppState;", "()V", "app_debug"})
+    public static final class ScoreBoard extends com.temi.temiSDK.AppState {
+        @org.jetbrains.annotations.NotNull
+        public static final com.temi.temiSDK.AppState.ScoreBoard INSTANCE = null;
+        
+        private ScoreBoard() {
+        }
+    }
+    
+    @kotlin.Metadata(mv = {1, 9, 0}, k = 1, xi = 48, d1 = {"\u0000\f\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\b\u0002\b\u00c6\u0002\u0018\u00002\u00020\u0001B\u0007\b\u0002\u00a2\u0006\u0002\u0010\u0002\u00a8\u0006\u0003"}, d2 = {"Lcom/temi/temiSDK/AppState$Test;", "Lcom/temi/temiSDK/AppState;", "()V", "app_debug"})
+    public static final class Test extends com.temi.temiSDK.AppState {
+        @org.jetbrains.annotations.NotNull
+        public static final com.temi.temiSDK.AppState.Test INSTANCE = null;
+        
+        private Test() {
+        }
+    }
+}
