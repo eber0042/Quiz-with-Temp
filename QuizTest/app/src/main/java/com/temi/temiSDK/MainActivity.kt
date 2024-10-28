@@ -666,7 +666,7 @@ fun QuizApp(context: Context) {
                         if (warning) {
                             viewModel.speech("Please do not touch me")
                             if (!(viewModel.isMissuesState())) continue
-                            viewModel.speech("I am warning you, if you do not stop touching me I will scream")
+                            viewModel.speech("I am warning you, if you do not stop molesting me I will scream")
                             if (!(viewModel.isMissuesState())) continue
                             viewModel.speech("3")
                             if (!(viewModel.isMissuesState())) continue

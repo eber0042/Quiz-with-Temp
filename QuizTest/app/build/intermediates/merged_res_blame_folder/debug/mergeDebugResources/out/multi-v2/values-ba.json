@@ -4,24 +4,7 @@
             "outputFile": "com.temi.temiSDK.app-mergeDebugResources-58:/values-ba/values-ba.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\nypro\\OneDrive\\Documents\\Temp Folder\\Applications\\New folder\\QuizTest\\app\\src\\main\\res\\values-ba\\themes.xml",
-                    "from": {
-                        "startLines": "3",
-                        "startColumns": "4",
-                        "startOffsets": "56",
-                        "endColumns": "81",
-                        "endOffsets": "133"
-                    },
-                    "to": {
-                        "startLines": "39",
-                        "startColumns": "4",
-                        "startOffsets": "2246",
-                        "endColumns": "80",
-                        "endOffsets": "2322"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\nypro\\OneDrive\\Documents\\Temp Folder\\Applications\\New folder\\QuizTest\\app\\src\\main\\res\\values-ba\\strings.xml",
+                    "source": "C:\\Users\\nypro\\OneDrive\\Documents\\GitHub\\Quiz-with-Temp\\QuizTest\\app\\src\\main\\res\\values-ba\\strings.xml",
                     "from": {
                         "startLines": "2,10,25,24,21,3,34,22,4,28,5,15,36,32,29,35,33,37,20,14,18,9,23,16,27,13,12,38,11,26,6,7,8,31,17,30,19",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -35,6 +18,23 @@
                         "startOffsets": "55,97,141,187,233,272,335,380,439,497,539,590,643,697,750,808,855,907,952,1004,1059,1093,1127,1173,1231,1286,1346,1394,1432,1595,1669,1741,1785,1943,1994,2029,2073",
                         "endColumns": "41,43,45,45,38,62,44,58,57,41,50,52,53,52,57,46,51,44,51,54,33,33,45,57,54,59,47,37,162,73,71,43,157,50,34,43,172",
                         "endOffsets": "92,136,182,228,267,330,375,434,492,534,585,638,692,745,803,850,902,947,999,1054,1088,1122,1168,1226,1281,1341,1389,1427,1590,1664,1736,1780,1938,1989,2024,2068,2241"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\nypro\\OneDrive\\Documents\\GitHub\\Quiz-with-Temp\\QuizTest\\app\\src\\main\\res\\values-ba\\themes.xml",
+                    "from": {
+                        "startLines": "3",
+                        "startColumns": "4",
+                        "startOffsets": "56",
+                        "endColumns": "81",
+                        "endOffsets": "133"
+                    },
+                    "to": {
+                        "startLines": "39",
+                        "startColumns": "4",
+                        "startOffsets": "2246",
+                        "endColumns": "80",
+                        "endOffsets": "2322"
                     }
                 }
             ]

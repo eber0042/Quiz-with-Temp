@@ -4,6 +4,23 @@
             "outputFile": "com.temi.temiSDK.app-mergeDebugResources-58:/values-ja/values-ja.xml",
             "map": [
                 {
+                    "source": "C:\\Users\\nypro\\OneDrive\\Documents\\GitHub\\Quiz-with-Temp\\QuizTest\\app\\src\\main\\res\\values-ja\\colors.xml",
+                    "from": {
+                        "startLines": "7,2,3,4,5,6,8",
+                        "startColumns": "4,4,4,4,4,4,4",
+                        "startOffsets": "286,55,102,149,196,241,328",
+                        "endColumns": "41,46,46,46,44,44,41",
+                        "endOffsets": "323,97,144,191,236,281,365"
+                    },
+                    "to": {
+                        "startLines": "2,3,4,5,6,7,8",
+                        "startColumns": "4,4,4,4,4,4,4",
+                        "startOffsets": "105,147,194,241,288,333,378",
+                        "endColumns": "41,46,46,46,44,44,41",
+                        "endOffsets": "142,189,236,283,328,373,415"
+                    }
+                },
+                {
                     "source": "C:\\Users\\nypro\\.gradle\\caches\\transforms-4\\25db64728ef312067a2cef5c00760d75\\transformed\\core-1.13.1\\res\\values-ja\\values-ja.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9",
@@ -21,24 +38,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\nypro\\OneDrive\\Documents\\Temp Folder\\Applications\\New folder\\QuizTest\\app\\src\\main\\res\\values-ja\\themes.xml",
-                    "from": {
-                        "startLines": "3",
-                        "startColumns": "4",
-                        "startOffsets": "56",
-                        "endColumns": "81",
-                        "endOffsets": "133"
-                    },
-                    "to": {
-                        "startLines": "157",
-                        "startColumns": "4",
-                        "startOffsets": "12809",
-                        "endColumns": "80",
-                        "endOffsets": "12885"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\nypro\\OneDrive\\Documents\\Temp Folder\\Applications\\New folder\\QuizTest\\app\\src\\main\\res\\values-ja\\strings.xml",
+                    "source": "C:\\Users\\nypro\\OneDrive\\Documents\\GitHub\\Quiz-with-Temp\\QuizTest\\app\\src\\main\\res\\values-ja\\strings.xml",
                     "from": {
                         "startLines": "2,10,25,24,21,3,34,22,4,28,5,15,36,32,29,35,33,37,20,14,18,9,23,16,27,13,12,38,11,26,6,7,8,31,17,30,19",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -106,20 +106,20 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\nypro\\OneDrive\\Documents\\Temp Folder\\Applications\\New folder\\QuizTest\\app\\src\\main\\res\\values-ja\\colors.xml",
+                    "source": "C:\\Users\\nypro\\OneDrive\\Documents\\GitHub\\Quiz-with-Temp\\QuizTest\\app\\src\\main\\res\\values-ja\\themes.xml",
                     "from": {
-                        "startLines": "7,2,3,4,5,6,8",
-                        "startColumns": "4,4,4,4,4,4,4",
-                        "startOffsets": "286,55,102,149,196,241,328",
-                        "endColumns": "41,46,46,46,44,44,41",
-                        "endOffsets": "323,97,144,191,236,281,365"
+                        "startLines": "3",
+                        "startColumns": "4",
+                        "startOffsets": "56",
+                        "endColumns": "81",
+                        "endOffsets": "133"
                     },
                     "to": {
-                        "startLines": "2,3,4,5,6,7,8",
-                        "startColumns": "4,4,4,4,4,4,4",
-                        "startOffsets": "105,147,194,241,288,333,378",
-                        "endColumns": "41,46,46,46,44,44,41",
-                        "endOffsets": "142,189,236,283,328,373,415"
+                        "startLines": "157",
+                        "startColumns": "4",
+                        "startOffsets": "12809",
+                        "endColumns": "80",
+                        "endOffsets": "12885"
                     }
                 },
                 {
