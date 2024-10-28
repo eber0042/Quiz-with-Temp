@@ -29,7 +29,7 @@ public final class MainViewModel extends androidx.lifecycle.ViewModel {
     private com.temi.temiSDK.State currentState = com.temi.temiSDK.State.NULL;
     @org.jetbrains.annotations.NotNull
     private com.temi.temiSDK.State stateMode = com.temi.temiSDK.State.NULL;
-    private final double defaultAngle = 15.0;
+    private final double defaultAngle = 180.0;
     private final double boundary = 90.0;
     @org.jetbrains.annotations.NotNull
     private com.temi.temiSDK.XDirection userRelativeDirection = com.temi.temiSDK.XDirection.GONE;

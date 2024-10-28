@@ -64,7 +64,7 @@ class MainViewModel @Inject constructor(
     private var currentState = State.NULL // Current state of the system
     private var stateMode = State.NULL
     private val defaultAngle =
-        15.0 // 180 + round(Math.toDegrees(robotController.getPositionYaw().toDouble())) // Default angle temi will go to.
+        180.0 // 180 + round(Math.toDegrees(robotController.getPositionYaw().toDouble())) // Default angle temi will go to.
     private val boundary = 90.0
     private var userRelativeDirection =
         XDirection.GONE // Used for checking direction user was lost
