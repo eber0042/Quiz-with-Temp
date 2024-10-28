@@ -487,6 +487,7 @@ class MainViewModel @Inject constructor(
                     State.DISTANCE -> TODO()
                     State.ANGLE -> TODO()
                     State.CONSTRAINT_FOLLOW -> {
+                        //' check to see if the state is not in misuse
                         if (!dragged.value.state && !lifted.value.state) {
 
                             val currentAngle =
@@ -600,9 +601,10 @@ class MainViewModel @Inject constructor(
 //                        Log.i("Normed",  normalizeAngle(defaultAngle + boundary).toString())
 //                        Log.i("Normed",  normalizeAngle(defaultAngle - boundary).toString())
 
-                            if (Math.abs(adjustedTurnAngle) > 0.1) {  // Only turn if there's a meaningful adjustment to make
+                            if (Math.abs(adjustedTurnAngle) > 0.1 && yPosition != YDirection.CLOSE) {  // Only turn if there's a meaningful adjustment to make
                                 robotController.turnBy(adjustedTurnAngle.toInt(), 1f, buffer)
                             } else if (isLost && (currentAngle < defaultAngle + boundary && currentAngle > defaultAngle - boundary)) {
+                                // Handles condition when the user is lost
                                 when (userRelativeDirection) {
                                     XDirection.LEFT -> {
                                         robotController.turnBy(45, 0.1f, buffer)
@@ -619,6 +621,7 @@ class MainViewModel @Inject constructor(
                                     }
                                 }
                             } else if (!isDetected && !isLost) {
+                                // Handles conditions were the robot has detected someone
                                 val angleThreshold = 2.0 // Example threshold, adjust as needed
 
                                 if (abs(defaultAngle - currentAngle) > angleThreshold) {
@@ -896,28 +899,38 @@ class MainViewModel @Inject constructor(
 
         // Title head of Temi based on how far away the user is.
         viewModelScope.launch {
+            var closeTrigger = false
             while (true) {
                 while (!dragged.value.state && !lifted.value.state) {
                     if (stateMode == State.CONSTRAINT_FOLLOW) {
                         when (yPosition) {
                             YDirection.FAR -> {
                                 robotController.tiltAngle(10, 1f, buffer)
+                                closeTrigger = false
                             }
 
                             YDirection.MIDRANGE -> {
                                 robotController.tiltAngle(25, 1f, buffer)
+                                closeTrigger = false
                             }
 
                             YDirection.CLOSE -> {
-                                robotController.tiltAngle(50, 1f, buffer)
+                                if (!closeTrigger){
+                                    robotController.tiltAngle(30, 1f, buffer)
+                                    closeTrigger = true
+                                }
                             }
 
                             YDirection.MISSING -> {
                                 robotController.tiltAngle(-5, 1f, buffer)
+                                closeTrigger = false
                             }
                         }
                     } else {
-                        robotController.tiltAngle(50, 1f, buffer)
+                        if (!closeTrigger){
+                            robotController.tiltAngle(50, 1f, buffer)
+                            closeTrigger = true
+                        }
                     }
                     buffer()
                 }
@@ -1057,7 +1070,7 @@ class MainViewModel @Inject constructor(
                 if (isDetected && previousUserDistance != 0.0) { //&& previousUserDistance != 0.0 && previousUserDistance == currentUserDistance) {
                     // logic for close or far position
                     yPosition = when {
-                        currentUserDistance < 0.60 -> {
+                        currentUserDistance < 0.90 -> {
                             YDirection.CLOSE
                         }
 
@@ -1115,7 +1128,7 @@ class MainViewModel @Inject constructor(
     }
 
     fun isMissuesState(): Boolean {
-        Log.i("State", (dragged.value.state || lifted.value.state).toString())
+        // Log.i("State", (dragged.value.state || lifted.value.state).toString())
         return (dragged.value.state || lifted.value.state)
     }
 

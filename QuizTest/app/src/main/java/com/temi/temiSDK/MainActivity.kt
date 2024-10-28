@@ -86,6 +86,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
+import androidx.core.app.AppLaunchChecker
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.ImageLoader
@@ -97,6 +98,7 @@ import com.google.gson.reflect.TypeToken
 import com.temi.temiSDK.ui.theme.GreetMiTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -658,8 +660,7 @@ fun QuizApp(context: Context) {
     }
 
     // Handles the misuse cases
-
- LaunchedEffect(Unit) {
+    LaunchedEffect(Unit) {
         var warning = true
         val volumeMax = 10
         val volumeDefault = 5
@@ -691,7 +692,7 @@ fun QuizApp(context: Context) {
                         }
                     } else {
                         viewModel.volumeControl(volumeDefault)
-                        delay(100)
+                        delay(500)
                         if (appState == AppState.Quiz) {
                             audioPlayer2.play()
                         }
@@ -772,6 +773,24 @@ fun QuizApp(context: Context) {
             }
 
             delay(100L)
+        }
+    }
+
+    // Used to create a job to create a timeout system
+    var timeoutJob by remember { mutableStateOf<Job?>(null) }
+
+    // Triggered each time `appState` changes
+    LaunchedEffect(appState) {
+        // Cancel any existing job to reset the timer
+        timeoutJob?.cancel()
+
+        if (appState != AppState.QuizHome) {
+            // Start a new timer job for the current `appState`
+            timeoutJob = launch {
+                delay(300000L) // Wait for 5 min
+                audioPlayer2.stop()
+                appState = AppState.QuizHome // Set back to QuizHome if timeout completes
+            }
         }
     }
 

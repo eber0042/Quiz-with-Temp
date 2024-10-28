@@ -27,6 +27,7 @@ import androidx.compose.ui.text.font.FontStyle;
 import androidx.compose.ui.text.font.FontWeight;
 import androidx.compose.ui.text.input.PasswordVisualTransformation;
 import androidx.compose.ui.text.style.TextAlign;
+import androidx.core.app.AppLaunchChecker;
 import coil.decode.GifDecoder;
 import coil.decode.ImageDecoderDecoder;
 import com.google.gson.Gson;
