@@ -834,6 +834,7 @@ fun QuizApp(context: Context) {
                     }
 
                     var userInput by remember { mutableStateOf("") }
+                    viewModel.resultSpeech(state = SpeechState.THANKYOU, say = "Thank you for doing this quiz, please add your name so it can be added to my scoreboard.")
 
                     AlertDialog(onDismissRequest = { showDialogSubmitThankYou = false },
                         title = { Text(stringResource(R.string.thank_you)) },
@@ -931,6 +932,7 @@ fun QuizApp(context: Context) {
 
             is AppState.ScoreBoard -> {
                 viewModel.idleMode(false)
+                viewModel.resultSpeech(state = SpeechState.SCOREBOARD, say = "Welcome to the Hall of Fame. Come see the many people who have done my Quiz")
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
@@ -970,6 +972,7 @@ fun QuizApp(context: Context) {
                         audioPlayer2.setLooping(false)
                         audioPlayer2.pause()
                         audioPlayer3.play()
+                        viewModel.resultSpeech(state = SpeechState.EXIT_EARLY, say = "Hang on, you are about to submit this quiz without completing all the questions. If you do this, your quiz will not be valid. Are you sure you want to do this?")
                         AlertDialog(onDismissRequest = { showDialogExitQuizEarly = false },
                             title = { Text(stringResource(R.string.warning)) },
                             text = { Text(stringResource(R.string.warning_message)) },
@@ -1491,7 +1494,10 @@ fun QuizApp(context: Context) {
         val currentQuestion by derivedStateOf { quizQuestions[questionIndex] } // need this otherwise...
         // the system does not update properly
 
+        val viewModel: MainViewModel = hiltViewModel()
+
         if (showDialogSubmitWithNoAnswer) {
+            viewModel.resultSpeech(state = SpeechState.EXIT_EARLY, say = "Hang on, you are about to submit this question without adding an answer. Are you sure you want to do this?")
             AlertDialog(onDismissRequest = { showDialogSubmitWithNoAnswer = false },
                 title = { Text(stringResource(R.string.mild_warning)) },
                 text = { Text(stringResource(R.string.you_have_not_selected_any_answers_are_you_sure_you_wish_to_proceed)) },
@@ -1548,7 +1554,6 @@ fun QuizApp(context: Context) {
 
         var isButtonEnabled by remember { mutableStateOf(true) } // Control button's state
 
-        val viewModel: MainViewModel = hiltViewModel()
 
         Box(
             modifier = Modifier

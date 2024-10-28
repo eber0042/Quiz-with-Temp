@@ -48,6 +48,14 @@ enum class XMovement {
     NOWHERE
 }
 
+enum class SpeechState {
+    SCOREBOARD,
+    UNANSWERED,
+    EXIT_EARLY,
+    THANKYOU,
+    QUIZ
+}
+
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val robotController: RobotController
@@ -82,6 +90,9 @@ class MainViewModel @Inject constructor(
     private var yMotion = YMovement.NOWHERE
 
     private var int: Int = 0
+
+    private var speechState = SpeechState.QUIZ
+    private var say = "Hello, World"
 
     init {
         /*
@@ -477,10 +488,18 @@ class MainViewModel @Inject constructor(
                 when (stateMode) {
                     State.TALK -> {
                         if (!lifted.value.state && !dragged.value.state) {
-                            //                        conditionGate({ ttsStatus.value.status in listOf(TtsRequest.Status.COMPLETED, TtsRequest.Status.PENDING, TtsRequest.Status.STARTED)})
-                            robotController.textModelChoice(int, buffer)
+                            when (speechState) {
+                                SpeechState.SCOREBOARD -> {robotController.speak(say, buffer); stateMode = State.NULL}
+                                SpeechState.UNANSWERED -> {robotController.speak(say, buffer); stateMode = State.NULL}
+                                SpeechState.EXIT_EARLY -> {robotController.speak(say, buffer); stateMode = State.NULL}
+                                SpeechState.THANKYOU -> {robotController.speak(say, buffer); stateMode = State.NULL}
+                                SpeechState.QUIZ -> {
+                                    //                        conditionGate({ ttsStatus.value.status in listOf(TtsRequest.Status.COMPLETED, TtsRequest.Status.PENDING, TtsRequest.Status.STARTED)})
+                                    robotController.textModelChoice(int, buffer)
 //                        conditionGate({ ttsStatus.value.status != TtsRequest.Status.COMPLETED })
-                            stateMode = State.NULL
+                                    stateMode = State.NULL
+                                }
+                            }
                         }
                     }
 
@@ -643,6 +662,7 @@ class MainViewModel @Inject constructor(
                             job.cancel()
                         }
                     }
+
                     State.TEST_MOVEMENT -> TODO()
                     State.DETECTION_LOGIC -> TODO()
                     State.TEST -> TODO()
@@ -703,28 +723,36 @@ class MainViewModel @Inject constructor(
                             XDirection.LEFT -> {
                                 when (yPosition) {
                                     YDirection.FAR -> {
-                                        robotController.speak(
-                                            "You're quite far to my left! Would you like to come closer for a quiz?",
-                                            buffer
-                                        )
+                                        if (stateMode == State.CONSTRAINT_FOLLOW) {
+                                            robotController.speak(
+                                                "You're quite far to my left! Would you like to come closer for a quiz?",
+                                                buffer
+                                            )
+                                        }
                                         conditionGate({ ttsStatus.value.status != TtsRequest.Status.COMPLETED })
                                         conditionTimer({ !isDetected }, time = 20)
                                     }
 
                                     YDirection.MIDRANGE -> {
-                                        robotController.speak(
-                                            "You're in the midrange on my left. Would you like to do a quiz?",
-                                            buffer
-                                        )
+                                        if (stateMode == State.CONSTRAINT_FOLLOW) {
+                                            robotController.speak(
+                                                "You're in the midrange on my left. Would you like to do a quiz?",
+                                                buffer
+                                            )
+                                        }
+
                                         conditionGate({ ttsStatus.value.status != TtsRequest.Status.COMPLETED })
                                         conditionTimer({ !isDetected }, time = 20)
                                     }
 
                                     YDirection.CLOSE -> {
-                                        robotController.speak(
-                                            "You're close on my left! Press the Start Button to start the quiz.",
-                                            buffer
-                                        )
+                                        if (stateMode == State.CONSTRAINT_FOLLOW) {
+                                            robotController.speak(
+                                                "You're close on my left! Press the Start Button to start the quiz.",
+                                                buffer
+                                            )
+                                        }
+
                                         conditionGate({ ttsStatus.value.status != TtsRequest.Status.COMPLETED })
                                         conditionTimer({ !isDetected }, time = 20)
                                     }
@@ -736,25 +764,34 @@ class MainViewModel @Inject constructor(
 
                                 when (xMotion) {
                                     XMovement.LEFTER -> {
-                                        robotController.speak(
-                                            "You're moving further to my left!",
-                                            buffer
-                                        )
+                                        if (stateMode == State.CONSTRAINT_FOLLOW) {
+                                            robotController.speak(
+                                                "You're moving further to my left!",
+                                                buffer
+                                            )
+                                        }
+
                                         conditionGate({ ttsStatus.value.status != TtsRequest.Status.COMPLETED })
                                         conditionTimer({ !isDetected }, time = 20)
                                     }
 
                                     XMovement.RIGHTER -> {
-                                        robotController.speak("You're moving to my right!", buffer)
+                                        if (stateMode == State.CONSTRAINT_FOLLOW) {
+                                            robotController.speak("You're moving to my right!", buffer)
+                                        }
+
                                         conditionGate({ ttsStatus.value.status != TtsRequest.Status.COMPLETED })
                                         conditionTimer({ !isDetected }, time = 20)
                                     }
 
                                     XMovement.NOWHERE -> {
-                                        robotController.speak(
-                                            "You're staying still on my left.",
-                                            buffer
-                                        )
+                                        if (stateMode == State.CONSTRAINT_FOLLOW) {
+                                            robotController.speak(
+                                                "You're staying still on my left.",
+                                                buffer
+                                            )
+                                        }
+
                                         conditionGate({ ttsStatus.value.status != TtsRequest.Status.COMPLETED })
                                         conditionTimer({ !isDetected }, time = 20)
                                     }
@@ -764,28 +801,37 @@ class MainViewModel @Inject constructor(
                             XDirection.RIGHT -> {
                                 when (yPosition) {
                                     YDirection.FAR -> {
-                                        robotController.speak(
-                                            "You're quite far to my right! Would you like to come closer for a quiz?",
-                                            buffer
-                                        )
+                                        if (stateMode == State.CONSTRAINT_FOLLOW) {
+                                            robotController.speak(
+                                                "You're quite far to my right! Would you like to come closer for a quiz?",
+                                                buffer
+                                            )
+                                        }
+
                                         conditionGate({ ttsStatus.value.status != TtsRequest.Status.COMPLETED })
                                         conditionTimer({ !isDetected }, time = 20)
                                     }
 
                                     YDirection.MIDRANGE -> {
-                                        robotController.speak(
-                                            "You're in the midrange on my right. Would you like to do a quiz?",
-                                            buffer
-                                        )
+                                        if (stateMode == State.CONSTRAINT_FOLLOW) {
+                                            robotController.speak(
+                                                "You're in the midrange on my right. Would you like to do a quiz?",
+                                                buffer
+                                            )
+                                        }
+
                                         conditionGate({ ttsStatus.value.status != TtsRequest.Status.COMPLETED })
                                         conditionTimer({ !isDetected }, time = 20)
                                     }
 
                                     YDirection.CLOSE -> {
-                                        robotController.speak(
-                                            "You're close on my right! Press the Start Button to start the quiz.",
-                                            buffer
-                                        )
+                                        if (stateMode == State.CONSTRAINT_FOLLOW) {
+                                            robotController.speak(
+                                                "You're close on my right! Press the Start Button to start the quiz.",
+                                                buffer
+                                            )
+                                        }
+
                                         conditionGate({ ttsStatus.value.status != TtsRequest.Status.COMPLETED })
                                         conditionTimer({ !isDetected }, time = 20)
                                     }
@@ -797,25 +843,34 @@ class MainViewModel @Inject constructor(
 
                                 when (xMotion) {
                                     XMovement.LEFTER -> {
-                                        robotController.speak("You're moving to my left!", buffer)
+                                        if (stateMode == State.CONSTRAINT_FOLLOW) {
+                                            robotController.speak("You're moving to my left!", buffer)
+                                        }
+
                                         conditionGate({ ttsStatus.value.status != TtsRequest.Status.COMPLETED })
                                         conditionTimer({ !isDetected }, time = 20)
                                     }
 
                                     XMovement.RIGHTER -> {
-                                        robotController.speak(
-                                            "You're moving further to my right!",
-                                            buffer
-                                        )
+                                        if (stateMode == State.CONSTRAINT_FOLLOW) {
+                                            robotController.speak(
+                                                "You're moving further to my right!",
+                                                buffer
+                                            )
+                                        }
+
                                         conditionGate({ ttsStatus.value.status != TtsRequest.Status.COMPLETED })
                                         conditionTimer({ !isDetected }, time = 20)
                                     }
 
                                     XMovement.NOWHERE -> {
-                                        robotController.speak(
-                                            "You're staying still on my right.",
-                                            buffer
-                                        )
+                                        if (stateMode == State.CONSTRAINT_FOLLOW) {
+                                            robotController.speak(
+                                                "You're staying still on my right.",
+                                                buffer
+                                            )
+                                        }
+
                                         conditionGate({ ttsStatus.value.status != TtsRequest.Status.COMPLETED })
                                         conditionTimer({ !isDetected }, time = 20)
                                     }
@@ -825,28 +880,37 @@ class MainViewModel @Inject constructor(
                             XDirection.MIDDLE -> {
                                 when (yPosition) {
                                     YDirection.FAR -> {
-                                        robotController.speak(
-                                            "You're far away from me! Would you like to come closer for a quiz?",
-                                            buffer
-                                        )
+                                        if (stateMode == State.CONSTRAINT_FOLLOW) {
+                                            robotController.speak(
+                                                "You're far away from me! Would you like to come closer for a quiz?",
+                                                buffer
+                                            )
+                                        }
+
                                         conditionGate({ ttsStatus.value.status != TtsRequest.Status.COMPLETED })
                                         conditionTimer({ !isDetected }, time = 20)
                                     }
 
                                     YDirection.MIDRANGE -> {
-                                        robotController.speak(
-                                            "You're in the midrange relative to me. Would you like to do a quiz?",
-                                            buffer
-                                        )
+                                        if (stateMode == State.CONSTRAINT_FOLLOW) {
+                                            robotController.speak(
+                                                "You're in the midrange relative to me. Would you like to do a quiz?",
+                                                buffer
+                                            )
+                                        }
+
                                         conditionGate({ ttsStatus.value.status != TtsRequest.Status.COMPLETED })
                                         conditionTimer({ !isDetected }, time = 20)
                                     }
 
                                     YDirection.CLOSE -> {
-                                        robotController.speak(
-                                            "You're close to me! Press the Start Button to start the quiz.",
-                                            buffer
-                                        )
+                                        if (stateMode == State.CONSTRAINT_FOLLOW) {
+                                            robotController.speak(
+                                                "You're close to me! Press the Start Button to start the quiz.",
+                                                buffer
+                                            )
+                                        }
+
                                         conditionGate({ ttsStatus.value.status != TtsRequest.Status.COMPLETED })
                                         conditionTimer({ !isDetected }, time = 20)
                                     }
@@ -858,22 +922,31 @@ class MainViewModel @Inject constructor(
 
                                 when (xMotion) {
                                     XMovement.LEFTER -> {
-                                        robotController.speak("You're moving to my left!", buffer)
+                                        if (stateMode == State.CONSTRAINT_FOLLOW) {
+                                            robotController.speak("You're moving to my left!", buffer)
+                                        }
+
                                         conditionGate({ ttsStatus.value.status != TtsRequest.Status.COMPLETED })
                                         conditionTimer({ !isDetected }, time = 20)
                                     }
 
                                     XMovement.RIGHTER -> {
-                                        robotController.speak("You're moving to my right!", buffer)
+                                        if (stateMode == State.CONSTRAINT_FOLLOW) {
+                                            robotController.speak("You're moving to my right!", buffer)
+                                        }
+
                                         conditionGate({ ttsStatus.value.status != TtsRequest.Status.COMPLETED })
                                         conditionTimer({ !isDetected }, time = 20)
                                     }
 
                                     XMovement.NOWHERE -> {
-                                        robotController.speak(
-                                            "You're staying still in the middle.",
-                                            buffer
-                                        )
+                                        if (stateMode == State.CONSTRAINT_FOLLOW) {
+                                            robotController.speak(
+                                                "You're staying still in the middle.",
+                                                buffer
+                                            )
+                                        }
+
                                         conditionGate({ ttsStatus.value.status != TtsRequest.Status.COMPLETED })
                                         conditionTimer({ !isDetected }, time = 20)
                                     }
@@ -915,7 +988,7 @@ class MainViewModel @Inject constructor(
                             }
 
                             YDirection.CLOSE -> {
-                                if (!closeTrigger){
+                                if (!closeTrigger) {
                                     robotController.tiltAngle(30, 1f, buffer)
                                     closeTrigger = true
                                 }
@@ -927,7 +1000,7 @@ class MainViewModel @Inject constructor(
                             }
                         }
                     } else {
-                        if (!closeTrigger){
+                        if (!closeTrigger) {
                             robotController.tiltAngle(50, 1f, buffer)
                             closeTrigger = true
                         }
@@ -1108,15 +1181,17 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun resultSpeech(int: Int) {
+    fun resultSpeech(int: Int = 0, state: SpeechState = SpeechState.QUIZ, say: String = "Hello, World") {
         this.int = int
         this.stateMode = State.TALK
+        this.speechState = state
+        this.say = say
     }
 
     suspend fun speech(text: String) {
         robotController.speak(text, buffer)
         conditionGate({ ttsStatus.value.status != TtsRequest.Status.COMPLETED })
-        conditionTimer({!(dragged.value.state || lifted.value.state)}, time = 2)
+        conditionTimer({ !(dragged.value.state || lifted.value.state) }, time = 2)
     }
 
     fun idleMode(setIdleMode: Boolean) {
