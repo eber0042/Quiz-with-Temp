@@ -783,6 +783,7 @@ id expanded_menu
 id forever
 id fragment_container_view_tag
 id group_divider
+id hide_graphics_layer_in_inspector_tag
 id hide_ime_id
 id hide_in_inspector_tag
 id home
@@ -1095,9 +1096,7 @@ string navigation_menu
 string next_question
 string no
 string not_selected
-string off
 string ok
-string on
 string password
 string permission_face_recognition
 string permission_map
@@ -1108,6 +1107,9 @@ string range_start
 string score_board
 string search_menu_title
 string selected
+string state_empty
+string state_off
+string state_on
 string status_bar_notification_info_overflow
 string submit_answer
 string submitted

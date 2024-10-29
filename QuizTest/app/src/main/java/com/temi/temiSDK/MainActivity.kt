@@ -1,15 +1,27 @@
 package com.temi.temiSDK
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.bluetooth.BluetoothDevice
+import android.bluetooth.BluetoothGatt
+import android.bluetooth.BluetoothGattCallback
+import android.bluetooth.BluetoothGattCharacteristic
+import android.bluetooth.BluetoothGattDescriptor
+import android.bluetooth.BluetoothManager
+import android.bluetooth.BluetoothProfile
+import android.bluetooth.le.ScanCallback
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
 import android.media.MediaPlayer
-import android.os.Build.VERSION.SDK_INT
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.provider.Settings
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -45,6 +57,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
@@ -57,16 +70,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -86,23 +90,20 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
-import androidx.core.app.AppLaunchChecker
+import androidx.core.app.ActivityCompat
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
-import coil.ImageLoader
-import coil.compose.AsyncImage
-import coil.decode.GifDecoder
-import coil.decode.ImageDecoderDecoder
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.isGranted
+import com.google.accompanist.permissions.rememberPermissionState
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.temi.temiSDK.ui.theme.GreetMiTheme
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.util.Locale
+import java.util.UUID
 import kotlin.random.Random
 
 /*
@@ -630,7 +631,369 @@ fun getAllPreferences(context: Context): String {
     }
 }
 
+//***************************************** BLUETOOTH
+enum class ConnectionState() {
+    CONNECTED,
+    DISCONNECTED,
+    DISCONNECTED_WITHOUT_INTENT
+}
 
+data class BleDevice(
+    var device: BluetoothDevice? = null,
+    var state: ConnectionState = ConnectionState.DISCONNECTED
+)
+
+class BleManager(private val context: Context, private val deviceData: BleDevice) {
+    private var bluetoothGatt: BluetoothGatt? = null
+    private var isDiscoveryCompleted = false
+    private val serviceUUIDs = mutableListOf<UUID>()
+    private val characteristicsUUIDs = mutableMapOf<UUID, MutableList<UUID>>() // Map of service UUID -> List of characteristic UUIDs
+
+    private val gattCallback = object : BluetoothGattCallback() {
+        override fun onConnectionStateChange(gatt: BluetoothGatt?, status: Int, newState: Int) {
+            if (ActivityCompat.checkSelfPermission(context, Manifest.permission.BLUETOOTH_CONNECT) == PackageManager.PERMISSION_GRANTED) {
+                Log.e("Bluetooth!", "Bluetooth permission not granted.")
+                return
+            }
+            when (newState) {
+                BluetoothProfile.STATE_CONNECTED -> {
+                    Log.i("Bluetooth!", "Device connected: ${gatt?.device?.name}")
+                    bluetoothGatt?.discoverServices()
+                }
+                BluetoothProfile.STATE_DISCONNECTED -> {
+                    Log.i("Bluetooth!", "Disconnected from GATT server.")
+                    bluetoothGatt?.close()
+                    bluetoothGatt = null
+                }
+            }
+        }
+
+        override fun onServicesDiscovered(gatt: BluetoothGatt, status: Int) {
+            if (status == BluetoothGatt.GATT_SUCCESS) {
+                Log.i("Bluetooth!", "Services discovered")
+
+                // Clear the lists to avoid storing duplicate UUIDs if this method is called multiple times
+                serviceUUIDs.clear()
+                characteristicsUUIDs.clear()
+
+                // Iterate through the discovered services
+                for (service in gatt.services) {
+                    val serviceUUID = service.uuid
+                    Log.d("Service!", "Service UUID: $serviceUUID")
+                    serviceUUIDs.add(serviceUUID) // Add the service UUID to the list
+
+                    // For each service, get its characteristics
+                    val characteristicUUIDsList = mutableListOf<UUID>()
+                    for (characteristic in service.characteristics) {
+                        val characteristicUUID = characteristic.uuid
+                        Log.d("Characteristic!", "Characteristic UUID: $characteristicUUID")
+                        characteristicUUIDsList.add(characteristicUUID) // Add the characteristic UUID to the list
+                    }
+                    // Store the characteristics associated with the service UUID
+                    characteristicsUUIDs[serviceUUID] = characteristicUUIDsList
+                }
+                isDiscoveryCompleted = true
+                // Now, the serviceUUIDs list and characteristicsUUIDs map are populated and can be used later
+            } else {
+                Log.w("Bluetooth!", "onServicesDiscovered received: $status")
+            }
+        }
+
+        override fun onCharacteristicRead(
+            gatt: BluetoothGatt?,
+            characteristic: BluetoothGattCharacteristic?,
+            status: Int
+        ) {
+            super.onCharacteristicRead(gatt, characteristic, status)
+
+            if (status == BluetoothGatt.GATT_SUCCESS && characteristic != null) {
+                // Check if this is the battery level characteristic
+                if (characteristic.uuid == UUID.fromString("00002a19-0000-1000-8000-00805f9b34fb")) {
+                    // Get the battery level directly from the byte array
+                    val batteryLevel = characteristic.value[0].toInt() and 0xFF // Convert to unsigned
+                    Log.i("Bluetooth!", "Battery level: $batteryLevel%")
+                }
+                // Check if this is the device name characteristic
+                else if (characteristic.uuid == UUID.fromString("00002a00-0000-1000-8000-00805f9b34fb")) {
+                    // Read the device name as a String
+                    val deviceName = characteristic.getStringValue(0)
+                    Log.i("Bluetooth!", "Device Name: $deviceName")
+                }
+                else if (characteristic.uuid == UUID.fromString("6e400003-b5a3-f393-e0a9-e50e24dcca9e")) {
+
+                }
+            } else {
+                Log.w("Bluetooth!", "onCharacteristicRead failed with status: $status")
+            }
+        }
+
+        // Check Characteristic changed
+        override fun onCharacteristicChanged(
+            gatt: BluetoothGatt?,
+            characteristic: BluetoothGattCharacteristic
+        ) {
+            super.onCharacteristicChanged(gatt, characteristic)
+            // Format Read data to string value
+            val result = characteristic.getStringValue(0)
+            // Send to Read data to string variable
+
+            Log.w("Bluetooth!", "onCharacteristicRead: $result")
+        }
+
+        override fun onCharacteristicWrite(
+            gatt: BluetoothGatt?,
+            characteristic: BluetoothGattCharacteristic?,
+            status: Int
+        ) {
+            super.onCharacteristicWrite(gatt, characteristic, status)
+
+            if (status == BluetoothGatt.GATT_SUCCESS) {
+                Log.i("Bluetooth!", "Message sent successfully!")
+            } else {
+                Log.e("Bluetooth!", "Failed to send message. Status: $status")
+            }
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    fun getData() {
+        if (bluetoothGatt == null) {
+            Log.e("Bluetooth!", "BluetoothGatt is null, cannot read characteristic.")
+            return
+        }
+        while (!isDiscoveryCompleted) {}
+        val UartService = bluetoothGatt?.getService(UUID.fromString("6e400001-b5a3-f393-e0a9-e50e24dcca9e"))
+        val RxCharacteristic = UartService?.getCharacteristic(UUID.fromString("6e400003-b5a3-f393-e0a9-e50e24dcca9e"))
+
+//        //         Enable notifications to receive messages
+        val RxDescriptor = RxCharacteristic?.getDescriptor(UUID.fromString("00002902-0000-1000-8000-00805f9b34fb"))
+        bluetoothGatt!!.setCharacteristicNotification(RxCharacteristic, true)
+        RxDescriptor?.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE)
+        bluetoothGatt!!.writeDescriptor(RxDescriptor)
+    }
+
+    @SuppressLint("MissingPermission")
+    fun moveServo() {
+        val UartService = bluetoothGatt?.getService(UUID.fromString("6e400001-b5a3-f393-e0a9-e50e24dcca9e"))
+        val TxCharacteristic = UartService?.getCharacteristic(UUID.fromString("6e400002-b5a3-f393-e0a9-e50e24dcca9e"))
+
+        val s_data = "s"
+
+        // Formatting write Data for Arduino
+        if (TxCharacteristic != null) {
+            TxCharacteristic.writeType = TxCharacteristic.writeType
+            TxCharacteristic.setValue(s_data)
+        }
+
+        if (TxCharacteristic == null) {
+            Log.e("Bluetooth!", "Characteristic not found.")
+            return
+        }
+        val success = bluetoothGatt?.writeCharacteristic(TxCharacteristic) ?: false
+        if (!success) {
+            Log.e("Bluetooth!", "Failed to initiate characteristic")
+        }
+    }
+
+    fun connectToDevice(): ConnectionState {
+        Log.i("Bluetooth!", "Trying to connect to: ${deviceData.device?.name} (${deviceData.device?.address})")
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            if (ActivityCompat.checkSelfPermission(context, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+                Log.e("Bluetooth!", "Missing BLUETOOTH_CONNECT permission")
+                return ConnectionState.DISCONNECTED_WITHOUT_INTENT
+            }
+        }
+
+        bluetoothGatt = deviceData.device?.connectGatt(context, false, gattCallback)
+
+        if (bluetoothGatt != null) {
+            Log.i("Bluetooth!", "GATT connection initiated")
+            return ConnectionState.CONNECTED
+        } else {
+            Log.e("Bluetooth!", "Failed to initiate GATT connection")
+            return ConnectionState.DISCONNECTED_WITHOUT_INTENT
+        }
+    }
+
+
+    @SuppressLint("MissingPermission")
+    fun disconnect() {
+        bluetoothGatt?.disconnect()
+        bluetoothGatt?.close()
+        bluetoothGatt = null
+        isDiscoveryCompleted = false
+        Log.i("Bluetooth!", "Disconnected from GATT server.")
+    }
+}
+
+@SuppressLint("MissingPermission")
+@OptIn(ExperimentalPermissionsApi::class)
+@Composable
+fun BluetoothScreen() {
+    val context = LocalContext.current
+    val bluetoothManager = context.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
+    val bluetoothAdapter = bluetoothManager.adapter
+
+    // Permissions
+    val permissionState = rememberPermissionState(Manifest.permission.BLUETOOTH)
+    val fineLocationPermissionState = rememberPermissionState(Manifest.permission.ACCESS_FINE_LOCATION)
+
+    val discoveredDevices = remember { mutableStateOf(mutableSetOf<BleDevice>()) } // Using Set for unique devices
+    var isScanning by remember { mutableStateOf(false) }
+    var dots by remember { mutableIntStateOf(0) }
+
+    var bleManager: BleManager? = null
+
+    // Dots animation for scanning indication
+    LaunchedEffect(isScanning) {
+        if (isScanning) {
+            while (isScanning) {
+                delay(500)
+                dots = (dots + 1) % 4
+            }
+        } else {
+            dots = 0
+        }
+    }
+
+    // Handle discovery timeout
+    LaunchedEffect(isScanning) {
+        if (isScanning) {
+            discoveredDevices.value.clear() // Clear previous devices
+            delay(12000) // Scanning timeout
+            bluetoothAdapter.cancelDiscovery()
+            isScanning = false
+            Log.i("Bluetooth!", "Discovery timed out")
+        }
+    }
+
+    // BLE scan callback
+    val leScanCallback = rememberUpdatedState(object : ScanCallback() {
+        override fun onScanResult(callbackType: Int, result: android.bluetooth.le.ScanResult) {
+            super.onScanResult(callbackType, result)
+            val device = result.device
+            if (device.name != null) {
+                discoveredDevices.value.add(BleDevice(device = device))
+            }
+        }
+
+        override fun onBatchScanResults(results: List<android.bluetooth.le.ScanResult>) {
+            super.onBatchScanResults(results)
+            results.forEach { result ->
+                val device = result.device
+                if (device.name != null) {
+                    discoveredDevices.value.add(BleDevice(device = device))
+                }
+            }
+        }
+
+        override fun onScanFailed(errorCode: Int) {
+            super.onScanFailed(errorCode)
+            Log.e("Bluetooth!", "Scan failed with error code: $errorCode")
+        }
+    })
+
+    // Start or stop scanning
+    fun toggleScan() {
+        val scanner = bluetoothManager.adapter.bluetoothLeScanner
+        if (isScanning) {
+            scanner.stopScan(leScanCallback.value)
+            isScanning = false
+        } else {
+            scanner.startScan(leScanCallback.value)
+            isScanning = true
+        }
+    }
+
+    // UI layout
+
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp).fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            if (!fineLocationPermissionState.status.isGranted || !permissionState.status.isGranted) {
+                Text(
+                    "Permissions denied.",
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Button(
+                    onClick = {
+                        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                        val uri = Uri.fromParts("package", context.packageName, null)
+                        intent.data = uri
+                        context.startActivity(intent)
+                    },
+                    modifier = Modifier.padding(top = 8.dp)
+                ) {
+                    Text("Go to Settings", textAlign = TextAlign.Center)
+                }
+            } else {
+                Button(
+                    onClick = { toggleScan() },
+                    modifier = Modifier.padding(top = 8.dp)
+                ) {
+                    Text(if (isScanning) "Stop Scanning${".".repeat(dots)}" else "Start Scanning", textAlign = TextAlign.Center)
+                }
+
+                Button(
+                    onClick = { bleManager?.moveServo() },
+                    modifier = Modifier.padding(top = 8.dp)
+                ) {
+                    Text("Move Servo", textAlign = TextAlign.Center)
+                }
+
+                if (isScanning) {
+                    // Optional loading indicator can go here
+                } else if (discoveredDevices.value.isNotEmpty()) {
+                    Text(
+                        "--Discovered Devices--",
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    LazyColumn(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        items(discoveredDevices.value.toList()) { bleDevice -> // Convert Set to List for LazyColumn
+                            Box(
+                                modifier = Modifier
+                                    .clickable {
+                                        // Made a system were only one device can be connect at a time
+                                        bleManager?.disconnect() // Disconnect previous
+                                        bleManager = BleManager(context, bleDevice) // Set new
+                                        bleManager?.connectToDevice() // Connect new
+                                    }
+                                    .padding(vertical = 8.dp)
+                                    .fillMaxWidth(),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Text(
+                                    text = "${bleDevice.device?.name} || ${bleDevice.device?.address}",
+                                    textAlign = TextAlign.Center,
+                                    color = when (bleDevice.state) {
+                                        ConnectionState.CONNECTED -> Color.Green
+                                        ConnectionState.DISCONNECTED_WITHOUT_INTENT -> Color.Red
+                                        else -> Color.Blue
+                                    },
+                                    modifier = Modifier.fillMaxWidth(),
+                                    style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                                )
+                            }
+                        }
+                    }
+                } else {
+                    Text("No devices discovered.", textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth())
+                }
+            }
+        }
+    }
+}
 //***************************************** MENUS
 
 @Composable
@@ -1147,6 +1510,8 @@ fun QuizApp(context: Context) {
                         modifier = Modifier.background(Color.LightGray) // Background color for the BoxWithClickable
                     )
                 }
+
+                BluetoothScreen()
             }
         }
     }

@@ -95,6 +95,9 @@ dependencies {
 
     // JSON serialization library dependency
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
+
+    // Accompanist Permissions
+    implementation("com.google.accompanist:accompanist-permissions:0.36.0") // Replace <latest-ver
 }
 
 kapt {
