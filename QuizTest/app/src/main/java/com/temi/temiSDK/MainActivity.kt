@@ -163,6 +163,7 @@ sealed class AppState {
     object QuizHome : AppState()
     object Quiz : AppState()
     object ScoreBoard : AppState()
+    object Bluetooth: AppState()
 }
 
 sealed class QuizState {
@@ -654,6 +655,9 @@ fun QuizApp(context: Context) {
 
     val viewModel: MainViewModel = hiltViewModel()
 
+    var passwordCheck by remember { mutableStateOf(false) }
+    var password by remember { mutableStateOf("") }
+
     // Define a callback function to handle the value from the child
     val onChildValueChanged: (Boolean) -> Unit = { newValue ->
         childState = newValue
@@ -770,6 +774,7 @@ fun QuizApp(context: Context) {
                     }
                 }
                 AppState.Test -> {}
+                AppState.Bluetooth -> {}
             }
 
             delay(100L)
@@ -824,6 +829,66 @@ fun QuizApp(context: Context) {
                         cycleColor = false,
                         modifier = Modifier.background(Color.LightGray) // Background color for the BoxWithClickable
                     )
+                }
+
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(
+                            bottom = 120.dp, start = 30.dp
+                        )
+                        .zIndex(5f), // Higher ZIndex value places it on top, // Padding around the Box
+                    contentAlignment = Alignment.BottomStart // Align content to top end (right)
+                ) {
+                    BoxWithClickable(
+                        onClick = {
+                            passwordCheck = true
+                            // appState = AppState.Bluetooth;
+                        },
+                        text = "BLE",
+                        type = "cool",
+                        grow = false,
+                        animatedPress = true,
+                        cycleColor = false,
+                        modifier = Modifier.background(Color.LightGray) // Background color for the BoxWithClickable
+                    )
+                }
+
+                // Dialog to ask for password input
+                if (passwordCheck) {
+                    if (password == "1234") Log.d("Input", password)
+                    AlertDialog(onDismissRequest = { passwordCheck = false },
+                        title = { Text(stringResource(R.string.enter_password)) },
+                        text = {
+                            Column {
+                                OutlinedTextField(value = password,
+                                    onValueChange = { password = it },
+                                    label = { Text(stringResource(R.string.password)) },
+                                    visualTransformation = PasswordVisualTransformation(),
+                                    singleLine = true
+                                )
+                            }
+                        },
+                        confirmButton = {
+                            Button(onClick = {
+                                if (password == "1234") {
+                                    appState = AppState.Bluetooth
+                                    // Reset password and state
+                                    passwordCheck = false
+                                    password = ""
+                                }
+                            }) {
+                                Text(stringResource(R.string.confirm))
+                            }
+                        },
+                        dismissButton = {
+                            Button(onClick = {
+                                passwordCheck = false
+                                password = ""
+                            }) {
+                                Text(stringResource(R.string.cancel))
+                            }
+                        })
                 }
 
                 if (showDialogSubmitThankYou) {
@@ -1056,6 +1121,31 @@ fun QuizApp(context: Context) {
                             audioPlayer2.stop();
                             audioPlayer1.play();
                         })
+                }
+            }
+
+            is AppState.Bluetooth -> {
+                viewModel.idleMode(false)
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(
+                            bottom = 120.dp, start = 30.dp
+                        )
+                        .zIndex(5f), // Higher ZIndex value places it on top, // Padding around the Box
+                    contentAlignment = Alignment.BottomStart // Align content to top end (right)
+                ) {
+                    BoxWithClickable(
+                        onClick = {
+                            appState = AppState.QuizHome;
+                        },
+                        text = "Home",
+                        type = "cool",
+                        grow = false,
+                        animatedPress = true,
+                        cycleColor = false,
+                        modifier = Modifier.background(Color.LightGray) // Background color for the BoxWithClickable
+                    )
                 }
             }
         }

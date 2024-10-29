@@ -36,11 +36,20 @@ import dagger.hilt.android.AndroidEntryPoint;
 import kotlinx.coroutines.Dispatchers;
 import java.util.Locale;
 
-@kotlin.Metadata(mv = {1, 9, 0}, k = 1, xi = 48, d1 = {"\u0000\u001e\n\u0002\u0018\u0002\n\u0002\u0010\u0000\n\u0002\b\u0005\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0000\b6\u0018\u00002\u00020\u0001:\u0004\u0003\u0004\u0005\u0006B\u0007\b\u0004\u00a2\u0006\u0002\u0010\u0002\u0082\u0001\u0004\u0007\b\t\n\u00a8\u0006\u000b"}, d2 = {"Lcom/temi/temiSDK/AppState;", "", "()V", "Quiz", "QuizHome", "ScoreBoard", "Test", "Lcom/temi/temiSDK/AppState$Quiz;", "Lcom/temi/temiSDK/AppState$QuizHome;", "Lcom/temi/temiSDK/AppState$ScoreBoard;", "Lcom/temi/temiSDK/AppState$Test;", "app_debug"})
+@kotlin.Metadata(mv = {1, 9, 0}, k = 1, xi = 48, d1 = {"\u0000\"\n\u0002\u0018\u0002\n\u0002\u0010\u0000\n\u0002\b\u0006\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0000\b6\u0018\u00002\u00020\u0001:\u0005\u0003\u0004\u0005\u0006\u0007B\u0007\b\u0004\u00a2\u0006\u0002\u0010\u0002\u0082\u0001\u0005\b\t\n\u000b\f\u00a8\u0006\r"}, d2 = {"Lcom/temi/temiSDK/AppState;", "", "()V", "Bluetooth", "Quiz", "QuizHome", "ScoreBoard", "Test", "Lcom/temi/temiSDK/AppState$Bluetooth;", "Lcom/temi/temiSDK/AppState$Quiz;", "Lcom/temi/temiSDK/AppState$QuizHome;", "Lcom/temi/temiSDK/AppState$ScoreBoard;", "Lcom/temi/temiSDK/AppState$Test;", "app_debug"})
 public abstract class AppState {
     
     private AppState() {
         super();
+    }
+    
+    @kotlin.Metadata(mv = {1, 9, 0}, k = 1, xi = 48, d1 = {"\u0000\f\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\b\u0002\b\u00c6\u0002\u0018\u00002\u00020\u0001B\u0007\b\u0002\u00a2\u0006\u0002\u0010\u0002\u00a8\u0006\u0003"}, d2 = {"Lcom/temi/temiSDK/AppState$Bluetooth;", "Lcom/temi/temiSDK/AppState;", "()V", "app_debug"})
+    public static final class Bluetooth extends com.temi.temiSDK.AppState {
+        @org.jetbrains.annotations.NotNull
+        public static final com.temi.temiSDK.AppState.Bluetooth INSTANCE = null;
+        
+        private Bluetooth() {
+        }
     }
     
     @kotlin.Metadata(mv = {1, 9, 0}, k = 1, xi = 48, d1 = {"\u0000\f\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\b\u0002\b\u00c6\u0002\u0018\u00002\u00020\u0001B\u0007\b\u0002\u00a2\u0006\u0002\u0010\u0002\u00a8\u0006\u0003"}, d2 = {"Lcom/temi/temiSDK/AppState$Quiz;", "Lcom/temi/temiSDK/AppState;", "()V", "app_debug"})
