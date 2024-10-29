@@ -827,6 +827,9 @@ class BleManager(private val context: Context, private val deviceData: BleDevice
     }
 }
 
+// I had an issue with trying to figure out how to share the class for the BleManager
+// Ended up just adding this function straight into the code.
+// Code is used but function is redundent.
 @SuppressLint("MissingPermission")
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
@@ -996,6 +999,8 @@ fun BluetoothScreen() {
 }
 //***************************************** MENUS
 
+@SuppressLint("MissingPermission")
+@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun QuizApp(context: Context) {
     var appState by remember { mutableStateOf<AppState>(AppState.QuizHome) } // Switch to test/quizhome
@@ -1021,10 +1026,20 @@ fun QuizApp(context: Context) {
     var passwordCheck by remember { mutableStateOf(false) }
     var password by remember { mutableStateOf("") }
 
-    // Define a callback function to handle the value from the child
-    val onChildValueChanged: (Boolean) -> Unit = { newValue ->
-        childState = newValue
-    }
+    // Stuff for handling Bluetooth
+    val context = LocalContext.current
+    val bluetoothManager = context.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
+    val bluetoothAdapter = bluetoothManager.adapter
+
+    // Permissions
+    val permissionState = rememberPermissionState(Manifest.permission.BLUETOOTH)
+    val fineLocationPermissionState = rememberPermissionState(Manifest.permission.ACCESS_FINE_LOCATION)
+
+    val discoveredDevices = remember { mutableStateOf(mutableSetOf<BleDevice>()) } // Using Set for unique devices
+    var isScanning by remember { mutableStateOf(false) }
+    var dots by remember { mutableIntStateOf(0) }
+
+    var bleManager: BleManager? = null
 
     // Handles the misuse cases
     LaunchedEffect(Unit) {
@@ -1511,7 +1526,154 @@ fun QuizApp(context: Context) {
                     )
                 }
 
-                BluetoothScreen()
+                // Dots animation for scanning indication
+                LaunchedEffect(isScanning) {
+                    if (isScanning) {
+                        while (isScanning) {
+                            delay(500)
+                            dots = (dots + 1) % 4
+                        }
+                    } else {
+                        dots = 0
+                    }
+                }
+
+                // Handle discovery timeout
+                LaunchedEffect(isScanning) {
+                    if (isScanning) {
+                        discoveredDevices.value.clear() // Clear previous devices
+                        delay(12000) // Scanning timeout
+                        bluetoothAdapter.cancelDiscovery()
+                        isScanning = false
+                        Log.i("Bluetooth!", "Discovery timed out")
+                    }
+                }
+
+                // BLE scan callback
+                val leScanCallback = rememberUpdatedState(object : ScanCallback() {
+                    override fun onScanResult(callbackType: Int, result: android.bluetooth.le.ScanResult) {
+                        super.onScanResult(callbackType, result)
+                        val device = result.device
+                        if (device.name != null) {
+                            discoveredDevices.value.add(BleDevice(device = device))
+                        }
+                    }
+
+                    override fun onBatchScanResults(results: List<android.bluetooth.le.ScanResult>) {
+                        super.onBatchScanResults(results)
+                        results.forEach { result ->
+                            val device = result.device
+                            if (device.name != null) {
+                                discoveredDevices.value.add(BleDevice(device = device))
+                            }
+                        }
+                    }
+
+                    override fun onScanFailed(errorCode: Int) {
+                        super.onScanFailed(errorCode)
+                        Log.e("Bluetooth!", "Scan failed with error code: $errorCode")
+                    }
+                })
+
+                // Start or stop scanning
+                fun toggleScan() {
+                    val scanner = bluetoothManager.adapter.bluetoothLeScanner
+                    if (isScanning) {
+                        scanner.stopScan(leScanCallback.value)
+                        isScanning = false
+                    } else {
+                        scanner.startScan(leScanCallback.value)
+                        isScanning = true
+                    }
+                }
+
+                // UI layout
+
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Column(
+                        modifier = Modifier.padding(16.dp).fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        if (!fineLocationPermissionState.status.isGranted || !permissionState.status.isGranted) {
+                            Text(
+                                "Permissions denied.",
+                                textAlign = TextAlign.Center,
+                                modifier = Modifier.fillMaxWidth()
+                            )
+                            Button(
+                                onClick = {
+                                    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                                    val uri = Uri.fromParts("package", context.packageName, null)
+                                    intent.data = uri
+                                    context.startActivity(intent)
+                                },
+                                modifier = Modifier.padding(top = 8.dp)
+                            ) {
+                                Text("Go to Settings", textAlign = TextAlign.Center)
+                            }
+                        } else {
+                            Button(
+                                onClick = { toggleScan() },
+                                modifier = Modifier.padding(top = 8.dp)
+                            ) {
+                                Text(if (isScanning) "Stop Scanning${".".repeat(dots)}" else "Start Scanning", textAlign = TextAlign.Center)
+                            }
+
+                            Button(
+                                onClick = { bleManager?.moveServo() },
+                                modifier = Modifier.padding(top = 8.dp)
+                            ) {
+                                Text("Move Servo", textAlign = TextAlign.Center)
+                            }
+
+                            if (isScanning) {
+                                // Optional loading indicator can go here
+                            } else if (discoveredDevices.value.isNotEmpty()) {
+                                Text(
+                                    "--Discovered Devices--",
+                                    textAlign = TextAlign.Center,
+                                    modifier = Modifier.fillMaxWidth()
+                                )
+                                LazyColumn(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalAlignment = Alignment.CenterHorizontally
+                                ) {
+                                    items(discoveredDevices.value.toList()) { bleDevice -> // Convert Set to List for LazyColumn
+                                        Box(
+                                            modifier = Modifier
+                                                .clickable {
+                                                    // Made a system were only one device can be connect at a time
+                                                    bleManager?.disconnect() // Disconnect previous
+                                                    bleManager = BleManager(context, bleDevice) // Set new
+                                                    bleManager?.connectToDevice() // Connect new
+                                                }
+                                                .padding(vertical = 8.dp)
+                                                .fillMaxWidth(),
+                                            contentAlignment = Alignment.Center
+                                        ) {
+                                            Text(
+                                                text = "${bleDevice.device?.name} || ${bleDevice.device?.address}",
+                                                textAlign = TextAlign.Center,
+                                                color = when (bleDevice.state) {
+                                                    ConnectionState.CONNECTED -> Color.Green
+                                                    ConnectionState.DISCONNECTED_WITHOUT_INTENT -> Color.Red
+                                                    else -> Color.Blue
+                                                },
+                                                modifier = Modifier.fillMaxWidth(),
+                                                style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                                            )
+                                        }
+                                    }
+                                }
+                            } else {
+                                Text("No devices discovered.", textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth())
+                            }
+                        }
+                    }
+                }
             }
         }
     }

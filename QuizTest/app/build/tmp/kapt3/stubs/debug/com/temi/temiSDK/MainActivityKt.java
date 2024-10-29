@@ -130,6 +130,8 @@ public final class MainActivityKt {
     public static final void BluetoothScreen() {
     }
     
+    @android.annotation.SuppressLint(value = {"MissingPermission"})
+    @kotlin.OptIn(markerClass = {com.google.accompanist.permissions.ExperimentalPermissionsApi.class})
     @androidx.compose.runtime.Composable
     public static final void QuizApp(@org.jetbrains.annotations.NotNull
     android.content.Context context) {
