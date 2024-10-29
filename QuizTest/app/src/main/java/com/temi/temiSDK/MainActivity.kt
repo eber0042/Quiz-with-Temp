@@ -829,7 +829,7 @@ class BleManager(private val context: Context, private val deviceData: BleDevice
 
 // I had an issue with trying to figure out how to share the class for the BleManager
 // Ended up just adding this function straight into the code.
-// Code is used but function is redundent.
+// Code is used but function is redundant.
 @SuppressLint("MissingPermission")
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
@@ -1019,8 +1019,6 @@ fun QuizApp(context: Context) {
     var save by remember { mutableStateOf<List<QuizQuestion>>(listOf()) }
     var saveNumber by remember { mutableStateOf(0) }
 
-    var childState by remember { mutableStateOf(false) }
-
     val viewModel: MainViewModel = hiltViewModel()
 
     var passwordCheck by remember { mutableStateOf(false) }
@@ -1039,7 +1037,8 @@ fun QuizApp(context: Context) {
     var isScanning by remember { mutableStateOf(false) }
     var dots by remember { mutableIntStateOf(0) }
 
-    var bleManager: BleManager? = null
+    // var bleManager: BleManager? = null
+    var bleManager by remember { mutableStateOf(BleManager(context, deviceData = BleDevice())) }
 
     // Handles the misuse cases
     LaunchedEffect(Unit) {
@@ -1278,7 +1277,10 @@ fun QuizApp(context: Context) {
 
                     var userInput by remember { mutableStateOf("") }
                     viewModel.resultSpeech(state = SpeechState.THANKYOU, say = "Thank you for doing this quiz, please add your name so it can be added to my scoreboard.")
-
+                    if (save.sumOf { it.result.score } == save.sumOf { it.result.outOf }) {
+                        viewModel.resultSpeech(state = SpeechState.THANKYOU, say = "I see you have done very well on my quiz. Here, have a chocolate on me.  Please add your name so your glory can be saved and shown to all.")
+                        bleManager?.moveServo()
+                    }
                     AlertDialog(onDismissRequest = { showDialogSubmitThankYou = false },
                         title = { Text(stringResource(R.string.thank_you)) },
                         text = {

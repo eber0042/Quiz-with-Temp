@@ -168,7 +168,7 @@ singleOn:-> false
 OnCorrect:-> true
 surveyOn:-> false
 columnLength:-> 2
-scoreType:-> all
+scoreType:-> s
 texts:->
 * Mt. Fuji ; true
 * Mt. Everest ; false
