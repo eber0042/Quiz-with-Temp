@@ -21,4 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Temi SDK Framework"
 include(":app")
- 
+include(":OpenCV")

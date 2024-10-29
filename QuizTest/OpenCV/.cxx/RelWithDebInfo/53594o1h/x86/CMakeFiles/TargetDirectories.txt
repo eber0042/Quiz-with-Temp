@@ -1,0 +1,3 @@
+C:/Users/nypro/OneDrive/Documents/GitHub/Quiz-with-Temp/QuizTest/OpenCV/.cxx/RelWithDebInfo/53594o1h/x86/CMakeFiles/opencv_jni_shared.dir
+C:/Users/nypro/OneDrive/Documents/GitHub/Quiz-with-Temp/QuizTest/OpenCV/.cxx/RelWithDebInfo/53594o1h/x86/CMakeFiles/edit_cache.dir
+C:/Users/nypro/OneDrive/Documents/GitHub/Quiz-with-Temp/QuizTest/OpenCV/.cxx/RelWithDebInfo/53594o1h/x86/CMakeFiles/rebuild_cache.dir
