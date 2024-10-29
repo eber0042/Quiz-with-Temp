@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.temi.temiSDK.app-mergeDebugResources-60:/values-en-rCA/values-en-rCA.xml",
+            "outputFile": "com.temi.temiSDK.app-mergeDebugResources-64:/values-en-rCA/values-en-rCA.xml",
             "map": [
                 {
                     "source": "C:\\Users\\nypro\\.gradle\\caches\\transforms-4\\1ed9274bf11cc54ee8c283dfd0d60a8d\\transformed\\material3-release\\res\\values-en-rCA\\values-en-rCA.xml",
