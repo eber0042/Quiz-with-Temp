@@ -1,5 +1,6 @@
 package com.temi.temiSDK
 
+import android.annotation.SuppressLint
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -58,7 +59,7 @@ enum class SpeechState {
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val robotController: RobotController
+    private val robotController: RobotController,
 ) : ViewModel() {
 
     private val ttsStatus = robotController.ttsStatus // Current speech state

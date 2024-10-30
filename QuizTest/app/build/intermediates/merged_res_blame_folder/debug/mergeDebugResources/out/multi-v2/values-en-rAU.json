@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.temi.temiSDK.app-mergeDebugResources-64:/values-en-rAU/values-en-rAU.xml",
+            "outputFile": "com.temi.temiSDK.app-mergeDebugResources-66:/values-en-rAU/values-en-rAU.xml",
             "map": [
                 {
                     "source": "C:\\Users\\nypro\\.gradle\\caches\\transforms-4\\d52c57f9e35ae6ead2ae4c3fd9573125\\transformed\\ui-release\\res\\values-en-rAU\\values-en-rAU.xml",

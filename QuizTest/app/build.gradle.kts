@@ -108,6 +108,10 @@ dependencies {
 
     // Optional: include LiteRT Support Library
     implementation("com.google.android.gms:play-services-tflite-support:16.1.0")
+
+    // Stuff to hopefully get OpnCV Working
+    implementation ("androidx.camera:camera-core:1.0.0") // Camera2 library dependency
+    implementation ("androidx.camera:camera-camera2:1.0.0")
 }
 
 kapt {

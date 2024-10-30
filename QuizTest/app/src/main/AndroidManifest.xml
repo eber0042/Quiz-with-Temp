@@ -12,6 +12,7 @@
 
     <!-- This stuff is used for the emotion detection system-->
     <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
 
     <uses-feature android:name="android.hardware.camera" android:required="false"/>
     <uses-feature android:name="android.hardware.camera.autofocus" android:required="false"/>
@@ -38,12 +39,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="EmotionDetection"
-            android:exported="true"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.Temi">
-        </activity>
+        <service android:name=".EmotionDetection" />
         <meta-data
             android:name="com.robotemi.sdk.metadata.SKILL"
             android:value="@string/app_name" />

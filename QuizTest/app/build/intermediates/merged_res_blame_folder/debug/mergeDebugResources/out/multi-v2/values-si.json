@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.temi.temiSDK.app-mergeDebugResources-64:/values-si/values-si.xml",
+            "outputFile": "com.temi.temiSDK.app-mergeDebugResources-66:/values-si/values-si.xml",
             "map": [
                 {
                     "source": "C:\\Users\\nypro\\.gradle\\caches\\transforms-4\\2f13bd914ef105d9e5240573743cbf3f\\transformed\\foundation-release\\res\\values-si\\values-si.xml",

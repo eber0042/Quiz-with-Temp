@@ -1,25 +1,30 @@
 package com.temi.temiSDK
 
+import android.annotation.SuppressLint
+import android.app.Service
 import android.content.Context
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.ImageFormat
+import  android.hardware.camera2.*
 import android.hardware.camera2.CameraCharacteristics
 import android.hardware.camera2.CameraManager
+import android.media.ImageReader
+import android.os.Binder
 import android.os.Build
-import android.os.Bundle
+import android.os.IBinder
+import android.os.Messenger
 import android.util.Log
+import android.view.SurfaceHolder
 import android.view.SurfaceView
-import android.view.WindowManager
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import com.google.android.gms.tasks.Task
-import com.google.android.gms.tflite.java.TfLite
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import org.opencv.android.CameraActivity
 import org.opencv.android.CameraBridgeViewBase
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewFrame
-import org.opencv.android.CameraBridgeViewBase.CvCameraViewListener2
-import org.opencv.android.JavaCameraView
 import org.opencv.android.OpenCVLoader
+import org.opencv.android.Utils
 import org.opencv.core.CvType
 import org.opencv.core.Mat
 import org.opencv.core.MatOfRect
@@ -38,16 +43,20 @@ import java.nio.ByteBuffer
 import java.nio.channels.FileChannel
 import java.nio.file.StandardOpenOption
 import kotlin.math.abs
+import org.opencv.videoio.VideoCapture
+import android.os.Message
+import android.os.RemoteException
 
-class EmotionDetection : CameraActivity(), CvCameraViewListener2 {
-    private val coroutineScope = CoroutineScope(Dispatchers.Main)
+
+class EmotionDetection : Service(), CameraBridgeViewBase.CvCameraViewListener2 {
+
+    private lateinit var cameraDevice: CameraDevice
+    private lateinit var imageReader: ImageReader
 
     // OpenCV params
     private lateinit var mOpenCvCameraView: CameraBridgeViewBase
     private lateinit var faceCascade: CascadeClassifier
 
-    // LiteRT params
-    private val initializeTask: Task<Void> by lazy { TfLite.initialize(this) }
     private lateinit var interpreter: InterpreterApi
 
     /**
@@ -66,7 +75,8 @@ class EmotionDetection : CameraActivity(), CvCameraViewListener2 {
     /**
      * List that stores previous generation of faces and corresponding classifier results.
      */
-    var facesArrayMemory: MutableList< Array< Pair<Rect, FloatArray> > > = mutableListOf() // Change size to change how far system remembers
+    var facesArrayMemory: MutableList<Array<Pair<Rect, FloatArray>>> =
+        mutableListOf() // Change size to change how far system remembers
 
     /**
      * Number of previous iterations of faces stored in memory.
@@ -75,89 +85,189 @@ class EmotionDetection : CameraActivity(), CvCameraViewListener2 {
 
     var currentframe = 5
 
+    var boo = false
+
+    private val TAG = "HELLO!"
+
+    private val binder = EmotionDetectionBinder()
+
+    inner class EmotionDetectionBinder : Binder() {
+        fun getService(): EmotionDetection = this@EmotionDetection
+    }
+
     init {
         Log.i(TAG, "Instantiated new " + this.javaClass)
         for (i in 0 until memorySize) {
-            facesArrayMemory.add( arrayOf< Pair<Rect, FloatArray> >() ) // Add an empty array of Rect
+            facesArrayMemory.add(arrayOf<Pair<Rect, FloatArray>>()) // Add an empty array of Rect
         }
         Log.i("SIZE", "Boo  ${facesArrayMemory.size}")
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    public override fun onCreate(savedInstanceState: Bundle?) {
-        Log.i(TAG, "called onCreate")
-        super.onCreate(savedInstanceState)
+    private lateinit var surfaceHolder: SurfaceHolder
 
-        if (OpenCVLoader.initLocal()) {
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onCreate() {
+        super.onCreate()
+        Log.i(TAG, "Service created")
+        val cameraId = getFrontCameraIDY(this)
+        // Initialize OpenCV
+        if (OpenCVLoader.initDebug()) {
             Log.i(TAG, "OpenCV loaded successfully")
+            // Set a callback for when the surface is created
+            if (cameraId != null) {
+                startCameraStream(cameraId)
+            } else {
+                Log.e(TAG, "Front camera not found.")
+                stopSelf()
+            }
         } else {
             Log.e(TAG, "OpenCV initialization failed!")
-            Toast.makeText(this, "OpenCV initialization failed!", Toast.LENGTH_LONG)
-                .show()
-            return
+            Toast.makeText(this, "OpenCV initialization failed!", Toast.LENGTH_LONG).show()
+            stopSelf() // Stop the service if OpenCV fails to load
         }
+    }
 
-        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+    @SuppressLint("MissingPermission")
+    private fun startCameraStream(cameraId: String) {
+        val cameraManager = getSystemService(Context.CAMERA_SERVICE) as CameraManager
 
-        setContentView(R.layout.activity_main)
+        try {
+            cameraManager.openCamera(cameraId, object : CameraDevice.StateCallback() {
+                override fun onOpened(camera: CameraDevice) {
+                    cameraDevice = camera
+                    setUpImageReader()
+                    createCameraCaptureSession()
+                }
 
-        mOpenCvCameraView =
-            findViewById<JavaCameraView>(R.id.tutorial1_activity_java_surface_view) as CameraBridgeViewBase
+                override fun onDisconnected(camera: CameraDevice) {
+                    camera.close()
+                    stopSelf()
+                }
 
-        // Change this to visible to see camera and gone for none
-        mOpenCvCameraView.visibility = SurfaceView.VISIBLE
-
-        mOpenCvCameraView.setCvCameraViewListener(this)
-
-        getFrontCameraID(this)?.let { id: String ->
-            mOpenCvCameraView.setCameraIndex(id.toInt())
+                override fun onError(camera: CameraDevice, error: Int) {
+                    Log.e(TAG, "Camera error: $error")
+                    camera.close()
+                    stopSelf()
+                }
+            }, null)
+        } catch (e: CameraAccessException) {
+            Log.e(TAG, "Error accessing camera", e)
+            stopSelf()
         }
+    }
 
-        faceCascade = loadCascade()
-
-        initializeTask.addOnSuccessListener {
-            val interpreterOption =
-                InterpreterApi.Options()
-                    .setRuntime(InterpreterApi.Options.TfLiteRuntime.FROM_SYSTEM_ONLY)
-            interpreter = InterpreterApi.create(
-                loadModelFile(this),
-                interpreterOption
-            )
+    private fun stopCameraStream() {
+        // Close camera and cleanup resources
+        if (::cameraDevice.isInitialized) {
+            cameraDevice.close()
         }
-            .addOnFailureListener { e ->
-                Log.e("Interpreter", "Cannot initialize interpreter", e)
+    }
+
+    fun setSurfaceHolder(provider: SurfaceHolderProvider) {
+        val surfaceHolder = provider.getSurfaceHolder()
+        Log.i(TAG, "SurfaceHolder set in EmotionDetection service: ${surfaceHolder != null}")
+        // Now you can use this SurfaceHolder for your camera preview or processing
+    }
+
+    private fun renderFrame(frame: Mat) {
+        if (::surfaceHolder.isInitialized) {
+            val canvas = surfaceHolder.lockCanvas()
+            if (canvas != null) {
+                // Create a bitmap from the OpenCV Mat
+                val bitmap =
+                    Bitmap.createBitmap(frame.cols(), frame.rows(), Bitmap.Config.ARGB_8888)
+                Utils.matToBitmap(frame, bitmap)
+                // Draw the bitmap on the canvas
+                canvas.drawBitmap(bitmap, 0f, 0f, null)
+                // Unlock and post the canvas
+                surfaceHolder.unlockCanvasAndPost(canvas)
             }
+        }
+    }
+    override fun onCameraFrame(inputFrame: CvCameraViewFrame): Mat {
+        val output = inputFrame.rgba()
+        renderFrame(output) // Render the frame to the SurfaceView
+        return output
     }
 
-    public override fun onPause() {
-        super.onPause()
-        mOpenCvCameraView.disableView()
+    private fun setUpImageReader() {
+        // Set the size and format for the ImageReader
+        imageReader = ImageReader.newInstance(640, 480, ImageFormat.YUV_420_888, 2)
+
+        // Set the listener for image availability
+        imageReader.setOnImageAvailableListener({ reader ->
+            val image = reader.acquireLatestImage()
+            image?.let {
+                //Log.i(TAG, "Frame captured!")
+                it.close() // Make sure to close the image
+            }
+        }, null)
     }
 
-    public override fun onResume() {
-        super.onResume()
-        mOpenCvCameraView.enableView()
+    private fun createCameraCaptureSession() {
+        val surface = imageReader.surface
+        val captureRequestBuilder =
+            cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW).apply {
+                addTarget(surface)
+            }
+
+        cameraDevice.createCaptureSession(
+            listOf(surface),
+            object : CameraCaptureSession.StateCallback() {
+                override fun onConfigured(session: CameraCaptureSession) {
+                    session.setRepeatingRequest(captureRequestBuilder.build(), null, null)
+                }
+
+                override fun onConfigureFailed(session: CameraCaptureSession) {
+                    Log.e(TAG, "Camera configuration failed")
+                    stopSelf()
+                }
+            },
+            null
+        )
     }
 
-    override fun getCameraViewList(): List<CameraBridgeViewBase> {
-        return listOf<CameraBridgeViewBase>(mOpenCvCameraView)
-    }
+    private fun getFrontCameraIDY(context: Context): String? {
+        val cameraManager = context.getSystemService(Context.CAMERA_SERVICE) as CameraManager
+        try {
+            for (cameraId in cameraManager.cameraIdList) {
+                val characteristics = cameraManager.getCameraCharacteristics(cameraId)
+                val cameraFacing = characteristics.get(CameraCharacteristics.LENS_FACING)
 
-    public override fun onDestroy() {
+                if (cameraFacing != null && cameraFacing == CameraCharacteristics.LENS_FACING_FRONT) {
+                    Log.i("CameraService", "Front camera ID found: $cameraId")
+                    return cameraId // Return the ID of the front camera
+                }
+            }
+        } catch (e: Exception) {
+            Log.e("CameraService", "Error accessing camera ID", e)
+        }
+
+        Log.i("CameraService", "Front camera not found.")
+        return null // Return null if no front camera is found
+    }
+    //*************************************************************************
+
+    override fun onDestroy() {
         super.onDestroy()
         mOpenCvCameraView.disableView()
     }
 
+    override fun onBind(intent: Intent?): IBinder {
+        return binder // Not binding to any activity
+    }
+
     override fun onCameraViewStarted(width: Int, height: Int) {
-        // Set desired resolution (e.g., 640x480)
-//        mOpenCvCameraView.setCameraResolution(640, 480)
-//        mOpenCvCameraView.setMaxFrameSize(640, 480) // Example resolution
+        Log.i(TAG, "Camera view started with resolution $width x $height")
     }
 
     override fun onCameraViewStopped() {
+        Log.i(TAG, "Camera view stopped")
     }
 
+    /*
     override fun onCameraFrame(inputFrame: CvCameraViewFrame): Mat {
+        Log.i(TAG, "FUCK YOU")
         // Get the RGBA frame from the camera input
         val output = inputFrame.rgba()
         val grayFrame = inputFrame.gray()
@@ -359,6 +469,8 @@ class EmotionDetection : CameraActivity(), CvCameraViewListener2 {
         currentframe = (currentframe + 1) % 6
         return output
     }
+     */
+
 
     //**************************************************************************************
     companion object {
