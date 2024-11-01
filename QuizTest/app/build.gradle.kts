@@ -112,6 +112,12 @@ dependencies {
     // Stuff to hopefully get OpnCV Working
     implementation ("androidx.camera:camera-core:1.0.0") // Camera2 library dependency
     implementation ("androidx.camera:camera-camera2:1.0.0")
+
+    // Stuff to get composable to overlay on the camera view
+    implementation ("androidx.compose.ui:ui:1.4.0") // Use the latest stable version
+    implementation ("androidx.compose.material:material:1.4.0") // Material Design components
+    implementation ("androidx.compose.ui:ui-tooling-preview:1.4.0")
+    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.6.0") // For lifecycle management
 }
 
 kapt {

@@ -11,11 +11,14 @@ import android.bluetooth.BluetoothGattDescriptor
 import android.bluetooth.BluetoothManager
 import android.bluetooth.BluetoothProfile
 import android.bluetooth.le.ScanCallback
+import android.content.BroadcastReceiver
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.ServiceConnection
 import android.content.SharedPreferences
+import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.media.MediaPlayer
 import android.net.Uri
@@ -107,6 +110,10 @@ import java.util.UUID
 import kotlin.random.Random
 import android.view.SurfaceHolder
 import android.view.SurfaceView
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresPermission
+import com.temi.temiSDK.ui.theme.GreetMiTheme
 
 /*
 @Composable
@@ -148,89 +155,72 @@ fun Greeting() {
 */
 
 
-interface SurfaceHolderProvider {
-    fun getSurfaceHolder(): SurfaceHolder?
-}
+
 
 @AndroidEntryPoint
-class MainActivity : ComponentActivity(), SurfaceHolderProvider {
-    private lateinit var surfaceView: SurfaceView
-    private val TAG = "HELLO!"
-
-    private var emotionDetectionService: EmotionDetection? = null
-    private val serviceConnection = object : ServiceConnection {
-        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
-            val binder = service as EmotionDetection.EmotionDetectionBinder
-            emotionDetectionService = binder.getService()
-            emotionDetectionService?.setSurfaceHolder(this@MainActivity)
-
-            Log.i(TAG, "SurfaceHolder set in EmotionDetection service.")
-        }
-
-        override fun onServiceDisconnected(name: ComponentName?) {
-            emotionDetectionService = null
-        }
-    }
-
-    override fun getSurfaceHolder(): SurfaceHolder? {
-        return surfaceView.holder // Return the holder of the SurfaceView
-    }
+class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main) // Use the XML layout
 
-        surfaceView = findViewById(R.id.tutorial1_activity_java_surface_view)
+        // Get the PackageManager instance
+        val packageManager = packageManager
 
-        // Set up SurfaceHolder and its callback
-        val surfaceHolder = surfaceView.holder
-        surfaceHolder.addCallback(object : SurfaceHolder.Callback {
-            override fun surfaceCreated(holder: SurfaceHolder) {
-                Log.i(TAG, "Surface Created")
-                // Start and bind to the EmotionDetection service here
-                val intent = Intent(this@MainActivity, EmotionDetection::class.java)
-                startService(intent) // Start the service if it's not already running
-                bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)
+        // Retrieve installed apps
+        getInstalledTemiApps(packageManager)
+
+        // Enable edge-to-edge layout
+        enableEdgeToEdge()
+
+        // Start the emotional detection application
+        val intent = packageManager.getLaunchIntentForPackage("com.temi.emotiondetection")
+        // Check if the application is present, if so run it
+        if (intent != null) {
+            Log.w("FUCK!", "WORKING")
+            startActivity(intent) // Start the Emotion Detection app
+        }  else {
+            Log.e("FUCK!", "NOT WORKING")
+        }
+         // Set up method for receiving messages form emotional detection
+        val receiver = EmotionReceiver()
+        val filter = IntentFilter("com.quizapp.RECEIVE_DATA")
+        registerReceiver(receiver, filter)
+
+        setContent {
+            GreetMiTheme {
+                Box(modifier = Modifier.fillMaxSize()) {
+                    val context = LocalContext.current
+                    QuizApp(context = context)
+                }
             }
-
-            override fun surfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int) {
-                // Handle surface changes if needed
-            }
-
-            override fun surfaceDestroyed(holder: SurfaceHolder) {
-                Log.i(TAG, "Surface Destroyed")
-                // Clean up resources, stop camera, etc.
-                unbindService(serviceConnection) // Unbind service when the surface is destroyed
-            }
-        })
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        // Ensure to unbind the service if it's still bound
-        if (emotionDetectionService != null) {
-            unbindService(serviceConnection)
-            emotionDetectionService = null
         }
     }
 }
 
+fun getInstalledTemiApps(packageManager: PackageManager): List<String> {
+    val apps = mutableListOf<String>()
+    val packages = packageManager.getInstalledApplications(PackageManager.GET_META_DATA)
 
-//
-//        enableEdgeToEdge()
-//
-//        // Start the service
-//        val serviceIntent = Intent(this, EmotionDetection::class.java)
-//        startService(serviceIntent)
-//
-//        setContent {
-//            GreetMiTheme {
-//                Box(modifier = Modifier.fillMaxSize()) {
-//                    val context = LocalContext.current
-//                    QuizApp(context = context)
-//                }
-//            }
-//        }
+    for (packageInfo in packages) {
+        // Check if the package name starts with "com.temi"
+        if (packageInfo.packageName.startsWith("com.temi")) {
+            // Log the found app
+            Log.d("FUCK!", "Found Temi app: ${packageInfo.packageName}")
+            apps.add(packageInfo.packageName)
+        }
+    }
+
+    return apps
+}
+
+// Set up broadcaster for emotional detection
+class EmotionReceiver : BroadcastReceiver() {
+    override fun onReceive(context: Context, intent: Intent) {
+        val message = intent.getStringExtra("message")
+        Log.d("FUCK!", "Received message: $message")
+        // You can use the message in your app's logic here
+    }
+}
 //***************************************** TOOLS
 sealed class AppState {
     object Test : AppState()

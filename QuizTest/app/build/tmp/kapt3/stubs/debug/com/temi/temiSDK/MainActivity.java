@@ -11,11 +11,14 @@ import android.bluetooth.BluetoothGattDescriptor;
 import android.bluetooth.BluetoothManager;
 import android.bluetooth.BluetoothProfile;
 import android.bluetooth.le.ScanCallback;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -52,34 +55,18 @@ import java.util.Locale;
 import java.util.UUID;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import androidx.annotation.RequiresPermission;
 
 @dagger.hilt.android.AndroidEntryPoint
-@kotlin.Metadata(mv = {1, 9, 0}, k = 1, xi = 48, d1 = {"\u0000<\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\u0010\u000e\n\u0000\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0000\n\u0002\u0010\u0002\n\u0000\n\u0002\u0018\u0002\n\u0002\b\u0002\b\u0007\u0018\u00002\u00020\u00012\u00020\u0002B\u0005\u00a2\u0006\u0002\u0010\u0003J\n\u0010\f\u001a\u0004\u0018\u00010\rH\u0016J\u0012\u0010\u000e\u001a\u00020\u000f2\b\u0010\u0010\u001a\u0004\u0018\u00010\u0011H\u0014J\b\u0010\u0012\u001a\u00020\u000fH\u0014R\u000e\u0010\u0004\u001a\u00020\u0005X\u0082D\u00a2\u0006\u0002\n\u0000R\u0010\u0010\u0006\u001a\u0004\u0018\u00010\u0007X\u0082\u000e\u00a2\u0006\u0002\n\u0000R\u000e\u0010\b\u001a\u00020\tX\u0082\u0004\u00a2\u0006\u0002\n\u0000R\u000e\u0010\n\u001a\u00020\u000bX\u0082.\u00a2\u0006\u0002\n\u0000\u00a8\u0006\u0013"}, d2 = {"Lcom/temi/temiSDK/MainActivity;", "Landroidx/activity/ComponentActivity;", "Lcom/temi/temiSDK/SurfaceHolderProvider;", "()V", "TAG", "", "emotionDetectionService", "Lcom/temi/temiSDK/EmotionDetection;", "serviceConnection", "Landroid/content/ServiceConnection;", "surfaceView", "Landroid/view/SurfaceView;", "getSurfaceHolder", "Landroid/view/SurfaceHolder;", "onCreate", "", "savedInstanceState", "Landroid/os/Bundle;", "onDestroy", "app_debug"})
-public final class MainActivity extends androidx.activity.ComponentActivity implements com.temi.temiSDK.SurfaceHolderProvider {
-    private android.view.SurfaceView surfaceView;
-    @org.jetbrains.annotations.NotNull
-    private final java.lang.String TAG = "HELLO!";
-    @org.jetbrains.annotations.Nullable
-    private com.temi.temiSDK.EmotionDetection emotionDetectionService;
-    @org.jetbrains.annotations.NotNull
-    private final android.content.ServiceConnection serviceConnection = null;
+@kotlin.Metadata(mv = {1, 9, 0}, k = 1, xi = 48, d1 = {"\u0000\u0018\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\u0010\u0002\n\u0000\n\u0002\u0018\u0002\n\u0000\b\u0007\u0018\u00002\u00020\u0001B\u0005\u00a2\u0006\u0002\u0010\u0002J\u0012\u0010\u0003\u001a\u00020\u00042\b\u0010\u0005\u001a\u0004\u0018\u00010\u0006H\u0014\u00a8\u0006\u0007"}, d2 = {"Lcom/temi/temiSDK/MainActivity;", "Landroidx/activity/ComponentActivity;", "()V", "onCreate", "", "savedInstanceState", "Landroid/os/Bundle;", "app_debug"})
+public final class MainActivity extends androidx.activity.ComponentActivity {
     
     public MainActivity() {
         super(0);
     }
     
     @java.lang.Override
-    @org.jetbrains.annotations.Nullable
-    public android.view.SurfaceHolder getSurfaceHolder() {
-        return null;
-    }
-    
-    @java.lang.Override
     protected void onCreate(@org.jetbrains.annotations.Nullable
     android.os.Bundle savedInstanceState) {
-    }
-    
-    @java.lang.Override
-    protected void onDestroy() {
     }
 }
