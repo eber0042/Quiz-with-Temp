@@ -69,6 +69,7 @@ class MainViewModel @Inject constructor(
     private val lifted = robotController.lifted
     private val dragged = robotController.dragged
 
+    // These are important global variables
     private val buffer = 100L
     private var currentState = State.NULL // Current state of the system
     private var stateMode = State.NULL
@@ -80,11 +81,13 @@ class MainViewModel @Inject constructor(
 
 //    private var misuseState = arrayOf(false, false) // [0] is lifted and [1] is dragged
 
+    // Used for handle user position
     private var previousUserAngle = 0.0
     private var currentUserAngle = 0.0
     private var xPosition = XDirection.GONE
     private var xMotion = XMovement.NOWHERE
 
+    // Used for handle user position
     private var previousUserDistance = 0.0
     private var currentUserDistance = 0.0
     private var yPosition = YDirection.MISSING
@@ -92,8 +95,12 @@ class MainViewModel @Inject constructor(
 
     private var int: Int = 0
 
+    // Used to allow the system to cause Temi to say certain lines under conditions
     private var speechState = SpeechState.QUIZ
     private var say = "Hello, World"
+
+    private var emotion: String? = null
+
 
     init {
         /*
@@ -487,10 +494,17 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             while (true) {
                 when (stateMode) {
+
                     State.TALK -> {
                         if (!lifted.value.state && !dragged.value.state) {
                             when (speechState) {
-                                SpeechState.SCOREBOARD -> {robotController.speak(say, buffer); stateMode = State.NULL}
+                                SpeechState.SCOREBOARD -> {
+                                    robotController.speak(say, buffer)
+                                    if (emotion == "Happy") {
+                                        robotController.speak("I see that you are Happy. Does your name Happen to be on my list?", buffer)
+                                    }
+                                    stateMode = State.NULL
+                                }
                                 SpeechState.UNANSWERED -> {robotController.speak(say, buffer); stateMode = State.NULL}
                                 SpeechState.EXIT_EARLY -> {robotController.speak(say, buffer); stateMode = State.NULL}
                                 SpeechState.THANKYOU -> {robotController.speak(say, buffer); stateMode = State.NULL}
@@ -1212,6 +1226,9 @@ class MainViewModel @Inject constructor(
         robotController.volumeControl(volume)
     }
 
+    fun updateEmotion(emotion: String?) {
+        this.emotion = emotion
+    }
     //**************************System Function
     private suspend fun buffer() {
         // Increase buffer time to ensure enough delay between checks

@@ -154,9 +154,6 @@ fun Greeting() {
 }
 */
 
-
-
-
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
@@ -213,12 +210,43 @@ fun getInstalledTemiApps(packageManager: PackageManager): List<String> {
     return apps
 }
 
+object GlobalData {
+    var emotionResult by mutableStateOf<String?>(null)
+}
+
 // Set up broadcaster for emotional detection
 class EmotionReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         val message = intent.getStringExtra("message")
-        Log.d("FUCK!", "Received message: $message")
-        // You can use the message in your app's logic here
+
+        if (message.isNullOrBlank()) {
+            Log.w("FUCK!", "Received an empty or null message")
+            return
+        }
+
+        Log.d("FUCK!", "Received full message: $message")
+
+        // Pattern to match "Emotion" and "Face" values in the message
+        val emotionPattern = Regex(""""(\w+)"""")
+        val facePattern = Regex("""Face:\s+(\d+)""")
+
+        val emotionMatch = emotionPattern.find(message)
+        val faceMatch = facePattern.find(message)
+
+        // Extract values if found
+        val emotion = emotionMatch?.groupValues?.get(1)
+        val face = faceMatch?.groupValues?.get(1)?.toIntOrNull()
+
+        // Log.d("FUCK!", "$emotion")
+        // Log.d("FUCK!", "$face")
+
+        if (face == 0 && emotion != null) {
+            // Update GlobalData with the extracted emotion
+            GlobalData.emotionResult = emotion
+            //Log.d("FUCK!", "Stored emotion for face 0: $emotion")
+        } else {
+            Log.d("FUCK!", "Ignored message as face is not 0 or emotion is null")
+        }
     }
 }
 //***************************************** TOOLS
@@ -1083,6 +1111,13 @@ fun QuizApp(context: Context) {
     var saveNumber by remember { mutableStateOf(0) }
 
     val viewModel: MainViewModel = hiltViewModel()
+
+    // Update the viewmodel with the emotion and after delay change it to null
+    LaunchedEffect (GlobalData.emotionResult) {
+        viewModel.updateEmotion(GlobalData.emotionResult)
+        delay(5000)
+        viewModel.updateEmotion(null)
+    }
 
     var passwordCheck by remember { mutableStateOf(false) }
     var password by remember { mutableStateOf("") }
@@ -2185,6 +2220,13 @@ fun QuizApp(context: Context) {
 
         val viewModel: MainViewModel = hiltViewModel()
 
+        // Update the viewmodel with the emotion and after delay change it to null
+        LaunchedEffect (GlobalData.emotionResult) {
+            viewModel.updateEmotion(GlobalData.emotionResult)
+            delay(5000)
+            viewModel.updateEmotion(null)
+        }
+
         if (showDialogSubmitWithNoAnswer) {
             viewModel.resultSpeech(state = SpeechState.EXIT_EARLY, say = "Hang on, you are about to submit this question without adding an answer. Are you sure you want to do this?")
             AlertDialog(onDismissRequest = { showDialogSubmitWithNoAnswer = false },
@@ -2699,6 +2741,13 @@ fun QuizApp(context: Context) {
         }
 
         val viewModel: MainViewModel = hiltViewModel()
+
+        // Update the viewmodel with the emotion and after delay change it to null
+        LaunchedEffect (GlobalData.emotionResult) {
+            viewModel.updateEmotion(GlobalData.emotionResult)
+            delay(5000)
+            viewModel.updateEmotion(null)
+        }
 
         Log.d("Check_Score", "Out of: ${texts.count { it.isActive }}")
         Log.d("Check_Score", "Score: ${score}")
