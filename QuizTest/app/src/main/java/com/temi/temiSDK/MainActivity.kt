@@ -114,6 +114,8 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresPermission
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.robotemi.sdk.TtsRequest
 
@@ -156,34 +158,63 @@ fun Greeting() {
 }
 */
 
+class AudioPlayerViewModel : ViewModel() {
+    private var audioPlayer: AudioPlayer? = null
+    private var audioPlayer2: AudioPlayer? = null
+
+    // Initialize AudioPlayers using Context passed as a parameter
+    fun initAudioPlayers(context: Context) {
+        // Initialize audio players if they are not already initialized
+        if (audioPlayer == null) {
+            audioPlayer = AudioPlayer(context.applicationContext, R.raw.greeting1)  // Use application context
+        }
+        if (audioPlayer2 == null) {
+            audioPlayer2 = AudioPlayer(context.applicationContext, R.raw.thememusic)  // Use application context
+        }
+    }
+
+    // Renamed getter methods to avoid clash
+    fun getAudioPlayer(): AudioPlayer? = audioPlayer
+    fun getAudioPlayer2(): AudioPlayer? = audioPlayer2
+}
+
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
+    private lateinit var audioPlayerViewModel: AudioPlayerViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        /*
+        //        // Get the PackageManager instance
+        //        val packageManager = packageManager
+        //
+        //        // Retrieve installed apps
+        //        getInstalledTemiApps(packageManager)
+        //
+        //        // Enable edge-to-edge layout
+        //        enableEdgeToEdge()
+        //
+        //        // Start the emotional detection application
+        //        val intent = packageManager.getLaunchIntentForPackage("com.temi.emotiondetection")
+        //        // Check if the application is present, if so run it
+        //        if (intent != null) {
+        //            Log.w("FUCK!", "WORKING")
+        //            startActivity(intent) // Start the Emotion Detection app
+        //        } else {
+        //            Log.e("FUCK!", "NOT WORKING")
+        //        }
+        //        // Set up method for receiving messages form emotional detection
+        //        val receiver = EmotionReceiver()
+        //        val filter = IntentFilter("com.quizapp.RECEIVE_DATA")
+        //        registerReceiver(receiver, filter)
+         */
 
-//        // Get the PackageManager instance
-//        val packageManager = packageManager
-//
-//        // Retrieve installed apps
-//        getInstalledTemiApps(packageManager)
-//
-//        // Enable edge-to-edge layout
-//        enableEdgeToEdge()
-//
-//        // Start the emotional detection application
-//        val intent = packageManager.getLaunchIntentForPackage("com.temi.emotiondetection")
-//        // Check if the application is present, if so run it
-//        if (intent != null) {
-//            Log.w("FUCK!", "WORKING")
-//            startActivity(intent) // Start the Emotion Detection app
-//        } else {
-//            Log.e("FUCK!", "NOT WORKING")
-//        }
-//        // Set up method for receiving messages form emotional detection
-//        val receiver = EmotionReceiver()
-//        val filter = IntentFilter("com.quizapp.RECEIVE_DATA")
-//        registerReceiver(receiver, filter)
+        // Initialize the ViewModel
+        audioPlayerViewModel = ViewModelProvider(this).get(AudioPlayerViewModel::class.java)
+
+        // Initialize AudioPlayers using the Activity context
+        audioPlayerViewModel.initAudioPlayers(this)
 
         setContent {
             Box(modifier = Modifier.fillMaxSize()) {
@@ -1153,12 +1184,15 @@ fun BluetoothScreen() {
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun QuizApp(context: Context) {
+    // Access the ViewModel
+    val audioPlayerViewModel: AudioPlayerViewModel = viewModel()
+
     var appState by remember { mutableStateOf<AppState>(AppState.QuizHome) } // Switch to test/quizhome
-    val audioPlayer = remember { AudioPlayer(context, R.raw.greeting1) }
-    audioPlayer.setVolume(0.4f)
+    val audioPlayer = audioPlayerViewModel.getAudioPlayer()
+    audioPlayer?.setVolume(0.4f)
     val audioPlayer1 = remember { AudioPlayer(context, R.raw.buttonsound) }
-    val audioPlayer2 = remember { AudioPlayer(context, R.raw.thememusic) }
-    audioPlayer2.setVolume(0.5f)
+    val audioPlayer2 = audioPlayerViewModel.getAudioPlayer2()
+    audioPlayer2?.setVolume(0.5f)
     val audioPlayer3 = remember { AudioPlayer(context, R.raw.alert) }
     val audioPlayer4 = remember { AudioPlayer(context, R.raw.alarm) }
 
@@ -1214,7 +1248,7 @@ fun QuizApp(context: Context) {
                     if (viewModel.isMissuesState()) {
                         delay(sensitivity)
                         if (!(viewModel.isMissuesState())) continue
-                        audioPlayer2.stop()
+                        audioPlayer2?.stop()
                         viewModel.volumeControl(volumeMax)
                         if (warning) {
                             delay(100)
@@ -1237,7 +1271,7 @@ fun QuizApp(context: Context) {
                         viewModel.volumeControl(volumeDefault)
                         delay(500)
                         if (appState == AppState.Quiz) {
-                            audioPlayer2.play()
+                            audioPlayer2?.play()
                         }
                         audioPlayer4.stop()
                         audioPlayer4.reset()
@@ -1249,7 +1283,7 @@ fun QuizApp(context: Context) {
                     if (viewModel.isMissuesState()) {
                         delay(sensitivity)
                         if (!(viewModel.isMissuesState())) continue
-                        audioPlayer.stop()
+                        audioPlayer?.stop()
                         viewModel.volumeControl(volumeMax)
                         if (warning) {
                             delay(100)
@@ -1272,7 +1306,7 @@ fun QuizApp(context: Context) {
                         viewModel.volumeControl(volumeDefault)
                         delay(100)
                         if (appState == AppState.QuizHome) {
-                            audioPlayer.play()
+                            audioPlayer?.play()
                         }
                         audioPlayer4.stop()
                         audioPlayer4.reset()
@@ -1284,7 +1318,7 @@ fun QuizApp(context: Context) {
                     if (viewModel.isMissuesState()) {
                         delay(sensitivity)
                         if (!(viewModel.isMissuesState())) continue
-                        audioPlayer.stop()
+                        audioPlayer?.stop()
                         viewModel.volumeControl(volumeMax)
                         if (warning) {
                             delay(100)
@@ -1307,7 +1341,7 @@ fun QuizApp(context: Context) {
                         viewModel.volumeControl(volumeDefault)
                         delay(100)
                         if (appState == AppState.ScoreBoard) {
-                            audioPlayer.play()
+                            audioPlayer?.play()
                         }
                         audioPlayer4.stop()
                         audioPlayer4.reset()
@@ -1340,7 +1374,7 @@ fun QuizApp(context: Context) {
             // Start a new timer job for the current `appState`
             timeoutJob = launch {
                 delay(300000L) // Wait for 5 min
-                audioPlayer2.stop()
+                audioPlayer2?.stop()
                 appState = AppState.QuizHome // Set back to QuizHome if timeout completes
             }
         }
@@ -1353,8 +1387,8 @@ fun QuizApp(context: Context) {
 
         is AppState.QuizHome -> { //*** HOME SCREEN
             viewModel.idleMode(true)
-            audioPlayer.play()
-            audioPlayer.setLooping(true)
+            audioPlayer?.play()
+            audioPlayer?.setLooping(true)
 
             Box(
                 modifier = Modifier
@@ -1568,12 +1602,14 @@ fun QuizApp(context: Context) {
                     })
             }
 
-            QuizHome(onStartClicked = {
-                appState = AppState.Quiz;
-                audioPlayer.setLooping(false)
-                audioPlayer.stop();
-                audioPlayer1.play();
-            }, audioPlayer, context)
+            if (audioPlayer != null) {
+                QuizHome(onStartClicked = {
+                    appState = AppState.Quiz;
+                    audioPlayer?.setLooping(false)
+                    audioPlayer?.stop();
+                    audioPlayer1.play();
+                }, audioPlayer, context)
+            }
         }
 
         is AppState.ScoreBoard -> {
@@ -1609,8 +1645,8 @@ fun QuizApp(context: Context) {
         is AppState.Quiz -> { //*** QUIZ
             viewModel.idleMode(false)
             if (!showDialogExitQuizEarly) {
-                audioPlayer2.setLooping(true)
-                audioPlayer2.play()
+                audioPlayer2?.setLooping(true)
+                audioPlayer2?.play()
             }
 
             Box(
@@ -1618,8 +1654,8 @@ fun QuizApp(context: Context) {
             ) {
                 // Dialog used to make sure if someone want to leave the quiz early
                 if (showDialogExitQuizEarly) {
-                    audioPlayer2.setLooping(false)
-                    audioPlayer2.pause()
+                    audioPlayer2?.setLooping(false)
+                    audioPlayer2?.pause()
                     audioPlayer3.play()
                     viewModel.resultSpeech(
                         state = SpeechState.EXIT_EARLY,
@@ -1631,7 +1667,7 @@ fun QuizApp(context: Context) {
                         confirmButton = {
                             Button(onClick = {
                                 audioPlayer1.play();
-                                audioPlayer2.reset();
+                                audioPlayer2?.reset();
                                 appState = AppState.QuizHome
                                 showDialogExitQuizEarly = false
                                 // Handle exit logic here (e.g., navigate away, save state, etc.)
@@ -1662,7 +1698,7 @@ fun QuizApp(context: Context) {
                         onClick = {
                             appState = AppState.QuizHome;
                             audioPlayer1.play();
-                            audioPlayer2.stop();
+                            audioPlayer2?.stop();
                         },
                         text = stringResource(R.string.exit_quiz),
                         type = "cool",
@@ -1704,8 +1740,8 @@ fun QuizApp(context: Context) {
                         )
                         showDialogSubmitThankYou = true
                         appState = AppState.QuizHome;
-                        audioPlayer2.setLooping(false);
-                        audioPlayer2.stop();
+                        audioPlayer2?.setLooping(false);
+                        audioPlayer2?.stop();
                         audioPlayer1.play();
                     })
             }
@@ -2316,7 +2352,9 @@ fun Quiz(
     onShowOverlay: () -> Unit,
     onStartClicked: () -> Unit,
 ) {
-    val audioPlayer = remember { AudioPlayer(context, R.raw.buttonsound) }
+    val audioPlayerViewModel: AudioPlayerViewModel = viewModel()
+
+    val audioPlayer = audioPlayerViewModel.getAudioPlayer()
     var showDialogSubmitWithNoAnswer by remember { mutableStateOf(false) }
     //*******************************
     // State to hold the result from MultipleChoiceQuestion
@@ -2326,11 +2364,11 @@ fun Quiz(
 
     //*******************************
 
-    DisposableEffect(Unit) {
-        onDispose {
-            audioPlayer.release() // Release resources when composable is disposed
-        }
-    }
+//    DisposableEffect(Unit) {
+//        onDispose {
+//            audioPlayer.release() // Release resources when composable is disposed
+//        }
+//    }
 
     fun extractTextBetweenBrackets(line: String): String {
         // Define a regular expression to match text between < and >
@@ -2587,7 +2625,7 @@ fun Quiz(
 
                 if (isButtonEnabled) {
                     isButtonEnabled = false
-                    if (!viewModel.isMissuesState()) audioPlayer.play()
+                    if (!viewModel.isMissuesState()) audioPlayer?.play()
 
                     updateIndex(-1)
 
@@ -2614,7 +2652,7 @@ fun Quiz(
     ) {
         Button(
             onClick = {
-                if (!viewModel.isMissuesState()) audioPlayer.play()
+                if (!viewModel.isMissuesState()) audioPlayer?.play()
 //                audioPlayer.play() //not sure what this does
                 if (quizQuestions[questionIndex].result.isToggleList.all { !it } && !quizQuestions[questionIndex].isSubmitted) {
                     showDialogSubmitWithNoAnswer = true
@@ -2644,7 +2682,7 @@ fun Quiz(
                 if (isButtonEnabled) {
                     isButtonEnabled = false
 
-                    if (!viewModel.isMissuesState()) audioPlayer.play()
+                    if (!viewModel.isMissuesState()) audioPlayer?.play()
                     if ((questionIndex == quizQuestions.size - 1) && !quizQuestions.all { it.isSubmitted }) {
                         onShowOverlay()
                     } else if ((questionIndex == quizQuestions.size - 1) && quizQuestions.all { it.isSubmitted }) {
@@ -2915,11 +2953,11 @@ fun MultipleChoiceOption(
     val brighterGreen = Color(0xFF9CCC65) // Brighter green color
     val lighterRed = Color(0xFFEF9A9A) // Light red color
 
-    DisposableEffect(Unit) { // releases resources button is not in use
-        onDispose {
-            audioPlayer.release() // Release resources when composable is disposed
-        }
-    }
+//    DisposableEffect(Unit) { // releases resources button is not in use
+//        onDispose {
+//            audioPlayer.release() // Release resources when composable is disposed
+//        }
+//    }
 
     // Initialize the mutable state for the list
     val answers = texts.size
