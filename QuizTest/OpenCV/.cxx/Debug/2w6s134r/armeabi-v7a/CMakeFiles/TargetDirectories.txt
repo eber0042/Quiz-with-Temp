@@ -1,0 +1,3 @@
+C:/Users/nypro/OneDrive/Documents/GitHub/Quiz-with-Temp/QuizTest/OpenCV/.cxx/Debug/2w6s134r/armeabi-v7a/CMakeFiles/opencv_jni_shared.dir
+C:/Users/nypro/OneDrive/Documents/GitHub/Quiz-with-Temp/QuizTest/OpenCV/.cxx/Debug/2w6s134r/armeabi-v7a/CMakeFiles/edit_cache.dir
+C:/Users/nypro/OneDrive/Documents/GitHub/Quiz-with-Temp/QuizTest/OpenCV/.cxx/Debug/2w6s134r/armeabi-v7a/CMakeFiles/rebuild_cache.dir

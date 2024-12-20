@@ -1,85 +1,8 @@
-<Quiz1>
-text:-> Single Answer: Which planet is known as the Red Planet?
-image:-> R.drawable.image4
-background:-> R.drawable.image3
-textQuestion:-> true
-imageQuestion:-> true
-singleOn:-> true
-OnCorrect:-> false
-surveyOn:-> false
-columnLength:-> 3
-scoreType:-> s
-texts:->
-* Mars ; true
-* Venus ; false
-* Jupiter ; false
-* Saturn ; false
-* Earth ; false
-* Neptune ; false
-<end>
+poolSize:-> 3
+poolSizePriority:-> 2
 
-<Quiz2>
-text:-> Single Answer: Who painted the Mona Lisa?
-image:-> R.drawable.image4
-background:-> R.drawable.image3
-textQuestion:-> true
-imageQuestion:-> true
-singleOn:-> true
-OnCorrect:-> false
-surveyOn:-> false
-columnLength:-> 3
-scoreType:-> s
-texts:->
-* Leonardo da Vinci ; true
-* Vincent van Gogh ; false
-* Pablo Picasso ; false
-* Claude Monet ; false
-* Salvador Dalí ; false
-* Michelangelo ; false
-<end>
-
-<Quiz3>
-text:-> Single Answer: What is the capital of France?
-image:-> R.drawable.image4
-background:-> R.drawable.image3
-textQuestion:-> true
-imageQuestion:-> true
-singleOn:-> true
-OnCorrect:-> false
-surveyOn:-> false
-columnLength:-> 3
-scoreType:-> s
-texts:->
-* Paris ; true
-* Rome ; false
-* Madrid ; false
-* Berlin ; false
-* Vienna ; false
-* Brussels ; false
-<end>
-
-<Quiz4>
-text:-> Single Answer: What is the boiling point of water?
-image:-> R.drawable.image4
-background:-> R.drawable.image3
-textQuestion:-> true
-imageQuestion:-> false
-singleOn:-> true
-OnCorrect:-> false
-surveyOn:-> false
-columnLength:-> 2
-scoreType:-> s
-texts:->
-* 100°C ; true
-* 50°C ; false
-* 0°C ; false
-* 150°C ; false
-* 200°C ; false
-* 75°C ; false
-<end>
-
-<Quiz5>
-text:-> Multiple Answers: Which of the following animals are mammals?
+<!Quiz1>
+text:-> What are the entry requirements for specific courses?
 image:-> R.drawable.image4
 background:-> R.drawable.image3
 textQuestion:-> true
@@ -87,39 +10,94 @@ imageQuestion:-> false
 singleOn:-> false
 OnCorrect:-> true
 surveyOn:-> false
-columnLength:-> 3
+columnLength:-> 6
 scoreType:-> s
 texts:->
-* Dolphin ; true
-* Shark ; false
-* Bat ; true
-* Crocodile ; false
-* Elephant ; true
-* Turtle ; false
+* For Nitec/Higher Nitec students: A relevant Nitec/Higher Nitec with a GPA around 2.0 ; false
+* For GCE 'O' Level students: English: C6, Mathematics: C6, One relevant subject: C6 ; true
+* For Nitec/Higher Nitec students: A relevant Nitec/Higher Nitec with a GPA of 4.0 or higher ; false
+* For GCE 'O' Level students: English: B3, Mathematics: B4, One relevant subject: B4 ; false
+* For Nitec/Higher Nitec students: A relevant Nitec/Higher Nitec with a GPA of 2.5 or higher ; true
+<end>
+
+<!Quiz2>
+text:-> What diploma courses are offered here?
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> false
+OnCorrect:-> true
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* Robotics & Mechatronics ; true
+* Journalism ; false
+* Electrical & Electronic Engineering ; true
+* Aerospace Systems ; true
+* Fashion Design ; false
+<end>
+
+<!Quiz3>
+text:-> Can I combine different subject grades from multiple sittings of the GCE 'O' Level exams?
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* Yes, combined results from two sittings are accepted ; true
+* No, only one sitting is allowed ; false
+* Yes, but the average grade over multiple sittings is used ; false
+* Yes, but only for Science or Mathematics subjects ; false
+* No, only the score from the latest sitting is taken into consideration ; false
+<end>
+
+<!Quiz4>
+text:-> Are there direct entry programs or early admission options available?
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* Yes, through the Early Admissions Exercise (EAE) ; true
+* No, there are no direct entry programs available ; false
+* Yes, but only for international students ; false
+* Yes, but only if you have a GPA of 4.5 or above ; false
+* No, you must apply through the regular admissions process ; false
+<end>
+
+<!Quiz5>
+text:-> What is the typical class size in lectures and tutorials?
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* Lectures: 100 students, Tutorials: 50-60 students ; false
+* Lectures: 200 students, Tutorials: 100-120 students ; false
+* Lectures: 50 students, Tutorials: 20-25 students ; true
+* Lectures: 20 students, Tutorials: 10-20 students ; false
+* Lectures: 500 students, Tutorials: 100-120 students ; false
 <end>
 
 <Quiz6>
-text:-> Multiple Answers: Which elements are noble gases?
-image:-> R.drawable.image4
-background:-> R.drawable.image3
-textQuestion:-> true
-imageQuestion:-> false
-singleOn:-> false
-OnCorrect:-> true
-surveyOn:-> false
-columnLength:-> 2
-scoreType:-> s
-texts:->
-* Helium ; true
-* Oxygen ; false
-* Argon ; true
-* Nitrogen ; false
-* Neon ; true
-* Hydrogen ; false
-<end>
-
-<Quiz7>
-text:-> Single Answer: Who discovered gravity?
+text:-> Are there specializations or electives within the course?
 image:-> R.drawable.image4
 background:-> R.drawable.image3
 textQuestion:-> true
@@ -127,58 +105,303 @@ imageQuestion:-> false
 singleOn:-> true
 OnCorrect:-> false
 surveyOn:-> false
-columnLength:-> 3
+columnLength:-> 5
 scoreType:-> s
 texts:->
-* Isaac Newton ; true
-* Albert Einstein ; false
-* Galileo Galilei ; false
-* Nikola Tesla ; false
-* Marie Curie ; false
-* Charles Darwin ; false
+* No, the course is a generalist program and requires further education for specialization ; false
+* Yes, electives in robotics, mechatronics, automation, and Artificial Intelligence are available ; true
+* Yes, but only in Artificial Intelligence, Web Development, and Software Development ; false
+* No, there are no specializations or electives ; false
+* Yes, electives include Data Science, Software Engineering, Data analysis, and Computer Organisation and Design for all topics ; false
+<end>
+
+<Quiz7>
+text:-> How does the polytechnic prepare students for university admission?
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* The course focuses solely on theory with no hands-on experience to ensure students have the fundamentals of their topic for when they go to university ; false
+* Students are not prepared for university admission; they are only prepared for work ; false
+* The course includes academic modules, hands-on experience, and industrial attachments to ensure students have a robust understanding of practical and theoretical knowledge ; true
+* There are no specific programs for university preparation but there are courses external to the polytechnic to assist with this ; false
+* Only students with top grades are prepared for university admission ; false
 <end>
 
 <Quiz8>
-text:-> Multiple Answers: Which of these are programming languages?
+text:-> What are the internship opportunities for this course?
 image:-> R.drawable.image4
 background:-> R.drawable.image3
 textQuestion:-> true
 imageQuestion:-> false
-singleOn:-> false
+singleOn:-> true
 OnCorrect:-> false
 surveyOn:-> false
-columnLength:-> 2
-scoreType:-> all
+columnLength:-> 5
+scoreType:-> s
 texts:->
-* Python ; true
-* HTML ; false
-* Java ; true
-* CSS ; false
-* C# ; true
-* SQL ; false
+* Students do not complete internships ; false
+* Students complete a 6-week internship with companies like ST Engineering or Panasonic ; false
+* Students undergo a 20-week internship with companies like ST Engineering or Panasonic ; true
+* Students only do internships within the polytechnic based on pre-existing projects ; false
+* Students complete a 2-week internship at a local retail company to develop a better understanding of work culture ; false
 <end>
 
 <Quiz9>
-text:-> What are the two most famous mountains in Japan?
+text:-> Are there overseas exchange or study programs available?
 image:-> R.drawable.image4
 background:-> R.drawable.image3
 textQuestion:-> true
 imageQuestion:-> false
-singleOn:-> false
-OnCorrect:-> true
+singleOn:-> true
+OnCorrect:-> false
 surveyOn:-> false
-columnLength:-> 2
+columnLength:-> 5
 scoreType:-> s
 texts:->
-* Mt. Fuji ; true
-* Mt. Everest ; false
-* Mt. Tokyo ; false
-* Mt. Big Ben ; false
-* Mt. Kita ; true
-* Mt. Uluru ; false
+* Yes, opportunities to go to Japan, Germany, or South Korea ; true
+* No, there are no overseas opportunities available ; false
+* Yes, but only to English-speaking countries such as America, the United Kingdom, and Canada ; false
+* Yes, but the program is limited to short-term language courses ; false
+* Yes, but only to other polytechnics in Singapore or surrounding countries ; false
 <end>
 
 <Quiz10>
+text:-> What kind of industry projects or collaborations can students expect?
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* Students work only on theoretical projects with no industry collaboration ; false
+* Students work on industry projects such as designing robotic arms and smart factory solutions ; true
+* Students work on academic research projects with no industry focus ; false
+* Students work on software development for non-robotics industries ; false
+* Students are involved only in marketing and business development projects ; false
+<end>
+
+<Quiz11>
+text:-> Can we tour the labs and specialized facilities for this course?
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* No, the labs are only accessible to students ; false
+* Yes, during open houses, you can visit labs like the Robotics Lab, Mechatronics Lab, and Automation Lab ; true
+* Yes, but tours are limited to a certain number of attendees ; false
+* No, the labs are closed to the public for safety reasons ; false
+* Yes, but tours are only available upon appointment ; false
+<end>
+
+<Quiz12>
+text:-> Is there access to libraries, study spaces, and support services?
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* Yes, students have access to all those services ; true
+* No, there are no academic resources available to students ; false
+* Yes, but only certain departments or courses are allowed to access them ; false
+* Yes, but you must pay a fee for using the libraries and study spaces ; false
+* No, students are required to source their own study materials and resources ; false
+<end>
+
+<Quiz13>
+text:-> Are there facilities for sports, music, and other extracurricular activities?
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* No, there are no extracurricular activities available ; false
+* Yes, there are various sports facilities, music rooms, and clubs like the Robotics Club ; true
+* Yes, but students can only enrol into activities related to their course ; false
+* Yes, but students are required to pay a fee respective to the activity to participate in extracurricular activities ; false
+* No, only academic facilities are provided as the polytechnic only focuses on academic pursuits ; false
+<end>
+
+<Quiz14>
+text:-> What types of software or hardware tools do students have access to?
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* Students only have access to free online software ; false
+* Students use industry-standard tools like CAD software (SolidWorks), PLCs, microcontrollers, and ROS ; true
+* Students use basic office software and online calculators ; false
+* Students use proprietary software only developed by the polytechnic ; false
+* Students are not provided with any software tools and must purchase software as specified by their course ; false
+<end>
+
+<Quiz15>
+text:-> What clubs or societies are available for students to join?
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* Students can join the Robotics Club, Engineering Society, or other interest-based groups ; true
+* There are no clubs or societies available for students ; false
+* Only sports clubs are available for students ; false
+* Only academic clubs related to literature and humanities are available ; false
+* Only one club exists, the Student Council ; false
+<end>
+
+<Quiz16>
+text:-> Is there a mentorship or peer support system for new students?
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* Yes, seniors guide juniors through a mentorship program ; true
+* No, there is no mentorship program available ; false
+* Yes, but only for first-year students ; false
+* No, only faculty members provide support ; false
+* Yes, but only in the final year of study ; false
+<end>
+
+<Quiz17>
+text:-> How does the polytechnic support students in terms of mental health and counseling services?
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* The polytechnic does not offer mental health support ; false
+* Counselors are available for mental health support, along with workshops promoting well-being ; true
+* Mental health support is available only to students with specific conditions ; false
+* There is no formal mental health program, only peer support ; false
+* Counseling services are available only during exam periods ; false
+<end>
+
+<Quiz18>
+text:-> Are there scholarships, bursaries, or financial aid available for students?
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* Yes, there are scholarships like the SEG Scholarship and financial aid schemes ; true
+* No, students must pay full tuition fees without any assistance ; false
+* Yes, but only for students with high academic scores ; false
+* Yes, but only for students in certain courses ; false
+* No, there are no financial aid options available ; false
+<end>
+
+<Quiz19>
+text:-> What are the employment prospects for graduates from this course?
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* Graduates can secure roles like Robotics Engineer, Automation Specialist, or Mechatronics Technician ; true
+* Graduates can only work in customer service roles ; false
+* Graduates can work in any field unrelated to robotics or engineering ; false
+* Graduates will have to pursue further education to be employable ; false
+* Graduates can only work as technicians in non-technical fields ; false
+<end>
+
+<Quiz20>
+text:-> Are there alumni networks or career services to help students after graduation?
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* No, there are no alumni networks or career services ; false
+* Yes, NYP provides career services and alumni networks to connect students with industry professionals ; true
+* Yes, but only for students in the final year ; false
+* No, students must seek career opportunities independently ; false
+* Yes, but only alumni from the engineering department are included ; false
+<end>
+
+<Quiz21>
+text:-> What are the minimum entry requirements for the Robotics and Mechatronics Engineering diploma course?
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* English Language: 7, Additional Mathematics/Mathematics: 6, and any one of the following: Science, Computing, Design & Technology, or Electronics ; true
+* No specific entry requirements; anyone can apply ; false
+* English Language: 6, Mathematics: 5, and no subject-specific requirements ; false
+* Only a pass in English is required, no other subjects specified ; false
+* English Language: 8, Additional Mathematics: 7, and Physics as a compulsory subject ; false
+<end>
+
+
+<Quiz22>
 text:-> Survey: Did you enjoy taking the quiz?
 image:-> R.drawable.image4
 background:-> R.drawable.like
@@ -194,3 +417,4 @@ texts:->
 * It was okay. ; true
 * No, I did not enjoy it. ; true
 <end>
+

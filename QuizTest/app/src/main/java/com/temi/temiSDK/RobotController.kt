@@ -85,6 +85,8 @@ class RobotController():
     OnRobotLiftedListener,
     OnRobotDragStateChangedListener
 {
+    private var language = TtsRequest.Language.EN_US
+
     private val robot = Robot.getInstance() //This is needed to reference the data coming from Temi
 
     // Setting up the Stateflows here
@@ -106,8 +108,6 @@ class RobotController():
     private val _lifted = MutableStateFlow(Lifted(false))
     val lifted = _lifted.asStateFlow() // This can include talking state as well
 
-
-
     init {
         robot.addOnRobotReadyListener(this)
         robot.addTtsListener(this)
@@ -126,6 +126,7 @@ class RobotController():
             speech = speech,
             isShowOnConversationLayer = false,
             showAnimationOnly = false,
+            language = language
         ) // Need to create TtsRequest
         robot.speak(request)
         delay(buffer)
@@ -143,71 +144,10 @@ class RobotController():
         delay(buffer)
     }
 
-    // Move these outside the function to maintain state across calls
-    private val numberArray = (1..5).toMutableList()
-    private var currentIndex = 0
-    private var previousLastChoice = -1
 
-    suspend fun textModelChoice(state: Int, buffer: Long) {
-        // Function to get the next random number in the shuffled array
-        fun getRandomChoice(): Int {
-            if (currentIndex >= numberArray.size) {
-                numberArray.shuffle()  // Reshuffle when the array is exhausted
-                currentIndex = 0
 
-                // Ensure the first choice isn't the same as the last choice from the previous array
-                if (numberArray[0] == previousLastChoice) {
-                    // Find a random index to swap with the first element
-                    val swapIndex = (1 until numberArray.size).random()  // Get a random index (1..4)
-                    val temp = numberArray[0]
-                    numberArray[0] = numberArray[swapIndex]
-                    numberArray[swapIndex] = temp
-                }
-            }
-
-            val choice = numberArray[currentIndex]  // Get the current choice
-            currentIndex++  // Move to the next index
-            previousLastChoice = choice  // Update the last choice to the current choice
-
-            return choice
-        }
-
-        val choice = getRandomChoice()  // Get a randomized choice
-
-        when (state) {
-            0 -> { // All answers correct
-                Log.d("Quiz", "Perfect")
-                when (choice) {
-                    1 -> speak(speech = "Oh, you got it right? You want a medal or something?", buffer)
-                    2 -> speak(speech = "Congratulations! You must be so proud... of answering a quiz question.", buffer)
-                    3 -> speak(speech = "Wow, you did it! Now go do something actually challenging.", buffer)
-                    4 -> speak(speech = "You got it right, big deal. Let’s not get carried away.", buffer)
-                    5 -> speak(speech = "Perfect score, huh? Enjoy your moment of glory, it’s not lasting long.", buffer)
-                }
-            }
-
-            1 -> { // Partially correct
-                Log.d("Quiz", "Partial")
-                when (choice) {
-                    1 -> speak(speech = "Almost there... but not quite. Story of your life, huh?", buffer)
-                    2 -> speak(speech = "Half right? So close, yet so far. Keep trying, maybe you'll get it one day.", buffer)
-                    3 -> speak(speech = "Some of it was right, but seriously, you can do better than that.", buffer)
-                    4 -> speak(speech = "You're halfway there! But no, that doesn't count as winning.", buffer)
-                    5 -> speak(speech = "Partial credit? I mean, do you want a participation trophy or what?", buffer)
-                }
-            }
-
-            2 -> { // All answers wrong
-                Log.d("Quiz", "Incorrect")
-                when (choice) {
-                    1 -> speak(speech = "Wow. How did you manage to get that wrong? Even my dog knows that one.", buffer)
-                    2 -> speak(speech = "Not a single answer right? Impressive... in all the wrong ways.", buffer)
-                    3 -> speak(speech = "Oh, you really went for zero, huh? Bold strategy. Let’s see how it works out.", buffer)
-                    4 -> speak(speech = "All wrong? I didn’t even think that was possible with how easy these questions are. And yet, here we are.", buffer)
-                    5 -> speak(speech = "You do realize that you are meant to select the correct answers, right?", buffer)
-                }
-            }
-        }
+    fun changeLanguage(language: TtsRequest.Language) {
+        this.language = language
     }
     //********************************* General Data
     fun getPositionYaw(): Float

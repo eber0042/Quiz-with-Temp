@@ -1,85 +1,8 @@
-<Quiz1>
-text:-> Single Answer: Which planet is known as the Red Planet?
-image:-> R.drawable.image4
-background:-> R.drawable.image3
-textQuestion:-> true
-imageQuestion:-> true
-singleOn:-> true
-OnCorrect:-> false
-surveyOn:-> false
-columnLength:-> 3
-scoreType:-> s
-texts:->
-* Mars ; true
-* Venus ; false
-* Jupiter ; false
-* Saturn ; false
-* Earth ; false
-* Neptune ; false
-<end>
+poolSize:-> 3
+poolSizePriority:-> 2
 
-<Quiz2>
-text:-> Single Answer: Who painted the Mona Lisa?
-image:-> R.drawable.image4
-background:-> R.drawable.image3
-textQuestion:-> true
-imageQuestion:-> true
-singleOn:-> true
-OnCorrect:-> false
-surveyOn:-> false
-columnLength:-> 3
-scoreType:-> s
-texts:->
-* Leonardo da Vinci ; true
-* Vincent van Gogh ; false
-* Pablo Picasso ; false
-* Claude Monet ; false
-* Salvador Dalí ; false
-* Michelangelo ; false
-<end>
-
-<Quiz3>
-text:-> Single Answer: What is the capital of France?
-image:-> R.drawable.image4
-background:-> R.drawable.image3
-textQuestion:-> true
-imageQuestion:-> true
-singleOn:-> true
-OnCorrect:-> false
-surveyOn:-> false
-columnLength:-> 3
-scoreType:-> s
-texts:->
-* Paris ; true
-* Rome ; false
-* Madrid ; false
-* Berlin ; false
-* Vienna ; false
-* Brussels ; false
-<end>
-
-<Quiz4>
-text:-> Single Answer: What is the boiling point of water?
-image:-> R.drawable.image4
-background:-> R.drawable.image3
-textQuestion:-> true
-imageQuestion:-> false
-singleOn:-> true
-OnCorrect:-> false
-surveyOn:-> false
-columnLength:-> 2
-scoreType:-> s
-texts:->
-* 100°C ; true
-* 50°C ; false
-* 0°C ; false
-* 150°C ; false
-* 200°C ; false
-* 75°C ; false
-<end>
-
-<Quiz5>
-text:-> Multiple Answers: Which of the following animals are mammals?
+<!Quiz1>
+text:-> 调查: 具体课程的入学要求是什么？
 image:-> R.drawable.image4
 background:-> R.drawable.image3
 textQuestion:-> true
@@ -87,39 +10,94 @@ imageQuestion:-> false
 singleOn:-> false
 OnCorrect:-> true
 surveyOn:-> false
-columnLength:-> 3
+columnLength:-> 6
 scoreType:-> s
 texts:->
-* Dolphin ; true
-* Shark ; false
-* Bat ; true
-* Crocodile ; false
-* Elephant ; true
-* Turtle ; false
+* 对于Nitec/Higher Nitec学生：相关的Nitec/Higher Nitec，GPA约为2.0 ; false
+* 对于GCE 'O'级学生：英语：C6，数学：C6，一门相关科目：C6 ; true
+* 对于Nitec/Higher Nitec学生：相关的Nitec/Higher Nitec，GPA为4.0或更高 ; false
+* 对于GCE 'O'级学生：英语：B3，数学：B4，一门相关科目：B4 ; false
+* 对于Nitec/Higher Nitec学生：相关的Nitec/Higher Nitec，GPA为2.5或更高 ; true
+<end>
+
+<!Quiz2>
+text:-> 调查: 这里提供哪些文凭课程？
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> false
+OnCorrect:-> true
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* 机器人技术与机电一体化 ; true
+* 新闻学 ; false
+* 电气与电子工程 ; true
+* 航空系统 ; true
+* 时尚设计 ; false
+<end>
+
+<!Quiz3>
+text:-> 调查: 我可以合并多次GCE 'O'级考试的不同科目成绩吗？
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* 是的，可以接受两次考试成绩合并 ; true
+* 不是的，只能允许一次考试成绩 ; false
+* 是的，但会使用多次考试的平均成绩 ; false
+* 是的，但仅适用于科学或数学科目 ; false
+* 不是的，只会考虑最新一次考试的成绩 ; false
+<end>
+
+<!Quiz4>
+text:-> 调查: 是否有直接入学计划或提前录取选项？
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* 是的，通过提前招生计划（EAE） ; true
+* 不是的，没有直接入学计划 ; false
+* 是的，但仅限于国际学生 ; false
+* 是的，但只有GPA达到4.5或以上才可以 ; false
+* 不是的，必须通过常规招生程序申请 ; false
+<end>
+
+<!Quiz5>
+text:-> 调查: 讲座和辅导课的典型班级人数是多少？
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* 讲座：100名学生，辅导课：50-60名学生 ; false
+* 讲座：200名学生，辅导课：100-120名学生 ; false
+* 讲座：50名学生，辅导课：20-25名学生 ; true
+* 讲座：20名学生，辅导课：10-20名学生 ; false
+* 讲座：500名学生，辅导课：100-120名学生 ; false
 <end>
 
 <Quiz6>
-text:-> Multiple Answers: Which elements are noble gases?
-image:-> R.drawable.image4
-background:-> R.drawable.image3
-textQuestion:-> true
-imageQuestion:-> false
-singleOn:-> false
-OnCorrect:-> true
-surveyOn:-> false
-columnLength:-> 2
-scoreType:-> s
-texts:->
-* Helium ; true
-* Oxygen ; false
-* Argon ; true
-* Nitrogen ; false
-* Neon ; true
-* Hydrogen ; false
-<end>
-
-<Quiz7>
-text:-> Single Answer: Who discovered gravity?
+text:-> 调查: 该课程是否有专业化或选修课？
 image:-> R.drawable.image4
 background:-> R.drawable.image3
 textQuestion:-> true
@@ -127,59 +105,304 @@ imageQuestion:-> false
 singleOn:-> true
 OnCorrect:-> false
 surveyOn:-> false
-columnLength:-> 3
+columnLength:-> 5
 scoreType:-> s
 texts:->
-* Isaac Newton ; true
-* Albert Einstein ; false
-* Galileo Galilei ; false
-* Nikola Tesla ; false
-* Marie Curie ; false
-* Charles Darwin ; false
+* 不是的，这个课程是通用课程，需要进一步的教育来进行专业化 ; false
+* 是的，提供机器人技术、机电一体化、自动化和人工智能的选修课 ; true
+* 是的，但仅限于人工智能、网页开发和软件开发 ; false
+* 不是的，没有专业化或选修课 ; false
+* 是的，选修课包括数据科学、软件工程、数据分析和计算机组织与设计等所有主题 ; false
+<end>
+
+<Quiz7>
+text:-> 调查: 学院如何为大学入学做准备？
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* 课程仅专注于理论，没有实践经验，以确保学生掌握必要的基础知识，准备进入大学 ; false
+* 学生没有为大学入学做准备；他们仅为就业做好准备 ; false
+* 课程包括学术模块、实践经验和工业实习，以确保学生对理论和实践知识有扎实的理解 ; true
+* 没有特定的大学入学准备课程，但学院外部有课程可以提供帮助 ; false
+* 只有成绩优秀的学生才为大学入学做准备 ; false
 <end>
 
 <Quiz8>
-text:-> Multiple Answers: Which of these are programming languages?
+text:-> 调查: 该课程的实习机会有哪些？
 image:-> R.drawable.image4
 background:-> R.drawable.image3
 textQuestion:-> true
 imageQuestion:-> false
-singleOn:-> false
+singleOn:-> true
 OnCorrect:-> false
 surveyOn:-> false
-columnLength:-> 2
-scoreType:-> all
+columnLength:-> 5
+scoreType:-> s
 texts:->
-* Python ; true
-* HTML ; false
-* Java ; true
-* CSS ; false
-* C# ; true
-* SQL ; false
+* 学生没有完成实习 ; false
+* 学生与像ST Engineering或Panasonic这样的公司完成6周实习 ; false
+* 学生与像ST Engineering或Panasonic这样的公司完成20周实习 ; true
+* 学生仅在学院内部根据现有项目进行实习 ; false
+* 学生完成2周的本地零售公司实习，以更好地理解工作文化 ; false
 <end>
 
 <Quiz9>
-text:-> What are the two most famous mountains in Japan?
+text:-> 是否有海外交流或学习项目？
 image:-> R.drawable.image4
 background:-> R.drawable.image3
 textQuestion:-> true
 imageQuestion:-> false
-singleOn:-> false
-OnCorrect:-> true
+singleOn:-> true
+OnCorrect:-> false
 surveyOn:-> false
-columnLength:-> 2
-scoreType:-> all
+columnLength:-> 5
+scoreType:-> s
 texts:->
-* Mt. Fuji ; true
-* Mt. Everest ; false
-* Mt. Tokyo ; false
-* Mt. Big Ben ; false
-* Mt. Kita ; true
-* Mt. Uluru ; false
+* 是的，有机会去日本、德国或韩国 ; true
+* 不，没有海外机会 ; false
+* 是的，但仅限于美国、英国和加拿大等英语国家 ; false
+* 是的，但项目仅限于短期语言课程 ; false
+* 是的，但仅限于其他新加坡或周边国家的理工学院 ; false
 <end>
 
 <Quiz10>
-text:-> Survey: Did you enjoy taking the quiz?
+text:-> 学生可以期待什么样的行业项目或合作？
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* 学生仅参与没有行业合作的理论项目 ; false
+* 学生参与行业项目，如设计机器人臂和智能工厂解决方案 ; true
+* 学生从事没有行业重点的学术研究项目 ; false
+* 学生从事非机器人行业的软件开发 ; false
+* 学生仅参与市场营销和业务发展项目 ; false
+<end>
+
+<Quiz11>
+text:-> 我们可以参观这个课程的实验室和专用设施吗？
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* 不，实验室仅对学生开放 ; false
+* 是的，在开放日，您可以参观机器人实验室、机电实验室和自动化实验室 ; true
+* 是的，但参观人数有限制 ; false
+* 不，出于安全原因，实验室不对公众开放 ; false
+* 是的，但参观仅限预约 ; false
+<end>
+
+<Quiz12>
+text:-> 是否可以使用图书馆、自习室和支持服务？
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* 是的，学生可以使用所有这些服务 ; true
+* 不，没有可供学生使用的学术资源 ; false
+* 是的，但只有某些部门或课程允许使用 ; false
+* 是的，但使用图书馆和自习室必须支付费用 ; false
+* 不，学生必须自行寻找学习资料和资源 ; false
+<end>
+
+<Quiz13>
+text:-> 是否有体育、音乐和其他课外活动的设施？
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* 不，没有课外活动设施 ; false
+* 是的，有各种体育设施、音乐室和机器人俱乐部等俱乐部 ; true
+* 是的，但学生只能参加与其课程相关的活动 ; false
+* 是的，但参加课外活动需要支付相应的费用 ; false
+* 不，只提供学术设施，因为理工学院只专注于学术追求 ; false
+<end>
+
+<Quiz14>
+text:-> 学生可以使用哪些类型的软件或硬件工具？
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* 学生仅可使用免费的在线软件 ; false
+* 学生使用行业标准工具，如CAD软件（SolidWorks）、PLC、微控制器和ROS ; true
+* 学生使用基本的办公软件和在线计算器 ; false
+* 学生使用理工学院专门开发的专有软件 ; false
+* 学生没有提供任何软件工具，必须购买课程规定的软件 ; false
+<end>
+
+<Quiz15>
+text:-> 学生可以加入哪些俱乐部或社团？
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* 学生可以加入机器人俱乐部、工程学会或其他兴趣团体 ; true
+* 没有可供学生加入的俱乐部或社团 ; false
+* 只有体育俱乐部可供学生加入 ; false
+* 只有与文学和人文学科相关的学术俱乐部 ; false
+* 只有一个俱乐部，学生会 ; false
+<end>
+
+<Quiz16>
+text:-> 是否有为新生提供的指导或同伴支持系统？
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* 是的，高年级学生通过指导计划指导低年级学生 ; true
+* 不，没有指导计划 ; false
+* 是的，但仅限于一年级学生 ; false
+* 不，只有教职员工提供支持 ; false
+* 是的，但仅在学习的最后一年提供 ; false
+<end>
+
+<Quiz17>
+text:-> 理工学院如何在心理健康和辅导服务方面支持学生？
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* 理工学院不提供心理健康支持 ; false
+* 有心理健康支持的辅导员和促进健康的工作坊 ; true
+* 心理健康支持仅限于有特定条件的学生 ; false
+* 没有正式的心理健康计划，只有同伴支持 ; false
+* 辅导服务仅在考试期间提供 ; false
+<end>
+
+<Quiz18>
+text:-> 是否有奖学金、助学金或财务援助可供学生申请？
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* 是的，有如SEG奖学金和财务援助计划 ; true
+* 不，学生必须支付全部学费，无任何援助 ; false
+* 是的，但仅限于学术成绩优秀的学生 ; false
+* 是的，但仅限于某些课程的学生 ; false
+* 不，没有财务援助选项 ; false
+<end>
+
+<Quiz19>
+text:-> 该课程毕业生的就业前景如何？
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* 毕业生可以担任机器人工程师、自动化专家或机电技术员等职位 ; true
+* 毕业生只能从事客户服务工作 ; false
+* 毕业生可以在任何与机器人或工程无关的领域工作 ; false
+* 毕业生必须继续深造才能就业 ; false
+* 毕业生只能在非技术领域担任技术员 ; false
+<end>
+
+<Quiz20>
+text:-> 是否有校友网络或职业服务帮助学生毕业后就业？
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* 不，没有校友网络或职业服务 ; false
+* 是的，NYP提供职业服务和校友网络，以连接学生与行业专业人士 ; true
+* 是的，但仅限于最后一年的学生 ; false
+* 不，学生必须独立寻找职业机会 ; false
+* 是的，但仅限于工程系的校友 ; false
+<end>
+
+<Quiz21>
+text:-> 机器人与机电工程文凭课程的最低入学要求是什么？
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* 英语：7，附加数学/数学：6，以下任意一门：科学、计算机、设计与技术或电子 ; true
+* 没有具体的入学要求；任何人都可以申请 ; false
+* 英语：6，数学：5，没有学科要求 ; false
+* 只要求通过英语，没有其他学科要求 ; false
+* 英语：8，附加数学：7，物理为必修科目 ; false
+<end>
+
+
+<Quiz22>
+text:->  调查：你喜欢做这个测验吗？
 image:-> R.drawable.image4
 background:-> R.drawable.like
 textQuestion:-> true
@@ -190,7 +413,8 @@ surveyOn:-> true
 columnLength:-> 1
 scoreType:-> s
 texts:->
-* Yes, I enjoyed it! ; true
-* It was okay. ; true
-* No, I did not enjoy it. ; true
+* 是的，我喜欢！ ; true
+* 还可以。 ; true
+* 不，我不喜欢。 ; true
 <end>
+

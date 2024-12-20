@@ -1,11 +1,13 @@
 package com.temi.temiSDK
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.robotemi.sdk.TtsRequest
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -60,6 +62,7 @@ enum class SpeechState {
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val robotController: RobotController,
+    @ApplicationContext private val context: Context // This will allow accessing the system files
 ) : ViewModel() {
 
     private val ttsStatus = robotController.ttsStatus // Current speech state
@@ -101,6 +104,73 @@ class MainViewModel @Inject constructor(
 
     private var emotion: String? = null
 
+    // Move these outside the function to maintain state across calls
+    private val numberArray = (1..5).toMutableList()
+    private var currentIndex = 0
+    private var previousLastChoice = -1
+
+    // This is the responses of the temi when someone answers a question
+    suspend fun textModelChoice(state: Int, buffer: Long) {
+        // Function to get the next random number in the shuffled array
+        fun getRandomChoice(): Int {
+            if (currentIndex >= numberArray.size) {
+                numberArray.shuffle()  // Reshuffle when the array is exhausted
+                currentIndex = 0
+
+                // Ensure the first choice isn't the same as the last choice from the previous array
+                if (numberArray[0] == previousLastChoice) {
+                    // Find a random index to swap with the first element
+                    val swapIndex = (1 until numberArray.size).random()  // Get a random index (1..4)
+                    val temp = numberArray[0]
+                    numberArray[0] = numberArray[swapIndex]
+                    numberArray[swapIndex] = temp
+                }
+            }
+
+            val choice = numberArray[currentIndex]  // Get the current choice
+            currentIndex++  // Move to the next index
+            previousLastChoice = choice  // Update the last choice to the current choice
+
+            return choice
+        }
+
+        val choice = getRandomChoice()  // Get a randomized choice
+
+        when (state) {
+            0 -> { // All answers correct
+                Log.d("Quiz", "Perfect")
+                when (choice) {
+                    1 -> robotController.speak(speech = context.getString(R.string.oh_you_got_it_right_you_want_a_medal_or_something), buffer)
+                    2 -> robotController.speak(speech = context.getString(R.string.congratulations_you_must_be_so_proud_of_answering_a_quiz_question), buffer)
+                    3 -> robotController.speak(speech = context.getString(R.string.wow_you_did_it_now_go_do_something_actually_challenging), buffer)
+                    4 -> robotController.speak(speech = context.getString(R.string.you_got_it_right_big_deal_let_s_not_get_carried_away), buffer)
+                    5 -> robotController.speak(speech = context.getString(R.string.perfect_score_huh_enjoy_your_moment_of_glory_it_s_not_lasting_long), buffer)
+                }
+            }
+
+            1 -> { // Partially correct
+                Log.d("Quiz", "Partial")
+                when (choice) {
+                    1 -> robotController.speak(speech = context.getString(R.string.almost_there_but_not_quite_story_of_your_life_huh), buffer)
+                    2 -> robotController.speak(speech = context.getString(R.string.half_right_so_close_yet_so_far_keep_trying_maybe_you_ll_get_it_one_day), buffer)
+                    3 -> robotController.speak(speech = context.getString(R.string.some_of_it_was_right_but_seriously_you_can_do_better_than_that), buffer)
+                    4 -> robotController.speak(speech = context.getString(R.string.you_re_halfway_there_but_no_that_doesn_t_count_as_winning), buffer)
+                    5 -> robotController.speak(speech = context.getString(R.string.partial_credit_i_mean_do_you_want_a_participation_trophy_or_what), buffer)
+                }
+            }
+
+            2 -> { // All answers wrong
+                Log.d("Quiz", "Incorrect")
+                when (choice) {
+                    1 -> robotController.speak(speech = context.getString(R.string.wow_how_did_you_manage_to_get_that_wrong), buffer)
+                    2 -> robotController.speak(speech = context.getString(R.string.not_a_single_answer_right_impressive_in_all_the_wrong_ways), buffer)
+                    3 -> robotController.speak(speech = context.getString(R.string.oh_you_really_went_for_zero_huh_bold_strategy_let_s_see_how_it_works_out), buffer)
+                    4 -> robotController.speak(speech = context.getString(R.string.all_wrong_i_didn_t_even_think_that_was_possible_with_how_easy_these_questions_are_and_yet_here_we_are), buffer)
+                    5 -> robotController.speak(speech = context.getString(R.string.you_do_realize_that_you_are_meant_to_select_the_correct_answers_right), buffer)
+                }
+            }
+        }
+    }
 
     init {
         /*
@@ -510,7 +580,7 @@ class MainViewModel @Inject constructor(
                                 SpeechState.THANKYOU -> {robotController.speak(say, buffer); stateMode = State.NULL}
                                 SpeechState.QUIZ -> {
                                     //                        conditionGate({ ttsStatus.value.status in listOf(TtsRequest.Status.COMPLETED, TtsRequest.Status.PENDING, TtsRequest.Status.STARTED)})
-                                    robotController.textModelChoice(int, buffer)
+                                    textModelChoice(int, buffer)
 //                        conditionGate({ ttsStatus.value.status != TtsRequest.Status.COMPLETED })
                                     stateMode = State.NULL
                                 }
@@ -740,7 +810,7 @@ class MainViewModel @Inject constructor(
                                     YDirection.FAR -> {
                                         if (stateMode == State.CONSTRAINT_FOLLOW) {
                                             robotController.speak(
-                                                "You're quite far to my left! Would you like to come closer for a quiz?",
+                                                context.getString(R.string.you_re_quite_far_to_my_left_would_you_like_to_come_closer_for_a_quiz),
                                                 buffer
                                             )
                                         }
@@ -751,7 +821,7 @@ class MainViewModel @Inject constructor(
                                     YDirection.MIDRANGE -> {
                                         if (stateMode == State.CONSTRAINT_FOLLOW) {
                                             robotController.speak(
-                                                "You're in the midrange on my left. Would you like to do a quiz?",
+                                                context.getString(R.string.you_re_in_the_midrange_on_my_left_would_you_like_to_do_a_quiz),
                                                 buffer
                                             )
                                         }
@@ -763,7 +833,7 @@ class MainViewModel @Inject constructor(
                                     YDirection.CLOSE -> {
                                         if (stateMode == State.CONSTRAINT_FOLLOW) {
                                             robotController.speak(
-                                                "You're close on my left! Press the Start Button to start the quiz.",
+                                                context.getString(R.string.you_re_close_on_my_left_press_the_start_button_to_start_the_quiz),
                                                 buffer
                                             )
                                         }
@@ -781,7 +851,7 @@ class MainViewModel @Inject constructor(
                                     XMovement.LEFTER -> {
                                         if (stateMode == State.CONSTRAINT_FOLLOW) {
                                             robotController.speak(
-                                                "You're moving further to my left!",
+                                                context.getString(R.string.you_re_moving_further_to_my_left),
                                                 buffer
                                             )
                                         }
@@ -792,7 +862,7 @@ class MainViewModel @Inject constructor(
 
                                     XMovement.RIGHTER -> {
                                         if (stateMode == State.CONSTRAINT_FOLLOW) {
-                                            robotController.speak("You're moving to my right!", buffer)
+                                            robotController.speak(context.getString(R.string.you_re_moving_to_my_right), buffer)
                                         }
 
                                         conditionGate({ ttsStatus.value.status != TtsRequest.Status.COMPLETED })
@@ -802,7 +872,7 @@ class MainViewModel @Inject constructor(
                                     XMovement.NOWHERE -> {
                                         if (stateMode == State.CONSTRAINT_FOLLOW) {
                                             robotController.speak(
-                                                "You're staying still on my left.",
+                                                context.getString(R.string.you_re_staying_still_on_my_left),
                                                 buffer
                                             )
                                         }
@@ -818,7 +888,7 @@ class MainViewModel @Inject constructor(
                                     YDirection.FAR -> {
                                         if (stateMode == State.CONSTRAINT_FOLLOW) {
                                             robotController.speak(
-                                                "You're quite far to my right! Would you like to come closer for a quiz?",
+                                                context.getString(R.string.you_re_quite_far_to_my_right_would_you_like_to_come_closer_for_a_quiz),
                                                 buffer
                                             )
                                         }
@@ -830,7 +900,7 @@ class MainViewModel @Inject constructor(
                                     YDirection.MIDRANGE -> {
                                         if (stateMode == State.CONSTRAINT_FOLLOW) {
                                             robotController.speak(
-                                                "You're in the midrange on my right. Would you like to do a quiz?",
+                                                context.getString(R.string.you_re_in_the_midrange_on_my_right_would_you_like_to_do_a_quiz),
                                                 buffer
                                             )
                                         }
@@ -842,7 +912,7 @@ class MainViewModel @Inject constructor(
                                     YDirection.CLOSE -> {
                                         if (stateMode == State.CONSTRAINT_FOLLOW) {
                                             robotController.speak(
-                                                "You're close on my right! Press the Start Button to start the quiz.",
+                                                context.getString(R.string.you_re_close_on_my_right_press_the_start_button_to_start_the_quiz),
                                                 buffer
                                             )
                                         }
@@ -859,7 +929,7 @@ class MainViewModel @Inject constructor(
                                 when (xMotion) {
                                     XMovement.LEFTER -> {
                                         if (stateMode == State.CONSTRAINT_FOLLOW) {
-                                            robotController.speak("You're moving to my left!", buffer)
+                                            robotController.speak(context.getString(R.string.you_re_moving_to_my_left), buffer)
                                         }
 
                                         conditionGate({ ttsStatus.value.status != TtsRequest.Status.COMPLETED })
@@ -869,7 +939,7 @@ class MainViewModel @Inject constructor(
                                     XMovement.RIGHTER -> {
                                         if (stateMode == State.CONSTRAINT_FOLLOW) {
                                             robotController.speak(
-                                                "You're moving further to my right!",
+                                                context.getString(R.string.you_re_moving_further_to_my_right),
                                                 buffer
                                             )
                                         }
@@ -881,7 +951,7 @@ class MainViewModel @Inject constructor(
                                     XMovement.NOWHERE -> {
                                         if (stateMode == State.CONSTRAINT_FOLLOW) {
                                             robotController.speak(
-                                                "You're staying still on my right.",
+                                                context.getString(R.string.you_re_staying_still_on_my_right),
                                                 buffer
                                             )
                                         }
@@ -897,7 +967,7 @@ class MainViewModel @Inject constructor(
                                     YDirection.FAR -> {
                                         if (stateMode == State.CONSTRAINT_FOLLOW) {
                                             robotController.speak(
-                                                "You're far away from me! Would you like to come closer for a quiz?",
+                                                context.getString(R.string.you_re_far_away_from_me_would_you_like_to_come_closer_for_a_quiz),
                                                 buffer
                                             )
                                         }
@@ -909,7 +979,7 @@ class MainViewModel @Inject constructor(
                                     YDirection.MIDRANGE -> {
                                         if (stateMode == State.CONSTRAINT_FOLLOW) {
                                             robotController.speak(
-                                                "You're in the midrange relative to me. Would you like to do a quiz?",
+                                                context.getString(R.string.you_re_in_the_midrange_relative_to_me_would_you_like_to_do_a_quiz),
                                                 buffer
                                             )
                                         }
@@ -921,7 +991,7 @@ class MainViewModel @Inject constructor(
                                     YDirection.CLOSE -> {
                                         if (stateMode == State.CONSTRAINT_FOLLOW) {
                                             robotController.speak(
-                                                "You're close to me! Press the Start Button to start the quiz.",
+                                                context.getString(R.string.you_re_close_to_me_press_the_start_button_to_start_the_quiz),
                                                 buffer
                                             )
                                         }
@@ -938,7 +1008,7 @@ class MainViewModel @Inject constructor(
                                 when (xMotion) {
                                     XMovement.LEFTER -> {
                                         if (stateMode == State.CONSTRAINT_FOLLOW) {
-                                            robotController.speak("You're moving to my left!", buffer)
+                                            robotController.speak(context.getString(R.string.you_re_moving_to_my_left), buffer)
                                         }
 
                                         conditionGate({ ttsStatus.value.status != TtsRequest.Status.COMPLETED })
@@ -947,7 +1017,7 @@ class MainViewModel @Inject constructor(
 
                                     XMovement.RIGHTER -> {
                                         if (stateMode == State.CONSTRAINT_FOLLOW) {
-                                            robotController.speak("You're moving to my right!", buffer)
+                                            robotController.speak(context.getString(R.string.you_re_moving_to_my_right), buffer)
                                         }
 
                                         conditionGate({ ttsStatus.value.status != TtsRequest.Status.COMPLETED })
@@ -957,7 +1027,7 @@ class MainViewModel @Inject constructor(
                                     XMovement.NOWHERE -> {
                                         if (stateMode == State.CONSTRAINT_FOLLOW) {
                                             robotController.speak(
-                                                "You're staying still in the middle.",
+                                                context.getString(R.string.you_re_staying_still_in_the_middle),
                                                 buffer
                                             )
                                         }
@@ -1203,6 +1273,15 @@ class MainViewModel @Inject constructor(
         this.say = say
     }
 
+    fun speechUi(text: String) {
+        viewModelScope.launch {
+            speech(text)
+        }
+    }
+
+    fun changeLanguage(language: TtsRequest.Language) {
+        robotController.changeLanguage(language)
+    }
     suspend fun speech(text: String) {
         robotController.speak(text, buffer)
         conditionGate({ ttsStatus.value.status != TtsRequest.Status.COMPLETED })

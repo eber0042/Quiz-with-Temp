@@ -1,1 +1,418 @@
-c
+poolSize:-> 3
+poolSizePriority:-> 2
+
+<!Quiz1>
+text:-> アンケート: 特定のコースの入学条件は何ですか？
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> false
+OnCorrect:-> true
+surveyOn:-> false
+columnLength:-> 6
+scoreType:-> s
+texts:->
+* Nitec/Higher Nitecの学生: GPA約2.0の関連するNitec/Higher Nitec ; false
+* GCE 'O' レベルの学生: 英語: C6, 数学: C6, 一つの関連科目: C6 ; true
+* Nitec/Higher Nitecの学生: GPAが4.0以上の関連するNitec/Higher Nitec ; false
+* GCE 'O' レベルの学生: 英語: B3, 数学: B4, 一つの関連科目: B4 ; false
+* Nitec/Higher Nitecの学生: GPAが2.5以上の関連するNitec/Higher Nitec ; true
+<end>
+
+<!Quiz2>
+text:-> アンケート: ここで提供されているディプロマコースは何ですか？
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> false
+OnCorrect:-> true
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* ロボティクス & メカトロニクス ; true
+* ジャーナリズム ; false
+* 電気 & 電子工学 ; true
+* 航空システム ; true
+* ファッションデザイン ; false
+<end>
+
+<!Quiz3>
+text:-> アンケート: GCE 'O' レベル試験の複数回の受験結果を組み合わせることはできますか？
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* はい、2回の受験結果を組み合わせることができます ; true
+* いいえ、1回の受験のみが認められています ; false
+* はい、複数回の受験結果の平均成績が使用されます ; false
+* はい、ただし科学または数学の科目にのみ適用されます ; false
+* いいえ、最新の受験結果のみが考慮されます ; false
+<end>
+
+<!Quiz4>
+text:-> アンケート: 直接入学プログラムや早期入学オプションはありますか？
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* はい、早期入学プログラム(EAE)を通じて ; true
+* いいえ、直接入学プログラムはありません ; false
+* はい、ただし国際学生のみが対象です ; false
+* はい、ただしGPAが4.5以上である場合のみです ; false
+* いいえ、通常の入学プロセスを通じて申し込む必要があります ; false
+<end>
+
+<!Quiz5>
+text:-> アンケート: 講義とチュートリアルの通常のクラスサイズはどのくらいですか？
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* 講義: 100人、チュートリアル: 50-60人 ; false
+* 講義: 200人、チュートリアル: 100-120人 ; false
+* 講義: 50人、チュートリアル: 20-25人 ; true
+* 講義: 20人、チュートリアル: 10-20人 ; false
+* 講義: 500人、チュートリアル: 100-120人 ; false
+<end>
+
+<!Quiz6>
+text:-> アンケート: このコースには専門分野や選択科目はありますか？
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* いいえ、このコースは一般的なプログラムであり、専門分野に進むためにはさらに学ぶ必要があります ; false
+* はい、ロボティクス、メカトロニクス、オートメーション、人工知能の選択科目があります ; true
+* はい、ただし人工知能、ウェブ開発、ソフトウェア開発のみです ; false
+* いいえ、専門分野や選択科目はありません ; false
+* はい、選択科目にはデータサイエンス、ソフトウェアエンジニアリング、データ分析、コンピュータ組織と設計が含まれます ; false
+<end>
+
+<!Quiz7>
+text:-> アンケート: このポリテクニックは学生の大学入学の準備をどのようにしていますか？
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* このコースは理論中心で、大学に進学するための基礎知識を学生が習得するため、実践的な経験はありません ; false
+* 学生は大学入学の準備をしません；仕事のためだけに準備します ; false
+* このコースには学術モジュール、実務経験、産業実習が含まれており、学生は実践的および理論的な知識をしっかりと理解します ; true
+* 大学準備のための特別なプログラムはなく、外部のコースが助けとなります ; false
+* 高成績の学生のみが大学入学の準備をします ; false
+<end>
+
+<!Quiz8>
+text:-> アンケート: このコースにはインターンシップの機会はありますか？
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* 学生はインターンシップを行いません ; false
+* 学生はSTエンジニアリングやパナソニックなどの企業で6週間のインターンシップを行います ; false
+* 学生はSTエンジニアリングやパナソニックなどの企業で20週間のインターンシップを行います ; true
+* 学生はポリテクニック内で事前に存在するプロジェクトに基づいてインターンシップを行います ; false
+* 学生は地元の小売業で2週間のインターンシップを行い、仕事の文化を理解します ; false
+<end>
+
+<Quiz9>
+text:-> 海外交換留学プログラムや留学プログラムはありますか？
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* はい、日本、ドイツ、韓国への留学の機会があります ; true
+* いいえ、海外への機会はありません ; false
+* はい、アメリカ、イギリス、カナダなどの英語圏のみです ; false
+* はい、しかしプログラムは短期の語学コースに限られています ; false
+* はい、シンガポールまたは周辺国の他のポリテクニックのみです ; false
+<end>
+
+<Quiz10>
+text:-> 学生が期待できる業界プロジェクトやコラボレーションはどのようなものですか？
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* 学生は業界とのコラボレーションなしで理論的なプロジェクトだけを行います ; false
+* 学生はロボットアームやスマートファクトリーソリューションの設計など、業界プロジェクトに取り組みます ; true
+* 学生は業界の焦点を持たない学術研究プロジェクトに取り組みます ; false
+* 学生はロボット工学以外の業界のためのソフトウェア開発に取り組みます ; false
+* 学生はマーケティングやビジネス開発のプロジェクトのみを行います ; false
+<end>
+
+<Quiz11>
+text:-> このコースのためにラボや専門施設を見学できますか？
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* いいえ、ラボは学生のみがアクセスできます ; false
+* はい、オープンハウスの際にロボティクスラボ、メカトロニクスラボ、オートメーションラボなどの見学ができます ; true
+* はい、しかし見学は定員に限られています ; false
+* いいえ、安全上の理由でラボは一般公開されていません ; false
+* はい、しかし見学は予約制です ; false
+<end>
+
+<Quiz12>
+text:-> 図書館、学習スペース、支援サービスへのアクセスはありますか？
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* はい、学生はすべてのサービスにアクセスできます ; true
+* いいえ、学生には学術的なリソースは提供されていません ; false
+* はい、しかし特定の学部やコースのみがアクセスできます ; false
+* はい、しかし図書館や学習スペースの使用には料金がかかります ; false
+* いいえ、学生は自分で学習資料やリソースを調達しなければなりません ; false
+<end>
+
+<Quiz13>
+text:-> スポーツ、音楽、その他の課外活動の施設はありますか？
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* いいえ、課外活動はありません ; false
+* はい、さまざまなスポーツ施設、音楽室、ロボティクスクラブなどのクラブがあります ; true
+* はい、しかし学生は自分のコースに関連する活動のみに参加できます ; false
+* はい、しかし課外活動に参加するためにはその活動に応じた費用を支払う必要があります ; false
+* いいえ、ポリテクニックは学問的な追求のみを重視しているため、学問施設のみが提供されます ; false
+<end>
+
+<Quiz14>
+text:-> 学生がアクセスできるソフトウェアやハードウェアツールはどのようなものですか？
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* 学生は無料のオンラインソフトウェアのみを利用できます ; false
+* 学生は業界標準のツール（CADソフトウェア（SolidWorks）、PLC、マイクロコントローラー、ROS）を使用します ; true
+* 学生は基本的なオフィスソフトウェアやオンライン計算機を使用します ; false
+* 学生はポリテクニックが開発した専用のソフトウェアのみを使用します ; false
+* 学生はソフトウェアツールを提供されず、コースで指定されたソフトウェアを購入する必要があります ; false
+<end>
+
+<Quiz15>
+text:-> 学生が参加できるクラブや社会活動は何ですか？
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* 学生はロボティクスクラブ、工学会、またはその他の興味に基づいたグループに参加できます ; true
+* クラブや社会活動は学生には提供されていません ; false
+* スポーツクラブのみが学生には提供されています ; false
+* 文学や人文学に関連する学問的なクラブのみが提供されています ; false
+* クラブは1つのみ、学生会です ; false
+<end>
+
+<Quiz16>
+text:-> 新入生に対するメンターシップやピアサポートのシステムはありますか？
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* はい、先輩が後輩をガイドするメンターシッププログラムがあります ; true
+* いいえ、メンターシッププログラムはありません ; false
+* はい、しかし1年生のみ対象です ; false
+* いいえ、サポートは教員のみが提供します ; false
+* はい、しかし最終学年の学生のみが対象です ; false
+<end>
+
+<Quiz17>
+text:-> ポリテクニックは学生のメンタルヘルスとカウンセリングサービスをどのようにサポートしていますか？
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* ポリテクニックはメンタルヘルスサポートを提供していません ; false
+* カウンセラーがメンタルヘルスサポートを提供しており、ウェルビーイングを促進するワークショップもあります ; true
+* メンタルヘルスサポートは特定の条件を持つ学生のみが利用できます ; false
+* メンタルヘルスプログラムはなく、ピアサポートのみです ; false
+* カウンセリングサービスは試験期間中のみ提供されます ; false
+<end>
+
+<Quiz18>
+text:-> 学生に奨学金、助成金、または経済的支援はありますか？
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* はい、SEG奨学金や経済的支援制度があります ; true
+* いいえ、学生は全額の学費を支払わなければなりません ; false
+* はい、しかし学業成績が優秀な学生のみです ; false
+* はい、しかし特定のコースにいる学生のみです ; false
+* いいえ、経済的支援はありません ; false
+<end>
+
+<Quiz19>
+text:-> このコースを修了した卒業生の就職の見通しはどうですか？
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* 卒業生はロボティクスエンジニア、オートメーションスペシャリスト、またはメカトロニクステクニシャンの職に就くことができます ; true
+* 卒業生はカスタマーサービス職のみで働けます ; false
+* 卒業生はロボティクスやエンジニアリングとは無関係な分野で働けます ; false
+* 卒業生は雇用されるためにさらに学位を取得する必要があります ; false
+* 卒業生は非技術的な分野でのみ技術者として働けます ; false
+<end>
+
+<Quiz20>
+text:-> 卒業後に学生を支援するための卒業生ネットワークやキャリアサービスはありますか？
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* いいえ、卒業生ネットワークやキャリアサービスはありません ; false
+* はい、NYPはキャリアサービスと卒業生ネットワークを提供し、学生を業界の専門家とつなげます ; true
+* はい、しかし最終学年の学生のみ対象です ; false
+* いいえ、学生は自分でキャリアの機会を探さなければなりません ; false
+* はい、しかしエンジニアリング学科の卒業生のみが対象です ; false
+<end>
+
+<Quiz21>
+text:-> ロボティクスおよびメカトロニクス工学のディプロマコースに必要な最低入学条件は何ですか？
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* 英語: 7、追加数学/数学: 6、以下のいずれか1科目: 科学、コンピュータ、デザイン＆テクノロジー、またはエレクトロニクス ; true
+* 特定の入学条件はなく、誰でも申し込むことができます ; false
+* 英語: 6、数学: 5、科目別の条件はありません ; false
+* 英語の合格のみが必要で、他の科目は指定されていません ; false
+* 英語: 8、追加数学: 7、物理は必須科目です ; false
+<end>
+
+<Quiz22>
+text:-> 調査: クイズを楽しみましたか？
+image:-> R.drawable.image4
+background:-> R.drawable.like
+textQuestion:-> true
+imageQuestion:-> true
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> true
+columnLength:-> 1
+scoreType:-> s
+texts:->
+* はい、楽しみました！ ; true
+* まあまあでした。 ; true
+* いいえ、楽しめませんでした。 ; true
+<end>

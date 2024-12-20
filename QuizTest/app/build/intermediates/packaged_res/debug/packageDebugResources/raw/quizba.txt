@@ -1,85 +1,8 @@
-<Quiz1>
-text:-> Einfache Antwort: Welcher Planet is als roter Planet bekannt?
-image:-> R.drawable.image4
-background:-> R.drawable.image3
-textQuestion:-> true
-imageQuestion:-> true
-singleOn:-> true
-OnCorrect:-> false
-surveyOn:-> false
-columnLength:-> 3
-scoreType:-> s
-texts:->
-* Mars ; true
-* Venus ; false
-* Jupiter ; false
-* Saturn ; false
-* Erde ; false
-* Neptun ; false
-<end>
+poolSize:-> 3
+poolSizePriority:-> 2
 
-<Quiz2>
-text:-> Einfache Antwort: Wer hod d'Mona Lisa g’malt?
-image:-> R.drawable.image4
-background:-> R.drawable.image3
-textQuestion:-> true
-imageQuestion:-> true
-singleOn:-> true
-OnCorrect:-> false
-surveyOn:-> false
-columnLength:-> 3
-scoreType:-> s
-texts:->
-* Leonardo da Vinci ; true
-* Vincent van Gogh ; false
-* Pablo Picasso ; false
-* Claude Monet ; false
-* Salvador Dalí ; false
-* Michelangelo ; false
-<end>
-
-<Quiz3>
-text:-> Einfache Antwort: Was is d’Hauptstod vo Frankreich?
-image:-> R.drawable.image4
-background:-> R.drawable.image3
-textQuestion:-> true
-imageQuestion:-> true
-singleOn:-> true
-OnCorrect:-> false
-surveyOn:-> false
-columnLength:-> 3
-scoreType:-> s
-texts:->
-* Paris ; true
-* Rom ; false
-* Madrid ; false
-* Berlin ; false
-* Wien ; false
-* Brüssel ; false
-<end>
-
-<Quiz4>
-text:-> Einfache Antwort: Wos is da Siedepunkt vom Wasser?
-image:-> R.drawable.image4
-background:-> R.drawable.image3
-textQuestion:-> true
-imageQuestion:-> false
-singleOn:-> true
-OnCorrect:-> false
-surveyOn:-> false
-columnLength:-> 2
-scoreType:-> s
-texts:->
-* 100°C ; true
-* 50°C ; false
-* 0°C ; false
-* 150°C ; false
-* 200°C ; false
-* 75°C ; false
-<end>
-
-<Quiz5>
-text:-> Mehrere Antworten: Welche von dene Viecher san Säugetiere?
+<!Quiz1>
+text:-> Was sind die Zulassungsvoraussetzungen für bestimmte Kurse?
 image:-> R.drawable.image4
 background:-> R.drawable.image3
 textQuestion:-> true
@@ -87,39 +10,94 @@ imageQuestion:-> false
 singleOn:-> false
 OnCorrect:-> true
 surveyOn:-> false
-columnLength:-> 3
+columnLength:-> 6
 scoreType:-> s
 texts:->
-* Delfin ; true
-* Hai ; false
-* Fledermaus ; true
-* Krokodil ; false
-* Elefant ; true
-* Schildkröte ; false
+* Für Nitec/Higher Nitec Studierende: Ein relevanter Nitec/Higher Nitec mit einem GPA von ca. 2.0 ; false
+* Für GCE 'O' Level Studierende: Englisch: C6, Mathematik: C6, Ein relevantes Fach: C6 ; true
+* Für Nitec/Higher Nitec Studierende: Ein relevanter Nitec/Higher Nitec mit einem GPA von 4.0 oder höher ; false
+* Für GCE 'O' Level Studierende: Englisch: B3, Mathematik: B4, Ein relevantes Fach: B4 ; false
+* Für Nitec/Higher Nitec Studierende: Ein relevanter Nitec/Higher Nitec mit einem GPA von 2.5 oder höher ; true
+<end>
+
+<!Quiz2>
+text:-> Welche Diplomkurse werden hier angeboten?
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> false
+OnCorrect:-> true
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* Robotik & Mechatronik ; true
+* Journalismus ; false
+* Elektrische & Elektronische Technik ; true
+* Luft- und Raumfahrtsysteme ; true
+* Modedesign ; false
+<end>
+
+<!Quiz3>
+text:-> Kann ich verschiedene Noten aus mehreren Prüfungsdurchgängen der GCE 'O' Level Prüfungen kombinieren?
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* Ja, kombinierte Ergebnisse aus zwei Prüfungsdurchgängen werden akzeptiert ; true
+* Nein, nur ein Durchgang wird zugelassen ; false
+* Ja, aber der Durchschnitt der Noten aus mehreren Durchgängen wird verwendet ; false
+* Ja, aber nur für Naturwissenschaften oder Mathematik ; false
+* Nein, nur die Note des letzten Durchgangs wird berücksichtigt ; false
+<end>
+
+<!Quiz4>
+text:-> Gibt es Direktzulassungsprogramme oder Frühzulassungsoptionen?
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* Ja, über das Frühzulassungsprogramm (EAE) ; true
+* Nein, es gibt keine Direktzulassungsprogramme ; false
+* Ja, aber nur für internationale Studierende ; false
+* Ja, aber nur wenn du einen GPA von 4.5 oder höher hast ; false
+* Nein, du musst dich über das reguläre Zulassungsverfahren bewerben ; false
+<end>
+
+<!Quiz5>
+text:-> Was ist die typische Klassengröße in Vorlesungen und Tutorials?
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* Vorlesungen: 100 Studierende, Tutorials: 50-60 Studierende ; false
+* Vorlesungen: 200 Studierende, Tutorials: 100-120 Studierende ; false
+* Vorlesungen: 50 Studierende, Tutorials: 20-25 Studierende ; true
+* Vorlesungen: 20 Studierende, Tutorials: 10-20 Studierende ; false
+* Vorlesungen: 500 Studierende, Tutorials: 100-120 Studierende ; false
 <end>
 
 <Quiz6>
-text:-> Mehrere Antworten: Welche Elemente san Edelgase?
-image:-> R.drawable.image4
-background:-> R.drawable.image3
-textQuestion:-> true
-imageQuestion:-> false
-singleOn:-> false
-OnCorrect:-> true
-surveyOn:-> false
-columnLength:-> 2
-scoreType:-> s
-texts:->
-* Helium ; true
-* Sauerstoff ; false
-* Argon ; true
-* Stickstoff ; false
-* Neon ; true
-* Wasserstoff ; false
-<end>
-
-<Quiz7>
-text:-> Einfache Antwort: Wer hod d’Schwerkraft entdeckt?
+text:-> Gibt es Spezialisierungen oder Wahlfächer im Kurs?
 image:-> R.drawable.image4
 background:-> R.drawable.image3
 textQuestion:-> true
@@ -127,59 +105,303 @@ imageQuestion:-> false
 singleOn:-> true
 OnCorrect:-> false
 surveyOn:-> false
-columnLength:-> 3
+columnLength:-> 5
 scoreType:-> s
 texts:->
-* Isaac Newton ; true
-* Albert Einstein ; false
-* Galileo Galilei ; false
-* Nikola Tesla ; false
-* Marie Curie ; false
-* Charles Darwin ; false
+* Nein, der Kurs ist ein allgemeiner Studiengang und erfordert eine weiterführende Ausbildung für eine Spezialisierung ; false
+* Ja, Wahlfächer in Robotik, Mechatronik, Automatisierung und Künstlicher Intelligenz sind verfügbar ; true
+* Ja, aber nur in Künstlicher Intelligenz, Webentwicklung und Softwareentwicklung ; false
+* Nein, es gibt keine Spezialisierungen oder Wahlfächer ; false
+* Ja, Wahlfächer beinhalten Data Science, Software Engineering, Datenanalyse und Computerorganisation und -design für alle Themen ; false
+<end>
+
+<Quiz7>
+text:-> Wie bereitet die Fachhochschule die Studierenden auf die Universitätszulassung vor?
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* Der Kurs konzentriert sich ausschließlich auf Theorie ohne praktische Erfahrung, um sicherzustellen, dass Studierende die Grundlagen ihres Themas für den Universitätsbesuch beherrschen ; false
+* Studierende werden nicht auf die Universitätszulassung vorbereitet, sondern nur auf die Arbeit ; false
+* Der Kurs umfasst akademische Module, praktische Erfahrungen und industrielle Praktika, um sicherzustellen, dass Studierende ein solides Verständnis sowohl praktischer als auch theoretischer Kenntnisse haben ; true
+* Es gibt keine speziellen Programme zur Universitätsvorbereitung, aber es gibt Kurse außerhalb der Fachhochschule, die dabei helfen ; false
+* Nur Studierende mit Spitzennoten werden auf die Universitätszulassung vorbereitet ; false
 <end>
 
 <Quiz8>
-text:-> Mehrere Antworten: Welche vo dene san Programmiersprachn?
+text:-> Was sind die Praktikumsmöglichkeiten für diesen Kurs?
 image:-> R.drawable.image4
 background:-> R.drawable.image3
 textQuestion:-> true
 imageQuestion:-> false
-singleOn:-> false
+singleOn:-> true
 OnCorrect:-> false
 surveyOn:-> false
-columnLength:-> 2
-scoreType:-> all
+columnLength:-> 5
+scoreType:-> s
 texts:->
-* Python ; true
-* HTML ; false
-* Java ; true
-* CSS ; false
-* C# ; true
-* SQL ; false
+* Studierende absolvieren keine Praktika ; false
+* Studierende absolvieren ein 6-wöchiges Praktikum bei Unternehmen wie ST Engineering oder Panasonic ; false
+* Studierende absolvieren ein 20-wöchiges Praktikum bei Unternehmen wie ST Engineering oder Panasonic ; true
+* Studierende machen Praktika nur innerhalb der Fachhochschule, basierend auf bereits bestehenden Projekten ; false
+* Studierende absolvieren ein 2-wöchiges Praktikum bei einem lokalen Einzelhandelsunternehmen, um ein besseres Verständnis für die Arbeitskultur zu entwickeln ; false
 <end>
 
 <Quiz9>
-text:-> Was san die zwoa bekanntesten Berge in Japan?
+text:-> Gibt es Austausch- oder Studienprogramme im Ausland?
 image:-> R.drawable.image4
 background:-> R.drawable.image3
 textQuestion:-> true
 imageQuestion:-> false
-singleOn:-> false
-OnCorrect:-> true
+singleOn:-> true
+OnCorrect:-> false
 surveyOn:-> false
-columnLength:-> 2
-scoreType:-> all
+columnLength:-> 5
+scoreType:-> s
 texts:->
-* Berg Fuji ; true
-* Berg Everest ; false
-* Berg Tokio ; false
-* Berg Big Ben ; false
-* Berg Kita ; true
-* Berg Uluru ; false
+* Ja, es gibt Möglichkeiten nach Japan, Deutschland oder Südkorea zu gehen ; true
+* Nein, es gibt keine Auslandsmöglichkeiten ; false
+* Ja, aber nur in englischsprachige Länder wie Amerika, Großbritannien und Kanada ; false
+* Ja, aber das Programm ist nur für kurzfristige Sprachkurse ; false
+* Ja, aber nur zu anderen Fachhochschulen in Singapur oder umliegenden Ländern ; false
 <end>
 
 <Quiz10>
-text:-> Umfrage: Hod da des Quiz gfoin?
+text:-> Welche Art von Industrieprojekten oder Kooperationen können Studierende erwarten?
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* Studierende arbeiten nur an theoretischen Projekten ohne Industriekooperation ; false
+* Studierende arbeiten an Industrieprojekten wie dem Design von Roboterarmen und smarten Fabriklösungen ; true
+* Studierende arbeiten an akademischen Forschungsprojekten ohne Industriebezug ; false
+* Studierende arbeiten an Softwareentwicklungen für nicht-robotische Industrien ; false
+* Studierende sind nur an Marketing- und Geschäftsentwicklungsprojekten beteiligt ; false
+<end>
+
+<Quiz11>
+text:-> Kann man die Labore und spezialisierten Einrichtungen für diesen Kurs besichtigen?
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* Nein, die Labore sind nur für Studierende zugänglich ; false
+* Ja, bei Tagen der offenen Tür kann man Labore wie das Robotics Lab, Mechatronics Lab und Automation Lab besichtigen ; true
+* Ja, aber Führungen sind auf eine bestimmte Anzahl an Teilnehmern begrenzt ; false
+* Nein, die Labore sind aus Sicherheitsgründen für die Öffentlichkeit geschlossen ; false
+* Ja, aber Führungen sind nur nach Vereinbarung möglich ; false
+<end>
+
+<Quiz12>
+text:-> Gibt es Zugang zu Bibliotheken, Lernräumen und Unterstützungsdiensten?
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* Ja, Studierende haben Zugang zu allen diesen Dienstleistungen ; true
+* Nein, es gibt keine akademischen Ressourcen für Studierende ; false
+* Ja, aber nur bestimmte Abteilungen oder Kurse haben Zugang dazu ; false
+* Ja, aber es muss eine Gebühr für die Nutzung von Bibliotheken und Lernräumen gezahlt werden ; false
+* Nein, Studierende müssen ihre eigenen Lernmaterialien und Ressourcen beschaffen ; false
+<end>
+
+<Quiz13>
+text:-> Gibt es Einrichtungen für Sport, Musik und andere außerschulische Aktivitäten?
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* Nein, es gibt keine außerschulischen Aktivitäten ; false
+* Ja, es gibt verschiedene Sporteinrichtungen, Musikräume und Clubs wie den Robotics Club ; true
+* Ja, aber Studierende können nur Aktivitäten im Zusammenhang mit ihrem Kurs belegen ; false
+* Ja, aber Studierende müssen eine Gebühr für die Teilnahme an außerschulischen Aktivitäten zahlen ; false
+* Nein, nur akademische Einrichtungen werden angeboten, da die Fachhochschule nur akademische Zwecke verfolgt ; false
+<end>
+
+<Quiz14>
+text:-> Auf welche Software- oder Hardware-Tools haben Studierende Zugriff?
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* Studierende haben nur Zugang zu kostenloser Online-Software ; false
+* Studierende verwenden Industriestandard-Tools wie CAD-Software (SolidWorks), PLCs, Mikrocontroller und ROS ; true
+* Studierende verwenden grundlegende Bürosoftware und Online-Rechner ; false
+* Studierende verwenden nur proprietäre Software, die von der Fachhochschule entwickelt wurde ; false
+* Studierende erhalten keine Softwaretools und müssen Software nach den Vorgaben ihres Kurses kaufen ; false
+<end>
+
+<Quiz15>
+text:-> Welche Clubs oder Gesellschaften können Studierende beitreten?
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* Studierende können dem Robotics Club, der Engineering Society oder anderen interessenbasierten Gruppen beitreten ; true
+* Es gibt keine Clubs oder Gesellschaften für Studierende ; false
+* Nur Sportclubs sind für Studierende verfügbar ; false
+* Nur akademische Clubs im Bereich Literatur und Geisteswissenschaften sind verfügbar ; false
+* Es gibt nur einen Club, den Student Council ; false
+<end>
+
+<Quiz16>
+text:-> Gibt es ein Mentoren- oder Peer-Support-System für neue Studierende?
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* Ja, ältere Studierende begleiten jüngere durch ein Mentorenprogramm ; true
+* Nein, es gibt kein Mentorenprogramm ; false
+* Ja, aber nur für Erstsemester ; false
+* Nein, nur Fakultätsmitglieder bieten Unterstützung an ; false
+* Ja, aber nur im letzten Studienjahr ; false
+<end>
+
+<Quiz17>
+text:-> Wie unterstützt die Fachhochschule Studierende im Bereich der psychischen Gesundheit und Beratung?
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* Die Fachhochschule bietet keine Unterstützung für psychische Gesundheit an ; false
+* Es stehen Berater für psychische Gesundheit zur Verfügung, sowie Workshops zur Förderung des Wohlbefindens ; true
+* Psychische Gesundheitsunterstützung ist nur für Studierende mit bestimmten Bedingungen verfügbar ; false
+* Es gibt kein formelles Programm für psychische Gesundheit, nur Peer-Unterstützung ; false
+* Beratungsdienste sind nur während der Prüfungszeit verfügbar ; false
+<end>
+
+<Quiz18>
+text:-> Gibt es Stipendien, Zuschüsse oder finanzielle Unterstützung für Studierende?
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* Ja, es gibt Stipendien wie das SEG-Stipendium und finanzielle Unterstützungsprogramme ; true
+* Nein, Studierende müssen die vollen Studiengebühren ohne Unterstützung zahlen ; false
+* Ja, aber nur für Studierende mit hohen akademischen Leistungen ; false
+* Ja, aber nur für Studierende in bestimmten Studiengängen ; false
+* Nein, es gibt keine finanziellen Unterstützungsmöglichkeiten ; false
+<end>
+
+<Quiz19>
+text:-> Wia schau'n d' Berufschancen für Absolventen vo dem Kurs aus?
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* Absolventen kinnan Roll'n wie Robotics Engineer, Automation Specialist oder Mechatronics Technician kriagn ; true
+* Absolventen könnan nu in Kundenservice-Positionen arbeit'n ; false
+* Absolventen kinnan in jedem Bereich, der nix mit Robotik oder Ingenieurwissenschaften zu tun hod, arbeit'n ; false
+* Absolventen miass'n noch weitermachen mit Studium, um in da Berufswelt unterzukomm'n ; false
+* Absolventen könnan nu als Techniker in nicht-technischen Bereichen arbeit'n ; false
+<end>
+
+<Quiz20>
+text:-> Gibt's Alumni-Netzwerke oder Karrierdienste, die Studierende nach'm Abschluss unterstütz'n?
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* Nein, gibt's koane Alumni-Netzwerke oder Karrierdienste ; false
+* Ja, NYP biet' Karrierdienste und Alumni-Netzwerke, um Studierende mit Fachleuten aus der Industrie z' verbinden ; true
+* Ja, aber nur für Studierende im letzten Jahr ; false
+* Nein, Studierende müss'n selber nach Karrierechancen such'n ; false
+* Ja, aber nur Alumni aus der Ingenieursabteilung sind dabei ; false
+<end>
+
+<Quiz21>
+text:-> Was san die Mindestanforderungen für den Eintritt ins Robotics und Mechatronics Engineering Diplomkurs?
+image:-> R.drawable.image4
+background:-> R.drawable.image3
+textQuestion:-> true
+imageQuestion:-> false
+singleOn:-> true
+OnCorrect:-> false
+surveyOn:-> false
+columnLength:-> 5
+scoreType:-> s
+texts:->
+* Englisch: 7, Zusätzliche Mathematik/Mathematik: 6, und einer von folgenden: Wissenschaft, Informatik, Design & Technologie oder Elektronik ; true
+* Koane spezifischen Eintrittsanforderungen; jeder kann sich bewerben ; false
+* Englisch: 6, Mathematik: 5, und koane spezifischen Anforderungen ; false
+* Nur a Bestehen in Englisch is erforderlich, keine anderen Fächer angegeben ; false
+* Englisch: 8, Zusätzliche Mathematik: 7, und Physik als Pflichtfach ; false
+<end>
+
+<Quiz22>
+text:-> Umfrage: Hast du des Quiz gemacht und Spaß daran g'habt?
 image:-> R.drawable.image4
 background:-> R.drawable.like
 textQuestion:-> true
@@ -190,7 +412,8 @@ surveyOn:-> true
 columnLength:-> 1
 scoreType:-> s
 texts:->
-* Jo, hod ma gfoin! ; true
-* Joa, war ned schlecht. ; true
-* Na, hod ma ned gfoin. ; true
+* Ja, des hat mir g'follt! ; true
+* Es war okay. ; true
+* Nein, des hat mir net g'follt. ; true
 <end>
+

@@ -1,10 +1,12 @@
 package com.temi.temiSDK;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.util.Log;
 import androidx.lifecycle.ViewModel;
 import com.robotemi.sdk.TtsRequest;
 import dagger.hilt.android.lifecycle.HiltViewModel;
+import dagger.hilt.android.qualifiers.ApplicationContext;
 import javax.inject.Inject;
 import kotlin.math.*;
 
