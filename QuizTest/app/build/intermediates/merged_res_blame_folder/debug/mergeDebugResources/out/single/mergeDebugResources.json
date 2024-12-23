@@ -76,6 +76,10 @@
         "source": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-main-70:\\mipmap-anydpi-v26\\ic_launcher.xml"
     },
     {
+        "merged": "com.temi.temiSDK.app-debug-68:/drawable-nodpi_reference_image.png.flat",
+        "source": "com.temi.temiSDK.app-main-70:/drawable-nodpi/reference_image.png"
+    },
+    {
         "merged": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-debug-68:\\raw_quizen.txt.flat",
         "source": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-main-70:\\raw\\quizen.txt"
     },
@@ -90,10 +94,6 @@
     {
         "merged": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-debug-68:\\xml_backup_rules.xml.flat",
         "source": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-main-70:\\xml\\backup_rules.xml"
-    },
-    {
-        "merged": "com.temi.temiSDK.app-debug-68:/raw_quizba.txt.flat",
-        "source": "com.temi.temiSDK.app-main-70:/raw/quizba.txt"
     },
     {
         "merged": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-debug-68:\\raw_language.txt.flat",
@@ -144,6 +144,10 @@
         "source": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-main-70:\\drawable-nodpi\\pres.jpg"
     },
     {
+        "merged": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-debug-68:\\drawable-nodpi_reference_image.png.flat",
+        "source": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-main-70:\\drawable-nodpi\\reference_image.png"
+    },
+    {
         "merged": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-debug-68:\\mipmap-xxxhdpi_ic_launcher.webp.flat",
         "source": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-main-70:\\mipmap-xxxhdpi\\ic_launcher.webp"
     },
@@ -154,10 +158,6 @@
     {
         "merged": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-debug-68:\\xml_data_extraction_rules.xml.flat",
         "source": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-main-70:\\xml\\data_extraction_rules.xml"
-    },
-    {
-        "merged": "com.temi.temiSDK.app-debug-68:/raw_quizen.txt.flat",
-        "source": "com.temi.temiSDK.app-main-70:/raw/quizen.txt"
     },
     {
         "merged": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-debug-68:\\drawable_image5.jpg.flat",
@@ -232,16 +232,8 @@
         "source": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-main-70:\\drawable-nodpi\\oip__3_.jpg"
     },
     {
-        "merged": "com.temi.temiSDK.app-debug-68:/raw_quizjp.txt.flat",
-        "source": "com.temi.temiSDK.app-main-70:/raw/quizjp.txt"
-    },
-    {
         "merged": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-debug-68:\\drawable_image1.jpg.flat",
         "source": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-main-70:\\drawable\\image1.jpg"
-    },
-    {
-        "merged": "com.temi.temiSDK.app-debug-68:/raw_quizte.txt.flat",
-        "source": "com.temi.temiSDK.app-main-70:/raw/quizte.txt"
     },
     {
         "merged": "C:\\Users\\nypro\\.gradle\\daemon\\8.7\\com.temi.temiSDK.app-debug-68:\\mipmap-mdpi_ic_launcher_round.webp.flat",

@@ -4,7 +4,7 @@
             "outputFile": "com.temi.temiSDK.app-mergeDebugResources-66:/values-v18/values-v18.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\nypro\\.gradle\\caches\\transforms-4\\63f53cd0167cee89f95883e21c6aeae4\\transformed\\appcompat-1.6.1\\res\\values-v18\\values-v18.xml",
+                    "source": "C:\\Users\\nypro\\.gradle\\caches\\transforms-4\\3d0171b27b6d5247c83d15931be7831c\\transformed\\appcompat-1.6.1\\res\\values-v18\\values-v18.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

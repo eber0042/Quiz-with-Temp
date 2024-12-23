@@ -55,10 +55,12 @@ import java.util.Locale;
 import java.util.UUID;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.inputmethod.InputMethodManager;
 import androidx.annotation.RequiresPermission;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import com.robotemi.sdk.TtsRequest;
+import java.io.IOException;
 
 @kotlin.Metadata(mv = {1, 9, 0}, k = 1, xi = 48, d1 = {"\u0000\u0014\n\u0002\u0018\u0002\n\u0002\u0010\u0000\n\u0002\b\u0002\n\u0002\u0010\u000e\n\u0002\b\b\b\u00c6\u0002\u0018\u00002\u00020\u0001B\u0007\b\u0002\u00a2\u0006\u0002\u0010\u0002R/\u0010\u0005\u001a\u0004\u0018\u00010\u00042\b\u0010\u0003\u001a\u0004\u0018\u00010\u00048F@FX\u0086\u008e\u0002\u00a2\u0006\u0012\n\u0004\b\n\u0010\u000b\u001a\u0004\b\u0006\u0010\u0007\"\u0004\b\b\u0010\t\u00a8\u0006\f"}, d2 = {"Lcom/temi/temiSDK/GlobalData;", "", "()V", "<set-?>", "", "emotionResult", "getEmotionResult", "()Ljava/lang/String;", "setEmotionResult", "(Ljava/lang/String;)V", "emotionResult$delegate", "Landroidx/compose/runtime/MutableState;", "app_debug"})
 public final class GlobalData {

@@ -3,6 +3,8 @@ package com.temi.temiSDK
 import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.robotemi.sdk.TtsRequest
@@ -10,6 +12,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.util.Locale
 import javax.inject.Inject
 import kotlin.math.*
 
@@ -109,6 +112,30 @@ class MainViewModel @Inject constructor(
     private var currentIndex = 0
     private var previousLastChoice = -1
 
+    object LocaleManager {
+        fun setLocale(context: Context, languageCode: String) {
+            val locale = Locale(languageCode)
+            Locale.setDefault(locale)
+
+            val resources = context.resources
+            val config = resources.configuration
+            config.setLocale(locale)
+            resources.updateConfiguration(config, resources.displayMetrics)
+        }
+    }
+
+    private val _currentLanguage = MutableLiveData<String>()
+    val currentLanguage: LiveData<String> get() = _currentLanguage
+
+    // Method to change the language
+    fun changeLanguageString(languageCode: String) {
+        // Update the LiveData
+        _currentLanguage.value = languageCode
+
+        // Update the locale
+        LocaleManager.setLocale(context, languageCode)
+    }
+
     // This is the responses of the temi when someone answers a question
     suspend fun textModelChoice(state: Int, buffer: Long) {
         // Function to get the next random number in the shuffled array
@@ -173,6 +200,7 @@ class MainViewModel @Inject constructor(
     }
 
     init {
+
         /*
         viewModelScope.launch {
             while (true) { // This while loop is used to refresh the state to allow for refresh

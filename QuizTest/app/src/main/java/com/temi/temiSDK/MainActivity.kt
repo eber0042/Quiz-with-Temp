@@ -110,14 +110,21 @@ import java.util.UUID
 import kotlin.random.Random
 import android.view.SurfaceHolder
 import android.view.SurfaceView
+import android.view.inputmethod.InputMethodManager
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresPermission
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.BasicText
+import androidx.compose.foundation.verticalScroll
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.robotemi.sdk.TtsRequest
+import java.io.IOException
 
 /*
 @Composable
@@ -160,22 +167,67 @@ fun Greeting() {
 
 class AudioPlayerViewModel : ViewModel() {
     private var audioPlayer: AudioPlayer? = null
+    private var audioPlayer1: AudioPlayer? = null
     private var audioPlayer2: AudioPlayer? = null
+    private var audioPlayer3: AudioPlayer? = null
+    private var audioPlayer4: AudioPlayer? = null
+    private var audioPlayer5: AudioPlayer? = null
+    private var audioPlayer6: AudioPlayer? = null
+    private var audioPlayer7: AudioPlayer? = null
+    private var audioPlayer8: AudioPlayer? = null
+
 
     // Initialize AudioPlayers using Context passed as a parameter
     fun initAudioPlayers(context: Context) {
         // Initialize audio players if they are not already initialized
         if (audioPlayer == null) {
             audioPlayer = AudioPlayer(context.applicationContext, R.raw.greeting1)  // Use application context
+//            audioPlayer?.prepare() // Prepare the media player
+        }
+        if (audioPlayer1 == null) {
+            audioPlayer1 = AudioPlayer(context.applicationContext, R.raw.buttonsound)  // Replace with your raw file
+//            audioPlayer1?.prepare() // Prepare the media player
         }
         if (audioPlayer2 == null) {
             audioPlayer2 = AudioPlayer(context.applicationContext, R.raw.thememusic)  // Use application context
+//            audioPlayer2?.prepare() // Prepare the media player
+        }
+        if (audioPlayer3 == null) {
+            audioPlayer3 = AudioPlayer(context.applicationContext, R.raw.buttonsound1)  // Replace with your raw file
+//            audioPlayer3?.prepare() // Prepare the media player
+        }
+        if (audioPlayer4 == null) {
+            audioPlayer4 = AudioPlayer(context.applicationContext, R.raw.alarm)  // Replace with your raw file
+//            audioPlayer4?.prepare() // Prepare the media player
+        }
+        if (audioPlayer5 == null) {
+            audioPlayer5 = AudioPlayer(context.applicationContext, R.raw.alert)  // Replace with your raw file
+//            audioPlayer5?.prepare() // Prepare the media player
+        }
+        if (audioPlayer6 == null) {
+            audioPlayer6 = AudioPlayer(context.applicationContext, R.raw.correct)  // Replace with your raw file
+//            audioPlayer6?.prepare() // Prepare the media player
+        }
+        if (audioPlayer7 == null) {
+            audioPlayer7 = AudioPlayer(context.applicationContext, R.raw.ok)  // Replace with your raw file
+//            audioPlayer7?.prepare() // Prepare the media player
+        }
+        if (audioPlayer8 == null) {
+            audioPlayer8 = AudioPlayer(context.applicationContext, R.raw.incorrect)  // Replace with your raw file
+//            audioPlayer8?.prepare() // Prepare the media player
         }
     }
 
     // Renamed getter methods to avoid clash
     fun getAudioPlayer(): AudioPlayer? = audioPlayer
+    fun getAudioPlayer1(): AudioPlayer? = audioPlayer1
     fun getAudioPlayer2(): AudioPlayer? = audioPlayer2
+    fun getAudioPlayer3(): AudioPlayer? = audioPlayer3
+    fun getAudioPlayer4(): AudioPlayer? = audioPlayer4
+    fun getAudioPlayer5(): AudioPlayer? = audioPlayer5
+    fun getAudioPlayer6(): AudioPlayer? = audioPlayer6
+    fun getAudioPlayer7(): AudioPlayer? = audioPlayer7
+    fun getAudioPlayer8(): AudioPlayer? = audioPlayer8
 }
 
 @AndroidEntryPoint
@@ -297,16 +349,20 @@ sealed class QuizState {
 class AudioPlayer(context: Context, private val mediaResId: Int) {
 
     private val mediaPlayer: MediaPlayer = MediaPlayer.create(context, mediaResId)
-    private val handler = Handler(Looper.getMainLooper())
-    private var volumeRunnable: Runnable? = null
+    private var isPrepared: Boolean = false  // Flag to check if MediaPlayer is prepared
 
-    init {
-        // Optionally, you can configure the media player here
-    }
+//    // This function prepares the media player (called once during initialization or setup)
+//    fun prepare() {
+//        if (!isPrepared) {
+//            mediaPlayer.prepareAsync()  // Prepare the player asynchronously
+//            isPrepared = true
+//        }
+//    }
 
+    // This function handles playing the prepared media
     fun play() {
         if (!mediaPlayer.isPlaying) {
-            mediaPlayer.start()
+            mediaPlayer.start()  // Start playing the audio
         }
     }
 
@@ -331,7 +387,6 @@ class AudioPlayer(context: Context, private val mediaResId: Int) {
 
     fun release() {
         mediaPlayer.release()
-        volumeRunnable?.let { handler.removeCallbacks(it) }
     }
 
     fun setLooping(isLooping: Boolean) {
@@ -342,33 +397,9 @@ class AudioPlayer(context: Context, private val mediaResId: Int) {
         // Volume ranges from 0.0f (silent) to 1.0f (loudest)
         mediaPlayer.setVolume(volume, volume)
     }
-
-    fun setVolumeOverTime(startVolume: Float, endVolume: Float, durationMs: Long) {
-        val volumeStep = (endVolume - startVolume) / (durationMs / 50) // Update every 50ms
-        var currentVolume = startVolume
-
-        // Remove any previously scheduled volume change
-        volumeRunnable?.let { handler.removeCallbacks(it) }
-
-        volumeRunnable = object : Runnable {
-            override fun run() {
-                currentVolume += volumeStep
-                if (currentVolume > endVolume) {
-                    currentVolume = endVolume
-                }
-                mediaPlayer.setVolume(currentVolume, currentVolume)
-                if (currentVolume < endVolume) {
-                    handler.postDelayed(this, 50)
-                }
-            }
-        }
-
-        handler.post(volumeRunnable!!)
-    }
 }
 
 @OptIn(ExperimentalAnimationApi::class)
-
 @Composable
 fun ImageCycler(
     imageResIds: List<Int>, durationMillis: Long = 2000L, // Duration for each image
@@ -1193,10 +1224,10 @@ fun QuizApp(context: Context) {
     val audioPlayer1 = remember { AudioPlayer(context, R.raw.buttonsound) }
     val audioPlayer2 = audioPlayerViewModel.getAudioPlayer2()
     audioPlayer2?.setVolume(0.5f)
-    val audioPlayer3 = remember { AudioPlayer(context, R.raw.alert) }
-    val audioPlayer4 = remember { AudioPlayer(context, R.raw.alarm) }
+    val audioPlayer3 = audioPlayerViewModel.getAudioPlayer5()
+    val audioPlayer4 = audioPlayerViewModel.getAudioPlayer4()
 
-    audioPlayer4.setLooping(true)
+    audioPlayer4?.setLooping(true)
 
     var showDialogExitQuizEarly by remember { mutableStateOf(false) }
     var showDialogSubmitThankYou by remember { mutableStateOf(false) }
@@ -1265,7 +1296,7 @@ fun QuizApp(context: Context) {
                             warning = false
                         }
                         if (!warning) {
-                            audioPlayer4.play()
+                            audioPlayer4?.play()
                         }
                     } else {
                         viewModel.volumeControl(volumeDefault)
@@ -1273,8 +1304,8 @@ fun QuizApp(context: Context) {
                         if (appState == AppState.Quiz) {
                             audioPlayer2?.play()
                         }
-                        audioPlayer4.stop()
-                        audioPlayer4.reset()
+                        audioPlayer4?.stop()
+                        audioPlayer4?.reset()
                         warning = true
                     }
                 }
@@ -1300,7 +1331,7 @@ fun QuizApp(context: Context) {
                             warning = false
                         }
                         if (!warning) {
-                            audioPlayer4.play()
+                            audioPlayer4?.play()
                         }
                     } else {
                         viewModel.volumeControl(volumeDefault)
@@ -1308,8 +1339,8 @@ fun QuizApp(context: Context) {
                         if (appState == AppState.QuizHome) {
                             audioPlayer?.play()
                         }
-                        audioPlayer4.stop()
-                        audioPlayer4.reset()
+                        audioPlayer4?.stop()
+                        audioPlayer4?.reset()
                         warning = true
                     }
                 }
@@ -1335,7 +1366,7 @@ fun QuizApp(context: Context) {
                             warning = false
                         }
                         if (!warning) {
-                            audioPlayer4.play()
+                            audioPlayer4?.play()
                         }
                     } else {
                         viewModel.volumeControl(volumeDefault)
@@ -1343,8 +1374,8 @@ fun QuizApp(context: Context) {
                         if (appState == AppState.ScoreBoard) {
                             audioPlayer?.play()
                         }
-                        audioPlayer4.stop()
-                        audioPlayer4.reset()
+                        audioPlayer4?.stop()
+                        audioPlayer4?.reset()
                         warning = true
                     }
                 }
@@ -1362,575 +1393,600 @@ fun QuizApp(context: Context) {
         // At this point, never got implemented T_T
     }
 
-    // Used to create a job to create a timeout system
+    // Timeout duration (1 minute)
+    val timeoutDuration = 60000L
+
+    // Job variable to handle timeout
     var timeoutJob by remember { mutableStateOf<Job?>(null) }
 
-    // Triggered each time `appState` changes
-    LaunchedEffect(appState) {
-        // Cancel any existing job to reset the timer
+    // CoroutineScope to launch timeout jobs
+    val coroutineScope = rememberCoroutineScope()
+
+    // Function to control timeout behavior
+    fun startTimeout() {
+        // Cancel any existing timeout job
         timeoutJob?.cancel()
 
-        if (appState != AppState.QuizHome) {
-            // Start a new timer job for the current `appState`
-            timeoutJob = launch {
-                delay(300000L) // Wait for 5 min
-                audioPlayer2?.stop()
-                appState = AppState.QuizHome // Set back to QuizHome if timeout completes
-            }
+        // Start a new timeout job
+        timeoutJob = coroutineScope.launch {
+            delay(timeoutDuration) // Wait for the specified timeout duration
+            audioPlayer2?.stop()    // Stop audio when timeout occurs
+            appState = AppState.QuizHome // Transition to QuizHome if timeout completes
         }
     }
 
-    when (appState) {
-        is AppState.Test -> {
-            Test(context)
+    // Trigger timeout control whenever `appState` changes
+    LaunchedEffect(appState) {
+        if (appState != AppState.QuizHome && appState != AppState.Bluetooth) { // Only start timeout if not already in QuizHome
+            startTimeout() // Start the timeout if not in QuizHome
         }
+    }
 
-        is AppState.QuizHome -> { //*** HOME SCREEN
-            viewModel.idleMode(true)
-            audioPlayer?.play()
-            audioPlayer?.setLooping(true)
-
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(
-                        top = 120.dp, start = 30.dp
-                    )
-                    .zIndex(5f), // Higher ZIndex value places it on top, // Padding around the Box
-                contentAlignment = Alignment.TopStart // Align content to top end (right)
-            ) {
-                BoxWithClickable(
-                    onClick = {
-                        appState = AppState.ScoreBoard;
-                    },
-                    text = stringResource(R.string.score_board),
-                    type = "cool",
-                    grow = false,
-                    animatedPress = true,
-                    cycleColor = false,
-                    modifier = Modifier.background(Color.LightGray) // Background color for the BoxWithClickable
-                )
+    // Add a transparent Box that covers the entire screen to detect taps
+    Box(
+        modifier = Modifier
+            .fillMaxSize() // Cover the entire screen
+            .pointerInput(Unit) {
+                detectTapGestures(onTap = {
+                    // Reset the timeout when the screen is tapped
+                    startTimeout() // Restart timeout on tap
+                })
+            }
+    ) {
+        when (appState) {
+            is AppState.Test -> {
+                Test(context)
             }
 
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(
-                        bottom = 120.dp, start = 30.dp
-                    )
-                    .zIndex(5f), // Higher ZIndex value places it on top, // Padding around the Box
-                contentAlignment = Alignment.BottomStart // Align content to top end (right)
-            ) {
-                BoxWithClickable(
-                    onClick = {
-                        passwordCheck = true
-                        // appState = AppState.Bluetooth;
-                    },
-                    text = "BLE",
-                    type = "cool",
-                    grow = false,
-                    animatedPress = true,
-                    cycleColor = false,
-                    modifier = Modifier.background(Color.LightGray) // Background color for the BoxWithClickable
-                )
-            }
+            is AppState.QuizHome -> { //*** HOME SCREEN
+                viewModel.idleMode(true)
+                audioPlayer?.play()
+                audioPlayer?.setLooping(true)
 
-            // Dialog to ask for password input
-            if (passwordCheck) {
-                if (password == "1234") Log.d("Input", password)
-                AlertDialog(onDismissRequest = { passwordCheck = false },
-                    title = { Text(stringResource(R.string.enter_password)) },
-                    text = {
-                        Column {
-                            OutlinedTextField(
-                                value = password,
-                                onValueChange = { password = it },
-                                label = { Text(stringResource(R.string.password)) },
-                                visualTransformation = PasswordVisualTransformation(),
-                                singleLine = true
-                            )
-                        }
-                    },
-                    confirmButton = {
-                        Button(onClick = {
-                            if (password == "1234") {
-                                appState = AppState.Bluetooth
-                                // Reset password and state
-                                passwordCheck = false
-                                password = ""
-                            }
-                        }) {
-                            Text(stringResource(R.string.confirm))
-                        }
-                    },
-                    dismissButton = {
-                        Button(onClick = {
-                            passwordCheck = false
-                            password = ""
-                        }) {
-                            Text(stringResource(R.string.cancel))
-                        }
-                    })
-            }
-
-            if (showDialogSubmitThankYou) {
-                // Launch an effect to close the dialog after a delay
-                LaunchedEffect(Unit) {
-                    delay(60000L) // Delay in milliseconds (e.g., 60 seconds)
-                    showDialogSubmitThankYou = false
-                }
-
-
-                var userInput by remember { mutableStateOf("") }
-
-                // Additional dialogue tailored to results
-                val additionalDialogue = when {
-                    save.sumOf { it.result.score } == save.sumOf { it.result.outOf } -> {
-                        stringResource(R.string.congratulations_on_your_perfect_score_if_you_d_like_to_learn_more_about_the_quiz_answers_or_have_any_questions_please_seek_out_a_staff_member_accompanying_the_temi_v3_robot)
-                    }
-
-                    save.sumOf { it.result.score } >= save.sumOf { it.result.outOf } / 2 -> {
-                        stringResource(R.string.good_effort_if_you_d_like_more_information_about_the_quiz_answers_or_have_questions_don_t_hesitate_to_speak_to_a_staff_member_nearby_with_the_temi_v3_robot)
-                    }
-
-                    else -> {
-                        stringResource(R.string.keep_trying_if_you_d_like_to_understand_more_about_the_quiz_answers_or_have_any_questions_a_staff_member_with_the_temi_v3_robot_is_here_to_help)
-                    }
-                }
-
-                viewModel.resultSpeech(
-                    state = SpeechState.THANKYOU,
-                    say = additionalDialogue
-                    //say = "Thank you for doing this quiz, please add your name so it can be added to my scoreboard."
-                )
-                if (save.sumOf { it.result.score } == save.sumOf { it.result.outOf }) {
-                    viewModel.resultSpeech(
-                        state = SpeechState.THANKYOU,
-                        say = stringResource(R.string.i_see_you_have_done_very_well_on_my_quiz_here_have_a_chocolate_on_me_please_add_your_name_so_your_glory_can_be_saved_and_shown_to_all)
-                    )
-                    bleManager?.moveServo()
-                }
-                AlertDialog(onDismissRequest = { showDialogSubmitThankYou = false },
-                    title = { Text(stringResource(R.string.thank_you)) },
-                    text = {
-                        Column {
-                            // Calculate the text based on conditions
-                            val resultText = when {
-                                save.sumOf { it.result.score } == save.sumOf { it.result.outOf } -> {
-                                    stringResource(R.string.you_got) + " ${save.sumOf { it.result.score }}/${save.sumOf { it.result.outOf }}. " + stringResource(
-                                        R.string.well_done
-                                    )
-                                }
-
-                                save.sumOf { it.result.score } >= save.sumOf { it.result.outOf } / 2 -> {
-                                    stringResource(R.string.you_got) + " ${save.sumOf { it.result.score }}/${save.sumOf { it.result.outOf }}. " + stringResource(
-                                        R.string.good_try
-                                    )
-                                }
-
-                                else -> {
-                                    stringResource(R.string.you_got) + " ${save.sumOf { it.result.score }}/${save.sumOf { it.result.outOf }}. " + stringResource(
-                                        R.string.keep_trying
-                                    )
-                                }
-                            }
-
-                            // Display text in UI
-                            Text(resultText)
-
-
-                            OutlinedTextField(
-                                value = userInput,
-                                onValueChange = { userInput = it },
-                                label = { Text(stringResource(R.string.input)) },
-                                singleLine = true
-                            )
-                        }
-                    },
-                    confirmButton = {
-                        Button(onClick = {
-                            showDialogSubmitThankYou = false
-
-                            // Find the last save
-                            saveNumber = 0
-                            while (PreferencesManager.getQuizQuestions(
-                                    context, "save$saveNumber"
-                                ) != null
-                            ) {
-                                saveNumber++
-                            }
-
-                            // Retrieve and update the last quiz data
-                            val temp = PreferencesManager.getQuizQuestions(
-                                context, "save${saveNumber - 1}"
-                            )
-
-                            userInput = userInput.split(" ").firstOrNull().toString()
-
-                            if (temp != null && userInput.isNotEmpty() && !getBlacklist(context).contains(
-                                    userInput.lowercase()
-                                ) && (userInput.length <= 20)
-                            ) { // Save user input
-                                temp.forEach { it.name = userInput }
-                                PreferencesManager.saveQuizQuestions(
-                                    context, "save${saveNumber - 1}", temp
-                                )
-                            } else if (temp != null) {
-                                temp.forEach { it.name = getWhitelist(context).random() }
-                                PreferencesManager.saveQuizQuestions(
-                                    context, "save${saveNumber - 1}", temp
-                                )
-                            }
-
-                            // Debugging Log
-                            Log.d(
-                                "User Name Check", "${
-                                    PreferencesManager.getQuizQuestions(
-                                        context, "save${saveNumber - 1}"
-                                    )
-                                }"
-                            )
-
-                        }) {
-                            Text(stringResource(R.string.ok))
-                        }
-                    },
-                    dismissButton = {
-                        Button(onClick = { showDialogSubmitThankYou = false }) {
-                            Text(stringResource(R.string.cancel))
-                        }
-                    })
-            }
-
-            if (audioPlayer != null) {
-                QuizHome(onStartClicked = {
-                    appState = AppState.Quiz;
-                    audioPlayer?.setLooping(false)
-                    audioPlayer?.stop();
-                    audioPlayer1.play();
-                }, audioPlayer, context)
-            }
-        }
-
-        is AppState.ScoreBoard -> {
-            viewModel.idleMode(false)
-            viewModel.resultSpeech(
-                state = SpeechState.SCOREBOARD,
-                say = stringResource(R.string.welcome_to_the_hall_of_fame_come_see_the_many_people_who_have_done_my_quiz)
-            )
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(
-                        top = 120.dp, start = 100.dp
-                    )
-                    .zIndex(5f), // Higher ZIndex value places it on top, // Padding around the Box
-                contentAlignment = Alignment.TopStart // Align content to top end (right)
-            ) {
-                BoxWithClickable(
-                    onClick = {
-                        appState = AppState.QuizHome;
-                    },
-                    text = stringResource(R.string.exit),
-                    type = "cool",
-                    grow = false,
-                    animatedPress = true,
-                    cycleColor = false,
-                    modifier = Modifier.background(Color.LightGray) // Background color for the BoxWithClickable
-                )
-            }
-            ScoreBoard()
-        }
-
-        is AppState.Quiz -> { //*** QUIZ
-            viewModel.idleMode(false)
-            if (!showDialogExitQuizEarly) {
-                audioPlayer2?.setLooping(true)
-                audioPlayer2?.play()
-            }
-
-            Box(
-                modifier = Modifier.fillMaxSize()
-            ) {
-                // Dialog used to make sure if someone want to leave the quiz early
-                if (showDialogExitQuizEarly) {
-                    audioPlayer2?.setLooping(false)
-                    audioPlayer2?.pause()
-                    audioPlayer3.play()
-                    viewModel.resultSpeech(
-                        state = SpeechState.EXIT_EARLY,
-                        say = stringResource(R.string.hang_on_you_are_about_to_submit_this_quiz_without_completing_all_the_questions_if_you_do_this_your_quiz_will_not_be_valid_are_you_sure_you_want_to_do_this)
-                    )
-                    AlertDialog(onDismissRequest = { showDialogExitQuizEarly = false },
-                        title = { Text(stringResource(R.string.warning)) },
-                        text = { Text(stringResource(R.string.warning_message)) },
-                        confirmButton = {
-                            Button(onClick = {
-                                audioPlayer1.play();
-                                audioPlayer2?.reset();
-                                appState = AppState.QuizHome
-                                showDialogExitQuizEarly = false
-                                // Handle exit logic here (e.g., navigate away, save state, etc.)
-                            }) {
-                                Text(stringResource(R.string.ok))
-                            }
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(
+                            top = 120.dp, start = 30.dp
+                        )
+                        .zIndex(5f), // Higher ZIndex value places it on top, // Padding around the Box
+                    contentAlignment = Alignment.TopStart // Align content to top end (right)
+                ) {
+                    BoxWithClickable(
+                        onClick = {
+                            appState = AppState.ScoreBoard;
                         },
-                        dismissButton = {
-                            Button(onClick = {
-                                showDialogExitQuizEarly = false
-                                // Handle cancel logic here if needed
-                            }) {
-                                Text(stringResource(R.string.cancel))
-                            }
-                        })
+                        text = stringResource(R.string.score_board),
+                        type = "cool",
+                        grow = false,
+                        animatedPress = true,
+                        cycleColor = false,
+                        modifier = Modifier.background(Color.LightGray) // Background color for the BoxWithClickable
+                    )
                 }
 
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(
-                            top = 80.dp, end = 30.dp
+                            bottom = 120.dp, start = 30.dp
                         )
                         .zIndex(5f), // Higher ZIndex value places it on top, // Padding around the Box
-                    contentAlignment = Alignment.TopEnd // Align content to top end (right)
+                    contentAlignment = Alignment.BottomStart // Align content to top end (right)
                 ) {
                     BoxWithClickable(
                         onClick = {
-                            appState = AppState.QuizHome;
-                            audioPlayer1.play();
-                            audioPlayer2?.stop();
+                            passwordCheck = true
+                            // appState = AppState.Bluetooth;
                         },
-                        text = stringResource(R.string.exit_quiz),
+                        text = "BLE",
                         type = "cool",
                         grow = false,
                         animatedPress = true,
                         cycleColor = false,
-                        modifier = Modifier
-                            .clip(RoundedCornerShape(2.dp)) // Rounds the corners
-                            .border(
-                                width = 2.dp,
-                                color = Color.Black,
-                                shape = RoundedCornerShape(5.dp) // Adjust shape as needed
-                            ) // Adds a border
-                            .padding(8.dp) // Padding inside the box
-                            .background(Color.LightGray) // Background color for the BoxWithClickable
+                        modifier = Modifier.background(Color.LightGray) // Background color for the BoxWithClickable
                     )
                 }
-                Quiz(context,
-                    onShowOverlay = { showDialogExitQuizEarly = true },
-                    save = { updatedQuestions -> // This gets the saved data from the quiz
-                        save = updatedQuestions
-                        Log.d("Save Check2", "${save[0].result}")
-                    },
-                    onStartClicked = {
-                        saveNumber = 0;
-                        // Check the memory and if current spot not empty increment the saveNumber
-                        while (PreferencesManager.getQuizQuestions(
-                                context, "save$saveNumber"
-                            ) != null
-                        ) saveNumber++
-                        // If valid save spot found, save new memory at that spot
-                        Log.d("Save Check", "${save}")
-                        PreferencesManager.saveQuizQuestions(
-                            context, "save$saveNumber", save
-                        ); // This saves the data
-                        Log.d(
-                            "Saved",
-                            "${PreferencesManager.getQuizQuestions(context, "save$saveNumber")}"
+
+                // Dialog to ask for password input
+                if (passwordCheck) {
+                    if (password == "1234") Log.d("Input", password)
+                    AlertDialog(onDismissRequest = { passwordCheck = false },
+                        title = { Text(stringResource(R.string.enter_password)) },
+                        text = {
+                            Column {
+                                OutlinedTextField(
+                                    value = password,
+                                    onValueChange = { password = it },
+                                    label = { Text(stringResource(R.string.password)) },
+                                    visualTransformation = PasswordVisualTransformation(),
+                                    singleLine = true
+                                )
+                            }
+                        },
+                        confirmButton = {
+                            Button(onClick = {
+                                if (password == "1234") {
+                                    appState = AppState.Bluetooth
+                                    // Reset password and state
+                                    passwordCheck = false
+                                    password = ""
+                                }
+                            }) {
+                                Text(stringResource(R.string.confirm))
+                            }
+                        },
+                        dismissButton = {
+                            Button(onClick = {
+                                passwordCheck = false
+                                password = ""
+                            }) {
+                                Text(stringResource(R.string.cancel))
+                            }
+                        })
+                }
+
+                if (showDialogSubmitThankYou) {
+                    // Launch an effect to close the dialog after a delay
+                    LaunchedEffect(Unit) {
+                        delay(60000L) // Delay in milliseconds (e.g., 60 seconds)
+                        showDialogSubmitThankYou = false
+                    }
+
+
+                    var userInput by remember { mutableStateOf("") }
+
+                    // Additional dialogue tailored to results
+                    val additionalDialogue = when {
+                        save.sumOf { it.result.score } == save.sumOf { it.result.outOf } -> {
+                            stringResource(R.string.congratulations_on_your_perfect_score_if_you_d_like_to_learn_more_about_the_quiz_answers_or_have_any_questions_please_seek_out_a_staff_member_accompanying_the_temi_v3_robot)
+                        }
+
+                        save.sumOf { it.result.score } >= save.sumOf { it.result.outOf } / 2 -> {
+                            stringResource(R.string.good_effort_if_you_d_like_more_information_about_the_quiz_answers_or_have_questions_don_t_hesitate_to_speak_to_a_staff_member_nearby_with_the_temi_v3_robot)
+                        }
+
+                        else -> {
+                            stringResource(R.string.keep_trying_if_you_d_like_to_understand_more_about_the_quiz_answers_or_have_any_questions_a_staff_member_with_the_temi_v3_robot_is_here_to_help)
+                        }
+                    }
+
+                    viewModel.resultSpeech(
+                        state = SpeechState.THANKYOU,
+                        say = additionalDialogue
+                        //say = "Thank you for doing this quiz, please add your name so it can be added to my scoreboard."
+                    )
+                    if (save.sumOf { it.result.score } == save.sumOf { it.result.outOf }) {
+                        viewModel.resultSpeech(
+                            state = SpeechState.THANKYOU,
+                            say = stringResource(R.string.i_see_you_have_done_very_well_on_my_quiz_here_have_a_chocolate_on_me_please_add_your_name_so_your_glory_can_be_saved_and_shown_to_all)
                         )
-                        showDialogSubmitThankYou = true
-                        appState = AppState.QuizHome;
-                        audioPlayer2?.setLooping(false);
-                        audioPlayer2?.stop();
+                        bleManager?.moveServo()
+                    }
+                    AlertDialog(onDismissRequest = { showDialogSubmitThankYou = false },
+                        title = { Text(stringResource(R.string.thank_you)) },
+                        text = {
+                            Column {
+                                // Calculate the text based on conditions
+                                val resultText = when {
+                                    save.sumOf { it.result.score } == save.sumOf { it.result.outOf } -> {
+                                        stringResource(R.string.you_got) + " ${save.sumOf { it.result.score }}/${save.sumOf { it.result.outOf }}. " + stringResource(
+                                            R.string.well_done
+                                        )
+                                    }
+
+                                    save.sumOf { it.result.score } >= save.sumOf { it.result.outOf } / 2 -> {
+                                        stringResource(R.string.you_got) + " ${save.sumOf { it.result.score }}/${save.sumOf { it.result.outOf }}. " + stringResource(
+                                            R.string.good_try
+                                        )
+                                    }
+
+                                    else -> {
+                                        stringResource(R.string.you_got) + " ${save.sumOf { it.result.score }}/${save.sumOf { it.result.outOf }}. " + stringResource(
+                                            R.string.keep_trying
+                                        )
+                                    }
+                                }
+
+                                // Display text in UI
+                                Text(resultText)
+
+
+                                OutlinedTextField(
+                                    value = userInput,
+                                    onValueChange = { userInput = it },
+                                    label = { Text(stringResource(R.string.input)) },
+                                    singleLine = true
+                                )
+                            }
+                        },
+                        confirmButton = {
+                            Button(onClick = {
+                                showDialogSubmitThankYou = false
+
+                                // Find the last save
+                                saveNumber = 0
+                                while (PreferencesManager.getQuizQuestions(
+                                        context, "save$saveNumber"
+                                    ) != null
+                                ) {
+                                    saveNumber++
+                                }
+
+                                // Retrieve and update the last quiz data
+                                val temp = PreferencesManager.getQuizQuestions(
+                                    context, "save${saveNumber - 1}"
+                                )
+
+                                userInput = userInput.split(" ").firstOrNull().toString()
+
+                                if (temp != null && userInput.isNotEmpty() && !getBlacklist(context).contains(
+                                        userInput.lowercase()
+                                    ) && (userInput.length <= 20)
+                                ) { // Save user input
+                                    temp.forEach { it.name = userInput }
+                                    PreferencesManager.saveQuizQuestions(
+                                        context, "save${saveNumber - 1}", temp
+                                    )
+                                } else if (temp != null) {
+                                    temp.forEach { it.name = getWhitelist(context).random() }
+                                    PreferencesManager.saveQuizQuestions(
+                                        context, "save${saveNumber - 1}", temp
+                                    )
+                                }
+
+                                // Debugging Log
+                                Log.d(
+                                    "User Name Check", "${
+                                        PreferencesManager.getQuizQuestions(
+                                            context, "save${saveNumber - 1}"
+                                        )
+                                    }"
+                                )
+
+                            }) {
+                                Text(stringResource(R.string.ok))
+                            }
+                        },
+                        dismissButton = {
+                            Button(onClick = { showDialogSubmitThankYou = false }) {
+                                Text(stringResource(R.string.cancel))
+                            }
+                        })
+                }
+
+                if (audioPlayer != null) {
+                    QuizHome(onStartClicked = {
+                        appState = AppState.Quiz;
+                        Log.i("Suffer!", "Check")
+                        audioPlayer?.setLooping(false)
+                        audioPlayer?.stop();
                         audioPlayer1.play();
-                    })
+                    }, audioPlayer, context)
+                }
             }
-        }
 
-        is AppState.Bluetooth -> {
-            viewModel.idleMode(false)
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(
-                        bottom = 120.dp, start = 30.dp
-                    )
-                    .zIndex(5f), // Higher ZIndex value places it on top, // Padding around the Box
-                contentAlignment = Alignment.BottomStart // Align content to top end (right)
-            ) {
-                BoxWithClickable(
-                    onClick = {
-                        appState = AppState.QuizHome;
-                    },
-                    text = "Home",
-                    type = "cool",
-                    grow = false,
-                    animatedPress = true,
-                    cycleColor = false,
-                    modifier = Modifier.background(Color.LightGray) // Background color for the BoxWithClickable
+            is AppState.ScoreBoard -> {
+                viewModel.idleMode(false)
+                viewModel.resultSpeech(
+                    state = SpeechState.SCOREBOARD,
+                    say = stringResource(R.string.welcome_to_the_hall_of_fame_come_see_the_many_people_who_have_done_my_quiz)
                 )
-            }
-
-            // Dots animation for scanning indication
-            LaunchedEffect(isScanning) {
-                if (isScanning) {
-                    while (isScanning) {
-                        delay(500)
-                        dots = (dots + 1) % 4
-                    }
-                } else {
-                    dots = 0
-                }
-            }
-
-            // Handle discovery timeout
-            LaunchedEffect(isScanning) {
-                if (isScanning) {
-                    discoveredDevices.value.clear() // Clear previous devices
-                    delay(12000) // Scanning timeout
-                    bluetoothAdapter.cancelDiscovery()
-                    isScanning = false
-                    Log.i("Bluetooth!", "Discovery timed out")
-                }
-            }
-
-            // BLE scan callback
-            val leScanCallback = rememberUpdatedState(object : ScanCallback() {
-                override fun onScanResult(
-                    callbackType: Int,
-                    result: android.bluetooth.le.ScanResult
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(
+                            top = 120.dp, start = 100.dp
+                        )
+                        .zIndex(5f), // Higher ZIndex value places it on top, // Padding around the Box
+                    contentAlignment = Alignment.TopStart // Align content to top end (right)
                 ) {
-                    super.onScanResult(callbackType, result)
-                    val device = result.device
-                    if (device.name != null) {
-                        discoveredDevices.value.add(BleDevice(device = device))
+                    BoxWithClickable(
+                        onClick = {
+                            appState = AppState.QuizHome;
+                        },
+                        text = stringResource(R.string.exit),
+                        type = "cool",
+                        grow = false,
+                        animatedPress = true,
+                        cycleColor = false,
+                        modifier = Modifier.background(Color.LightGray) // Background color for the BoxWithClickable
+                    )
+                }
+                ScoreBoard()
+            }
+
+            is AppState.Quiz -> { //*** QUIZ
+                viewModel.idleMode(false)
+                if (!showDialogExitQuizEarly) {
+                    audioPlayer2?.setLooping(true)
+                    audioPlayer2?.play()
+                }
+
+                Box(
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    // Dialog used to make sure if someone want to leave the quiz early
+                    if (showDialogExitQuizEarly) {
+                        audioPlayer2?.setLooping(false)
+                        audioPlayer2?.pause()
+                        audioPlayer3?.play()
+                        viewModel.resultSpeech(
+                            state = SpeechState.EXIT_EARLY,
+                            say = stringResource(R.string.hang_on_you_are_about_to_submit_this_quiz_without_completing_all_the_questions_if_you_do_this_your_quiz_will_not_be_valid_are_you_sure_you_want_to_do_this)
+                        )
+                        AlertDialog(onDismissRequest = { showDialogExitQuizEarly = false },
+                            title = { Text(stringResource(R.string.warning)) },
+                            text = { Text(stringResource(R.string.warning_message)) },
+                            confirmButton = {
+                                Button(onClick = {
+                                    audioPlayer2?.stop()
+                                    audioPlayer1.play();
+                                    audioPlayer2?.reset();
+                                    appState = AppState.QuizHome
+                                    showDialogExitQuizEarly = false
+                                    // Handle exit logic here (e.g., navigate away, save state, etc.)
+                                }) {
+                                    Text(stringResource(R.string.ok))
+                                }
+                            },
+                            dismissButton = {
+                                Button(onClick = {
+                                    showDialogExitQuizEarly = false
+                                    // Handle cancel logic here if needed
+                                }) {
+                                    Text(stringResource(R.string.cancel))
+                                }
+                            })
+                    }
+
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(
+                                top = 80.dp, end = 30.dp
+                            )
+                            .zIndex(5f), // Higher ZIndex value places it on top, // Padding around the Box
+                        contentAlignment = Alignment.TopEnd // Align content to top end (right)
+                    ) {
+                        BoxWithClickable(
+                            onClick = {
+                                appState = AppState.QuizHome;
+                                audioPlayer1.play();
+                                audioPlayer2?.stop();
+                            },
+                            text = stringResource(R.string.exit_quiz),
+                            type = "cool",
+                            grow = false,
+                            animatedPress = true,
+                            cycleColor = false,
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(2.dp)) // Rounds the corners
+                                .border(
+                                    width = 2.dp,
+                                    color = Color.Black,
+                                    shape = RoundedCornerShape(5.dp) // Adjust shape as needed
+                                ) // Adds a border
+                                .padding(8.dp) // Padding inside the box
+                                .background(Color.LightGray) // Background color for the BoxWithClickable
+                        )
+                    }
+                    Quiz(context,
+                        onShowOverlay = { showDialogExitQuizEarly = true },
+                        save = { updatedQuestions -> // This gets the saved data from the quiz
+                            save = updatedQuestions
+                            Log.d("Save Check2", "${save[0].result}")
+                        },
+                        onStartClicked = {
+                            saveNumber = 0;
+                            // Check the memory and if current spot not empty increment the saveNumber
+                            while (PreferencesManager.getQuizQuestions(
+                                    context, "save$saveNumber"
+                                ) != null
+                            ) saveNumber++
+                            // If valid save spot found, save new memory at that spot
+                            Log.d("Save Check", "${save}")
+                            PreferencesManager.saveQuizQuestions(
+                                context, "save$saveNumber", save
+                            ); // This saves the data
+                            Log.d(
+                                "Saved",
+                                "${PreferencesManager.getQuizQuestions(context, "save$saveNumber")}"
+                            )
+                            showDialogSubmitThankYou = true
+                            appState = AppState.QuizHome;
+                            audioPlayer2?.setLooping(false);
+                            audioPlayer2?.stop();
+                            audioPlayer1.play();
+                        })
+                }
+            }
+
+            is AppState.Bluetooth -> {
+                viewModel.idleMode(false)
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(
+                            bottom = 120.dp, start = 30.dp
+                        )
+                        .zIndex(5f), // Higher ZIndex value places it on top, // Padding around the Box
+                    contentAlignment = Alignment.BottomStart // Align content to top end (right)
+                ) {
+                    BoxWithClickable(
+                        onClick = {
+                            appState = AppState.QuizHome;
+                        },
+                        text = "Home",
+                        type = "cool",
+                        grow = false,
+                        animatedPress = true,
+                        cycleColor = false,
+                        modifier = Modifier.background(Color.LightGray) // Background color for the BoxWithClickable
+                    )
+                }
+
+                // Dots animation for scanning indication
+                LaunchedEffect(isScanning) {
+                    if (isScanning) {
+                        while (isScanning) {
+                            delay(500)
+                            dots = (dots + 1) % 4
+                        }
+                    } else {
+                        dots = 0
                     }
                 }
 
-                override fun onBatchScanResults(results: List<android.bluetooth.le.ScanResult>) {
-                    super.onBatchScanResults(results)
-                    results.forEach { result ->
+                // Handle discovery timeout
+                LaunchedEffect(isScanning) {
+                    if (isScanning) {
+                        discoveredDevices.value.clear() // Clear previous devices
+                        delay(12000) // Scanning timeout
+                        bluetoothAdapter.cancelDiscovery()
+                        isScanning = false
+                        Log.i("Bluetooth!", "Discovery timed out")
+                    }
+                }
+
+                // BLE scan callback
+                val leScanCallback = rememberUpdatedState(object : ScanCallback() {
+                    override fun onScanResult(
+                        callbackType: Int,
+                        result: android.bluetooth.le.ScanResult
+                    ) {
+                        super.onScanResult(callbackType, result)
                         val device = result.device
                         if (device.name != null) {
                             discoveredDevices.value.add(BleDevice(device = device))
                         }
                     }
-                }
 
-                override fun onScanFailed(errorCode: Int) {
-                    super.onScanFailed(errorCode)
-                    Log.e("Bluetooth!", "Scan failed with error code: $errorCode")
-                }
-            })
-
-            // Start or stop scanning
-            fun toggleScan() {
-                val scanner = bluetoothManager.adapter.bluetoothLeScanner
-                if (isScanning) {
-                    scanner.stopScan(leScanCallback.value)
-                    isScanning = false
-                } else {
-                    scanner.startScan(leScanCallback.value)
-                    isScanning = true
-                }
-            }
-
-            // UI layout
-
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                Column(
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    if (!fineLocationPermissionState.status.isGranted || !permissionState.status.isGranted) {
-                        Text(
-                            "Permissions denied.",
-                            textAlign = TextAlign.Center,
-                            modifier = Modifier.fillMaxWidth()
-                        )
-                        Button(
-                            onClick = {
-                                val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                                val uri = Uri.fromParts("package", context.packageName, null)
-                                intent.data = uri
-                                context.startActivity(intent)
-                            },
-                            modifier = Modifier.padding(top = 8.dp)
-                        ) {
-                            Text("Go to Settings", textAlign = TextAlign.Center)
+                    override fun onBatchScanResults(results: List<android.bluetooth.le.ScanResult>) {
+                        super.onBatchScanResults(results)
+                        results.forEach { result ->
+                            val device = result.device
+                            if (device.name != null) {
+                                discoveredDevices.value.add(BleDevice(device = device))
+                            }
                         }
+                    }
+
+                    override fun onScanFailed(errorCode: Int) {
+                        super.onScanFailed(errorCode)
+                        Log.e("Bluetooth!", "Scan failed with error code: $errorCode")
+                    }
+                })
+
+                // Start or stop scanning
+                fun toggleScan() {
+                    val scanner = bluetoothManager.adapter.bluetoothLeScanner
+                    if (isScanning) {
+                        scanner.stopScan(leScanCallback.value)
+                        isScanning = false
                     } else {
-                        Button(
-                            onClick = { toggleScan() },
-                            modifier = Modifier.padding(top = 8.dp)
-                        ) {
-                            Text(
-                                if (isScanning) "Stop Scanning${".".repeat(dots)}" else "Start Scanning",
-                                textAlign = TextAlign.Center
-                            )
-                        }
+                        scanner.startScan(leScanCallback.value)
+                        isScanning = true
+                    }
+                }
 
-                        Button(
-                            onClick = { bleManager?.moveServo() },
-                            modifier = Modifier.padding(top = 8.dp)
-                        ) {
-                            Text("Move Servo", textAlign = TextAlign.Center)
-                        }
+                // UI layout
 
-                        if (isScanning) {
-                            // Optional loading indicator can go here
-                        } else if (discoveredDevices.value.isNotEmpty()) {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .padding(16.dp)
+                            .fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        if (!fineLocationPermissionState.status.isGranted || !permissionState.status.isGranted) {
                             Text(
-                                "--Discovered Devices--",
+                                "Permissions denied.",
                                 textAlign = TextAlign.Center,
                                 modifier = Modifier.fillMaxWidth()
                             )
-                            LazyColumn(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalAlignment = Alignment.CenterHorizontally
+                            Button(
+                                onClick = {
+                                    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                                    val uri = Uri.fromParts("package", context.packageName, null)
+                                    intent.data = uri
+                                    context.startActivity(intent)
+                                },
+                                modifier = Modifier.padding(top = 8.dp)
                             ) {
-                                items(discoveredDevices.value.toList()) { bleDevice -> // Convert Set to List for LazyColumn
-                                    Box(
-                                        modifier = Modifier
-                                            .clickable {
-                                                // Made a system were only one device can be connect at a time
-                                                bleManager?.disconnect() // Disconnect previous
-                                                bleManager =
-                                                    BleManager(context, bleDevice) // Set new
-                                                bleManager?.connectToDevice() // Connect new
-                                            }
-                                            .padding(vertical = 8.dp)
-                                            .fillMaxWidth(),
-                                        contentAlignment = Alignment.Center
-                                    ) {
-                                        Text(
-                                            text = "${bleDevice.device?.name} || ${bleDevice.device?.address}",
-                                            textAlign = TextAlign.Center,
-                                            color = when (bleDevice.state) {
-                                                ConnectionState.CONNECTED -> Color.Green
-                                                ConnectionState.DISCONNECTED_WITHOUT_INTENT -> Color.Red
-                                                else -> Color.Blue
-                                            },
-                                            modifier = Modifier.fillMaxWidth(),
-                                            style = TextStyle(
-                                                fontSize = 20.sp,
-                                                fontWeight = FontWeight.Bold
-                                            )
-                                        )
-                                    }
-                                }
+                                Text("Go to Settings", textAlign = TextAlign.Center)
                             }
                         } else {
-                            Text(
-                                "No devices discovered.",
-                                textAlign = TextAlign.Center,
-                                modifier = Modifier.fillMaxWidth()
-                            )
+                            Button(
+                                onClick = { toggleScan() },
+                                modifier = Modifier.padding(top = 8.dp)
+                            ) {
+                                Text(
+                                    if (isScanning) "Stop Scanning${".".repeat(dots)}" else "Start Scanning",
+                                    textAlign = TextAlign.Center
+                                )
+                            }
+
+                            Button(
+                                onClick = { bleManager?.moveServo() },
+                                modifier = Modifier.padding(top = 8.dp)
+                            ) {
+                                Text("Move Servo", textAlign = TextAlign.Center)
+                            }
+
+                            if (isScanning) {
+                                // Optional loading indicator can go here
+                            } else if (discoveredDevices.value.isNotEmpty()) {
+                                Text(
+                                    "--Discovered Devices--",
+                                    textAlign = TextAlign.Center,
+                                    modifier = Modifier.fillMaxWidth()
+                                )
+                                LazyColumn(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalAlignment = Alignment.CenterHorizontally
+                                ) {
+                                    items(discoveredDevices.value.toList()) { bleDevice -> // Convert Set to List for LazyColumn
+                                        Box(
+                                            modifier = Modifier
+                                                .clickable {
+                                                    // Made a system were only one device can be connect at a time
+                                                    bleManager?.disconnect() // Disconnect previous
+                                                    bleManager =
+                                                        BleManager(context, bleDevice) // Set new
+                                                    bleManager?.connectToDevice() // Connect new
+                                                }
+                                                .padding(vertical = 8.dp)
+                                                .fillMaxWidth(),
+                                            contentAlignment = Alignment.Center
+                                        ) {
+                                            Text(
+                                                text = "${bleDevice.device?.name} || ${bleDevice.device?.address}",
+                                                textAlign = TextAlign.Center,
+                                                color = when (bleDevice.state) {
+                                                    ConnectionState.CONNECTED -> Color.Green
+                                                    ConnectionState.DISCONNECTED_WITHOUT_INTENT -> Color.Red
+                                                    else -> Color.Blue
+                                                },
+                                                modifier = Modifier.fillMaxWidth(),
+                                                style = TextStyle(
+                                                    fontSize = 20.sp,
+                                                    fontWeight = FontWeight.Bold
+                                                )
+                                            )
+                                        }
+                                    }
+                                }
+                            } else {
+                                Text(
+                                    "No devices discovered.",
+                                    textAlign = TextAlign.Center,
+                                    modifier = Modifier.fillMaxWidth()
+                                )
+                            }
                         }
                     }
                 }
@@ -2290,15 +2346,14 @@ fun QuizHome(onStartClicked: () -> Unit, audioPlayer: AudioPlayer, context: Cont
 fun ImageDisplayApp() {
     // State to track whether the image is visible
     var isImageVisible by remember { mutableStateOf(false) }
+    // Scroll state for vertical scrolling
+    val scrollState = rememberScrollState()
 
     // Full-screen Box to manage layout
     Box(
         modifier = Modifier
             .zIndex(6f)
             //.size(width = 200.dp, height = 80.dp)
-            .padding(
-                top = 80.dp, start = 30.dp
-            )
             .pointerInput(isImageVisible) {
                 if (isImageVisible) {
                     detectTapGestures {
@@ -2308,36 +2363,51 @@ fun ImageDisplayApp() {
             },
         contentAlignment = Alignment.TopStart // Align button to top-left
     ) {
-        // Button at the top-left corner
-        Button(
+        BoxWithClickable(
             onClick = { isImageVisible = true }, // Show image when clicked
+            text = stringResource(R.string.show_image),
+            type = "cool",
+            grow = false,
+            animatedPress = true,
+            cycleColor = false,
             modifier = Modifier
-                .padding(16.dp)
-                .size(width = 200.dp, height = 80.dp), // Size and padding
-            shape = RoundedCornerShape(10.dp), // Optional rounded corners
-            colors = ButtonDefaults.buttonColors(containerColor = Color.Blue)
-        ) {
-            Text(
-                text = stringResource(R.string.show_image),
-                color = Color.White,
-                fontSize = 22.sp
-            )
-        }
+                .padding(
+                    top = 80.dp, start = 30.dp
+                )
+                .clip(RoundedCornerShape(2.dp)) // Rounds the corners
+                .border(
+                    width = 2.dp,
+                    color = Color.Black,
+                    shape = RoundedCornerShape(5.dp) // Adjust shape as needed
+                ) // Adds a border
+                .padding(8.dp) // Padding inside the box
+                .background(Color.LightGray) // Background color for the BoxWithClickable
+        )
 
-        // Display the image if `isImageVisible` is true
+        // If the image is visible, display it
         if (isImageVisible) {
-            Box(
+            Column(
                 modifier = Modifier
-                    .fillMaxSize(), // Cover the entire screen
-                contentAlignment = Alignment.Center // Center the image
+                    .verticalScroll(scrollState) // Make the image scrollable
+                    .fillMaxWidth() // Make the column fill the entire screen width
+                    .fillMaxHeight() // Allow scrolling past both top and bottom
+                    .pointerInput(Unit) {
+                        detectTapGestures(
+                            onTap = {
+                                // Hide the image when tapped
+                                isImageVisible = false
+                            }
+                        )
+                    }
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.sample_image), // Replace with your image resource
+                    painter = painterResource(id = R.drawable.reference_image), // Replace with your image resource
                     contentDescription = "Displayed Image",
-                    contentScale = ContentScale.Crop, // Optional: Adjust the scaling of the image
+                    contentScale = ContentScale.FillWidth, // Scale the image to fill the width
                     modifier = Modifier
-                        .fillMaxWidth(1f)
-                        .aspectRatio(1f) // Maintain aspect ratio
+                        .fillMaxWidth() // Make the image take up full width
+                        .heightIn(min = 0.dp) // Allow flexible height based on content
+                        .padding(vertical = 16.dp) // Optional: Add some vertical padding
                 )
             }
         }
@@ -2354,12 +2424,14 @@ fun Quiz(
 ) {
     val audioPlayerViewModel: AudioPlayerViewModel = viewModel()
 
-    val audioPlayer = audioPlayerViewModel.getAudioPlayer()
+    val audioPlayer = audioPlayerViewModel.getAudioPlayer1()
+
     var showDialogSubmitWithNoAnswer by remember { mutableStateOf(false) }
     //*******************************
     // State to hold the result from MultipleChoiceQuestion
     var result by remember { mutableStateOf<ResultForOption?>(null) }
 
+    val buttonDelay = 250L // Controls the delay for the question change buttons
     val coroutineScope = rememberCoroutineScope()
 
     //*******************************
@@ -2625,12 +2697,12 @@ fun Quiz(
 
                 if (isButtonEnabled) {
                     isButtonEnabled = false
-                    if (!viewModel.isMissuesState()) audioPlayer?.play()
+                    if (!viewModel.isMissuesState()) audioPlayer?.reset();audioPlayer?.play()
 
                     updateIndex(-1)
 
                     coroutineScope.launch {
-                        delay(350)
+                        delay(buttonDelay)
                         isButtonEnabled = true
                     }
 
@@ -2652,7 +2724,7 @@ fun Quiz(
     ) {
         Button(
             onClick = {
-                if (!viewModel.isMissuesState()) audioPlayer?.play()
+                if (!viewModel.isMissuesState()) audioPlayer?.reset();audioPlayer?.play()
 //                audioPlayer.play() //not sure what this does
                 if (quizQuestions[questionIndex].result.isToggleList.all { !it } && !quizQuestions[questionIndex].isSubmitted) {
                     showDialogSubmitWithNoAnswer = true
@@ -2682,7 +2754,7 @@ fun Quiz(
                 if (isButtonEnabled) {
                     isButtonEnabled = false
 
-                    if (!viewModel.isMissuesState()) audioPlayer?.play()
+                    if (!viewModel.isMissuesState()) audioPlayer?.reset();audioPlayer?.play()
                     if ((questionIndex == quizQuestions.size - 1) && !quizQuestions.all { it.isSubmitted }) {
                         onShowOverlay()
                     } else if ((questionIndex == quizQuestions.size - 1) && quizQuestions.all { it.isSubmitted }) {
@@ -2692,7 +2764,7 @@ fun Quiz(
                     updateIndex(1)
 
                     coroutineScope.launch {
-                        delay(350)
+                        delay(buttonDelay)
                         isButtonEnabled = true
                     }
 
@@ -2931,22 +3003,16 @@ fun MultipleChoiceOption(
     val random by remember { mutableStateOf(true) } // this will allow randomising of
     // questions
 
+    val audioPlayerViewModel: AudioPlayerViewModel = viewModel()
+
     // Initialize AudioPlayer instances with remember and mutableStateOf
-    val audioPlayer by remember {
-        mutableStateOf(AudioPlayer(context, R.raw.buttonsound1))
-    }
-    val correct by remember {
-        mutableStateOf(AudioPlayer(context, R.raw.correct))
-    }
-    correct.setVolume(0.5f)
-    val ok by remember {
-        mutableStateOf(AudioPlayer(context, R.raw.ok))
-    }
-    ok.setVolume(0.2f)
-    val incorrect by remember {
-        mutableStateOf(AudioPlayer(context, R.raw.incorrect))
-    }
-    incorrect.setVolume(0.5f)
+    val audioPlayer = audioPlayerViewModel.getAudioPlayer3()
+    val correct = audioPlayerViewModel.getAudioPlayer6()
+    correct?.setVolume(0.5f)
+    val ok = audioPlayerViewModel.getAudioPlayer7()
+    ok?.setVolume(0.2f)
+    val incorrect = audioPlayerViewModel.getAudioPlayer8()
+    incorrect?.setVolume(0.5f)
 
     // Define lighter versions of green and red
     val lighterGreen = Color(0xFF66BB6A) // Light green color
@@ -3087,20 +3153,20 @@ fun MultipleChoiceOption(
         if (scoreType == "all") {
             if (score >= texts.size) {
                 if (!viewModel.isMissuesState()) {
-                    correct.play()
+                    correct?.play()
                     viewModel.resultSpeech(0)
                 }
 
                 onConditionChange(brighterGreen)
             } else if (score == 0) {
                 if (!viewModel.isMissuesState()) {
-                    incorrect.play()
+                    incorrect?.play()
                     viewModel.resultSpeech(2)
                 }
                 onConditionChange(Color.Red)
             } else {
                 if (!viewModel.isMissuesState()) {
-                    ok.play()
+                    ok?.play()
                     viewModel.resultSpeech(1)
                 }
                 onConditionChange(lighterGreen)
@@ -3109,19 +3175,19 @@ fun MultipleChoiceOption(
 
             if (score >= texts.count { it.isActive }) {
                 if (!viewModel.isMissuesState()) {
-                    correct.play()
+                    correct?.play()
                     viewModel.resultSpeech(0)
                 }
                 onConditionChange(brighterGreen)
             } else if (score == 0) {
                 if (!viewModel.isMissuesState()) {
-                    incorrect.play()
+                    incorrect?.play()
                     viewModel.resultSpeech(2)
                 }
                 onConditionChange(Color.Red)
             } else {
                 if (!viewModel.isMissuesState()) {
-                    ok.play()
+                    ok?.play()
                     viewModel.resultSpeech(1)
                 }
                 onConditionChange(lighterGreen)
@@ -3187,7 +3253,7 @@ fun MultipleChoiceOption(
                         Row(
                             modifier = Modifier
                                 //.fillMaxHeight() // Ensure the Row takes up the full height of its parent
-                                .padding(12.dp), // Optional padding around the Row
+                                .padding(4.dp), // Optional padding around the Row
                             horizontalArrangement = Arrangement.Center, // Center horizontally
                             verticalAlignment = Alignment.CenterVertically // Center vertically
                         ) {
@@ -3242,9 +3308,9 @@ fun MultipleChoiceOption(
                                         correct = texts.count { it.isActive },
                                         onSubmitted
                                     );
-                                    if (!onSubmitted() && !viewModel.isMissuesState()) audioPlayer.play()
+                                    if (!onSubmitted() && !viewModel.isMissuesState()) audioPlayer?.reset();audioPlayer?.play()
                                 },
-                                modifier = Modifier.padding(16.dp),
+                                modifier = Modifier.padding(12.dp),
                                 colors = ButtonDefaults.buttonColors(
                                     containerColor = backgroundColor,
                                     contentColor = contentColor
@@ -3288,11 +3354,11 @@ fun MultipleChoiceOption(
                                         correct = texts.count { it.isActive },
                                         onSubmitted
                                     );
-                                    if (!onSubmitted() && !viewModel.isMissuesState()) audioPlayer.play()
+                                    if (!onSubmitted() && !viewModel.isMissuesState())  audioPlayer?.reset();audioPlayer?.play()
                                 }) {
                                 Text(
                                     text = texts[index].text,
-                                    style = TextStyle(fontSize = 18.sp), // Adjust the size as needed
+                                    style = TextStyle(fontSize = 14.sp), // Adjust the size as needed
                                     modifier = Modifier.padding(16.dp)
                                 )
                             }
@@ -3366,7 +3432,6 @@ fun getFontWeight(weight: String): FontWeight {
     }
 }
 
-
 //***************************************** BUTTONS & STUFF
 @Composable
 fun LinearProgressBar(progress: Float) {
@@ -3383,6 +3448,17 @@ fun CircularProgressBar() {
     CircularProgressIndicator( // Used to create a spinning Icon
         modifier = Modifier.size(48.dp) // Adjust size as needed
     )
+}
+
+
+fun openInputMethodSettings(context: Context) {
+    try {
+        // Open the system's Input Method settings
+        val intent = Intent(Settings.ACTION_INPUT_METHOD_SETTINGS)
+        context.startActivity(intent)
+    } catch (e: Exception) {
+        Log.e("Keyboard", "Error opening input method settings", e)
+    }
 }
 
 @Composable
@@ -3450,6 +3526,9 @@ fun DropdownMenuSample(audioPlayer: AudioPlayer) {
                                 // Change the language of Temi
                                 viewModel.changeLanguage(TtsRequest.Language.EN_US)
 
+                                // Change String Resources maybe
+                                viewModel.changeLanguageString("en")
+
                                 // Restart activity to apply changes
                                 (context as? Activity)?.recreate()
                             })
@@ -3474,6 +3553,9 @@ fun DropdownMenuSample(audioPlayer: AudioPlayer) {
 
                             // Change the language of Temi
                             viewModel.changeLanguage(TtsRequest.Language.JA_JP)
+
+                            // Change String Resources maybe
+                            viewModel.changeLanguageString("ja")
 
                             // Restart activity to apply changes
                             (context as? Activity)?.recreate()
@@ -3501,6 +3583,9 @@ fun DropdownMenuSample(audioPlayer: AudioPlayer) {
                             // Change the language of Temi
                             viewModel.changeLanguage(TtsRequest.Language.DE_DE)
 
+                            // Change String Resources maybe
+                            viewModel.changeLanguageString("ba")
+
                             // Restart activity to apply changes
                             (context as? Activity)?.recreate()
                         })
@@ -3527,6 +3612,9 @@ fun DropdownMenuSample(audioPlayer: AudioPlayer) {
 
                                 // Change the language of Temi
                                 viewModel.changeLanguage(TtsRequest.Language.ZH_CN)
+
+                                // Change String Resources maybe
+                                viewModel.changeLanguageString("te")
 
                                 // Restart activity to apply changes
                                 (context as? Activity)?.recreate()

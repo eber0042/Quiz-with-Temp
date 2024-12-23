@@ -1000,10 +1000,11 @@ int drawable oip__2_ 0x7f070093
 int drawable oip__3_ 0x7f070094
 int drawable oip__4_ 0x7f070095
 int drawable pres 0x7f070096
-int drawable sample_image 0x7f070097
-int drawable test_level_drawable 0x7f070098
-int drawable tooltip_frame_dark 0x7f070099
-int drawable tooltip_frame_light 0x7f07009a
+int drawable reference_image 0x7f070097
+int drawable sample_image 0x7f070098
+int drawable test_level_drawable 0x7f070099
+int drawable tooltip_frame_dark 0x7f07009a
+int drawable tooltip_frame_light 0x7f07009b
 int id ALT 0x7f080000
 int id CTRL 0x7f080001
 int id FUNCTION 0x7f080002

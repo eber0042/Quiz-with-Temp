@@ -170,12 +170,14 @@ class RobotController():
         if (!isReady) return
         robot.setDetectionModeOn(on = true, distance = 2.0f) // Set how far it can detect stuff
         robot.setKioskModeOn(on = false)
-        robot.volume = 6// set volume to 4
+        robot.volume = 4// set volume to 4
 //        robot.setHardButtonMode(HardButton.VOLUME, HardButton.Mode.DISABLED)
 //        robot.setHardButtonMode(HardButton.MAIN, HardButton.Mode.DISABLED)
 //        robot.setHardButtonMode(HardButton.POWER, HardButton.Mode.DISABLED)
 //        robot.hideTopBar()
 
+        robot.setDetectionModeOn(true,2f)
+        Log.i ("Detection State", "${robot.detectionModeOn}")
         robot.setHardButtonMode(HardButton.VOLUME, HardButton.Mode.ENABLED)
         robot.setHardButtonMode(HardButton.MAIN, HardButton.Mode.ENABLED)
         robot.setHardButtonMode(HardButton.POWER, HardButton.Mode.ENABLED)

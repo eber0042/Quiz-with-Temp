@@ -1001,6 +1001,7 @@ drawable oip__2_
 drawable oip__3_
 drawable oip__4_
 drawable pres
+drawable reference_image
 drawable sample_image
 drawable test_level_drawable
 drawable tooltip_frame_dark
