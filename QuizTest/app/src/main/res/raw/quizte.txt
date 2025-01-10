@@ -1,7 +1,7 @@
-poolSize:-> 3
-poolSizePriority:-> 2
+poolSize:-> 1
+poolSizePriority:-> 0
 
-<!Quiz1>
+<Quiz1>
 text:-> 调查: 具体课程的入学要求是什么？
 image:-> R.drawable.image4
 background:-> R.drawable.image3
@@ -20,7 +20,7 @@ texts:->
 * 对于Nitec/Higher Nitec学生：相关的Nitec/Higher Nitec，GPA为2.5或更高 ; true
 <end>
 
-<!Quiz2>
+<Quiz2>
 text:-> 调查: 这里提供哪些文凭课程？
 image:-> R.drawable.image4
 background:-> R.drawable.image3
@@ -39,7 +39,7 @@ texts:->
 * 时尚设计 ; false
 <end>
 
-<!Quiz3>
+<Quiz3>
 text:-> 调查: 我可以合并多次GCE 'O'级考试的不同科目成绩吗？
 image:-> R.drawable.image4
 background:-> R.drawable.image3
@@ -58,7 +58,7 @@ texts:->
 * 不是的，只会考虑最新一次考试的成绩 ; false
 <end>
 
-<!Quiz4>
+<Quiz4>
 text:-> 调查: 是否有直接入学计划或提前录取选项？
 image:-> R.drawable.image4
 background:-> R.drawable.image3
@@ -77,7 +77,7 @@ texts:->
 * 不是的，必须通过常规招生程序申请 ; false
 <end>
 
-<!Quiz5>
+<Quiz5>
 text:-> 调查: 讲座和辅导课的典型班级人数是多少？
 image:-> R.drawable.image4
 background:-> R.drawable.image3

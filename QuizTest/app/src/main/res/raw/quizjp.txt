@@ -1,7 +1,7 @@
-poolSize:-> 3
-poolSizePriority:-> 2
+poolSize:-> 1
+poolSizePriority:-> 0
 
-<!Quiz1>
+<Quiz1>
 text:-> アンケート: 特定のコースの入学条件は何ですか？
 image:-> R.drawable.image4
 background:-> R.drawable.image3
@@ -20,7 +20,7 @@ texts:->
 * Nitec/Higher Nitecの学生: GPAが2.5以上の関連するNitec/Higher Nitec ; true
 <end>
 
-<!Quiz2>
+<Quiz2>
 text:-> アンケート: ここで提供されているディプロマコースは何ですか？
 image:-> R.drawable.image4
 background:-> R.drawable.image3
@@ -39,7 +39,7 @@ texts:->
 * ファッションデザイン ; false
 <end>
 
-<!Quiz3>
+<Quiz3>
 text:-> アンケート: GCE 'O' レベル試験の複数回の受験結果を組み合わせることはできますか？
 image:-> R.drawable.image4
 background:-> R.drawable.image3
@@ -58,7 +58,7 @@ texts:->
 * いいえ、最新の受験結果のみが考慮されます ; false
 <end>
 
-<!Quiz4>
+<Quiz4>
 text:-> アンケート: 直接入学プログラムや早期入学オプションはありますか？
 image:-> R.drawable.image4
 background:-> R.drawable.image3
@@ -77,7 +77,7 @@ texts:->
 * いいえ、通常の入学プロセスを通じて申し込む必要があります ; false
 <end>
 
-<!Quiz5>
+<Quiz5>
 text:-> アンケート: 講義とチュートリアルの通常のクラスサイズはどのくらいですか？
 image:-> R.drawable.image4
 background:-> R.drawable.image3
@@ -96,7 +96,7 @@ texts:->
 * 講義: 500人、チュートリアル: 100-120人 ; false
 <end>
 
-<!Quiz6>
+<Quiz6>
 text:-> アンケート: このコースには専門分野や選択科目はありますか？
 image:-> R.drawable.image4
 background:-> R.drawable.image3
@@ -115,7 +115,7 @@ texts:->
 * はい、選択科目にはデータサイエンス、ソフトウェアエンジニアリング、データ分析、コンピュータ組織と設計が含まれます ; false
 <end>
 
-<!Quiz7>
+<Quiz7>
 text:-> アンケート: このポリテクニックは学生の大学入学の準備をどのようにしていますか？
 image:-> R.drawable.image4
 background:-> R.drawable.image3
@@ -134,7 +134,7 @@ texts:->
 * 高成績の学生のみが大学入学の準備をします ; false
 <end>
 
-<!Quiz8>
+<Quiz8>
 text:-> アンケート: このコースにはインターンシップの機会はありますか？
 image:-> R.drawable.image4
 background:-> R.drawable.image3

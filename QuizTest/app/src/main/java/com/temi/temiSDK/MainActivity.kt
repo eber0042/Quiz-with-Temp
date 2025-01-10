@@ -1394,7 +1394,7 @@ fun QuizApp(context: Context) {
     }
 
     // Timeout duration (1 minute)
-    val timeoutDuration = 60000L
+    val timeoutDuration = 300000L
 
     // Job variable to handle timeout
     var timeoutJob by remember { mutableStateOf<Job?>(null) }
@@ -3358,7 +3358,7 @@ fun MultipleChoiceOption(
                                 }) {
                                 Text(
                                     text = texts[index].text,
-                                    style = TextStyle(fontSize = 14.sp), // Adjust the size as needed
+                                    style = TextStyle(fontSize = 24.sp), // Adjust the size as needed
                                     modifier = Modifier.padding(16.dp)
                                 )
                             }

@@ -1,7 +1,7 @@
-poolSize:-> 3
-poolSizePriority:-> 2
+poolSize:-> 1
+poolSizePriority:-> 0
 
-<!Quiz1>
+<Quiz1>
 text:-> What are the entry requirements for specific courses?
 image:-> R.drawable.image4
 background:-> R.drawable.image3
@@ -20,7 +20,7 @@ texts:->
 * For Nitec/Higher Nitec students: A relevant Nitec/Higher Nitec with a GPA of 2.5 or higher ; true
 <end>
 
-<!Quiz2>
+<Quiz2>
 text:-> What diploma courses are offered here?
 image:-> R.drawable.image4
 background:-> R.drawable.image3
@@ -39,7 +39,7 @@ texts:->
 * Fashion Design ; false
 <end>
 
-<!Quiz3>
+<Quiz3>
 text:-> Can I combine different subject grades from multiple sittings of the GCE 'O' Level exams?
 image:-> R.drawable.image4
 background:-> R.drawable.image3
@@ -58,7 +58,7 @@ texts:->
 * No, only the score from the latest sitting is taken into consideration ; false
 <end>
 
-<!Quiz4>
+<Quiz4>
 text:-> Are there direct entry programs or early admission options available?
 image:-> R.drawable.image4
 background:-> R.drawable.image3
@@ -77,7 +77,7 @@ texts:->
 * No, you must apply through the regular admissions process ; false
 <end>
 
-<!Quiz5>
+<Quiz5>
 text:-> What is the typical class size in lectures and tutorials?
 image:-> R.drawable.image4
 background:-> R.drawable.image3

@@ -1114,7 +1114,7 @@ class MainViewModel @Inject constructor(
                         }
                     } else {
                         if (!closeTrigger) {
-                            robotController.tiltAngle(50, 1f, buffer)
+                            robotController.tiltAngle(35, 1f, buffer)
                             closeTrigger = true
                         }
                     }
